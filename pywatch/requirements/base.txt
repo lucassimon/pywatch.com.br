@@ -8,3 +8,5 @@ flake8
 django_compressor
 dj-database-url
 django-decouple
+djangorestframework
+django-filter
