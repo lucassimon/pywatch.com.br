@@ -49,7 +49,11 @@ CACHES = {
 
 INSTALLED_APPS += (
     'debug_toolbar',
+    'django_nose',
 )
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # IPs allowed to see django-debug-toolbar output.
 INTERNAL_IPS = ("127.0.0.1",)
