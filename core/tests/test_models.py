@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
 
 #Core Django imports
+from django.test import TestCase
 
 #Third-party app imports
+from model_mommy import mommy
 
 # Relative imports of the 'app-name' package
 
@@ -22,3 +24,14 @@
 # 1 - Cada função de test deve haver apenas 1 assert
 #
 #####################################
+
+class TimeStampedAbstractModelTest(TestCase):
+
+    def setUp(self):
+        """
+        """
+
+    def test_simple_assert(self):
+        """
+        """
+        self.assertEqual(1+1,2)
