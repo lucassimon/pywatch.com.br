@@ -44,3 +44,36 @@ class StandardItemStuffModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Media(TimeStampedModel):
+    """
+    Classe model para cadastrar as medias
+    com os as apps de palestras/talks,
+    screencasts, tutoriais/artigos,
+    """
+
+    _KIND_MEDIAS = (
+        ('TU', _(u'Tutorial')),
+        ('CD', _(u'Codigo')),
+        ('VI', _(u'Video')),
+        ('SL', _(u'Slide')),
+    )
+
+    type = models.CharField(
+        verbose_name=_(u'Tipo'),
+        max_length=3,
+        choices=_KIND_MEDIAS
+    )
+
+    title = models.CharField(
+        verbose_name=_(u'Titulo'),
+        max_length=255
+    )
+
+    url = models.URLField(
+        verbose_name=_('URL'),
+    )
+
+    class Meta:
+        abstract = True
