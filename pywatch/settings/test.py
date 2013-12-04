@@ -1,6 +1,14 @@
 from base import *
+
+
+########## INSTALLED APPS CONFIGURATION
+
+INSTALLED_APPS += (
+    'django_nose',
+)
+
 ########## TEST SETTINGS
-TEST_RUNNER = "discover_runner.DiscoverRunner"
+TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
 TEST_DISCOVER_TOP_LEVEL = PROJECT_DIR
 TEST_DISCOVER_ROOT = PROJECT_DIR
 TEST_DISCOVER_PATTERN = "test_*"
