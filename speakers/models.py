@@ -20,12 +20,12 @@ class Speaker(TimeStampedModel):
     )
 
     slug = models.SlugField(
-        _(u'Slug'),
+        verbose_name=_(u'Slug'),
         unique=True
     )
 
     bio = models.TextField(
-        _(u'Biográfia'),
+        verbose_name=_(u'Biográfia'),
     )
 
     class Meta:
@@ -46,6 +46,7 @@ class KindContact(models.Model):
         ('FB', _('Facebook')),
         ('TT', _('Twitter')),
         ('GH', _('Github')),
+        ('GG', _('Google')),
     )
     speaker = models.ForeignKey(
         'Speaker',
