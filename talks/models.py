@@ -16,8 +16,8 @@ class Talk(TimeStampedModel, StandardItemStuffModel):
 
     class Meta:
         ordering = ['created']
-        verbose_name = _(u'Palestrante')
-        verbose_name_plural = _(u'Palestrantes')
+        verbose_name = _(u'Palestras')
+        verbose_name_plural = _(u'Palestras')
 
     def __unicode__(self):
         return u'%s' % (self.name)
