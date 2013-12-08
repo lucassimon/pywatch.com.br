@@ -18,22 +18,52 @@ class Speaker(TimeStampedModel):
         verbose_name=_(u'Nome'),
         max_length=255
     )
+    """
+    Atributo da classe Speaker para setar o nome
+    do palestrante.
+
+    Caracteristicas:
+    max length: 255
+    """
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
         unique=True
     )
+    """
+    Atributo da classe Speaker para setar o slug
+    do palestrante.
+
+    Caracteristicas:
+    max length: 255
+    unique: True
+    """
 
     bio = models.TextField(
         verbose_name=_(u'Biográfia'),
     )
+    """
+    Atributo da classe Speaker para setar a biografria
+    do palestrante.
+
+    Caracteristicas:
+    TextField
+    """
 
     class Meta:
+        """
+        Seta a ordenação da listagem pelo campo `created` ascendente
+        Nome da app no singular e plural
+        """
         ordering = ['created']
         verbose_name = _(u'Palestrante')
         verbose_name_plural = _(u'Palestrantes')
 
     def __unicode__(self):
+        """
+        Retorna o nome do palestrante
+        como unicode.
+        """
         return u'%s' % (self.name)
 
 
