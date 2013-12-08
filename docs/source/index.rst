@@ -54,10 +54,15 @@ Execute o PyWatch. ::
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
 
-
+   overview
+   getting_started
+   configuration
+   how_to_use
    packages
+   license
+   contact
 
 
 
