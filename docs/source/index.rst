@@ -24,7 +24,7 @@ Executando um exemplo
 =====================
 
 Crie o ambiente virtual.
-Pode-se utilizar o virtualenv ou virtualenvwrapper. Fica a sua escolha.::
+Pode-se utilizar o virtualenv ou virtualenvwrapper. Fica a sua escolha. ::
 
 
     cd ~/venvs
@@ -32,19 +32,19 @@ Pode-se utilizar o virtualenv ou virtualenvwrapper. Fica a sua escolha.::
     source pywatch/bin/activate
 
 
-Baixe e instale o PyWatch.::
+Baixe e instale o PyWatch. ::
 
     git clone git@github.com:lucassimon/pywatch.com.br.git
     cd pywatch.com.br
     pip install -r pywatch/requirements/dev.txt
 
-Sincronize o banco de dados.::
+Sincronize o banco de dados. ::
 
     cd pywatch.com.br
     python manage.py syncdb --migrate --settings=pywatch.settings.dev
 
 
-Execute o PyWatch.::
+Execute o PyWatch. ::
 
     cd pywatch.com.br
     python manage.py runserver --settings=pywatch.settings.dev
@@ -54,12 +54,10 @@ Execute o PyWatch.::
 Contents:
 
 .. toctree::
-   :maxdepth: 2
-   how_to_use
-   how_to_contribute
-   faq
-   license
-   contact
+   :maxdepth: 3
+
+
+   packages
 
 
 

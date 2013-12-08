@@ -240,3 +240,13 @@ texinfo_documents = [
 
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
+
+from unipath import Path
+PROJECT_DIR = Path(__file__).ancestor(3)
+SETTINGS = PROJECT_DIR.child('pywatch')
+sys.path.append(str(SETTINGS))
+SPEAKERS = PROJECT_DIR.child('speakers')
+sys.path.append(str(PROJECT_DIR))
+from django.core.management import setup_environ
+from settings import base
+setup_environ(base)
