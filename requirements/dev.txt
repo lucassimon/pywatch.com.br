@@ -1,0 +1,14 @@
+-r base.txt
+
+django-debug-toolbar
+coverage>=3.6
+django-discover-runner>=0.2.2
+model-mommy
+setuptools>=0.8
+ipython
+yolk
+ipdb
+django_nose
+nose
+splinter
+fabric
