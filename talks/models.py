@@ -20,7 +20,7 @@ class Talk(TimeStampedModel, StandardItemStuffModel):
         verbose_name_plural = _(u'Palestras')
 
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u'%s' % (self.title)
 
 
 class MediaTalk(Media):
@@ -40,4 +40,4 @@ class MediaTalk(Media):
         verbose_name_plural = _(u'Medias Palestrantes')
 
     def __unicode__(self):
-        return u'%s - %s' % (self.name, self.url)
+        return u'%s - %s' % (self.title, self.url)
