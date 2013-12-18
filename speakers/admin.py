@@ -26,7 +26,7 @@ class SpeakerAdmin(admin.ModelAdmin):
     inlines = [ContactInline, ]
 
     # campo slug setado como pre-populado de acordo com o que se digita no nome
-    prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {'slug': ('name', )}
 
     # campos a serem exibidos na tabela
     list_display = (
