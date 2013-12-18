@@ -78,24 +78,52 @@ class KindContact(models.Model):
         ('GH', _('Github')),
         ('GG', _('Google')),
     )
+
     speaker = models.ForeignKey(
         'Speaker',
         verbose_name=_('Palestrante')
     )
+
+    """
+    Atributo da classe KindContact para referenciar
+    ao objeto da classe speaker
+    """
 
     kind = models.CharField(
         _(u'Tipo'),
         max_length=2,
         choices=KINDS
     )
+    """
+    Atributo da classe KindContact para escolher as
+    opcoes setada na tupla KINDS
+
+    Caracteristicas:
+    CharField
+    max length: 2
+    """
 
     value = models.CharField(
         _(u'Valor'),
         max_length=255
     )
+    """
+    Atributo da classe KindContact para setar o
+    valor da opção escolhida
+
+    Caracteristicas:
+    CharField
+    max length: 255
+    """
 
     class Meta:
+        """
+        """
         verbose_name = _(u'Contato')
 
     def __unicode__(self):
+        """
+        Retorna o tipo e valor
+        como unicode.
+        """
         return u'%s, %s' % (self.kind, self.value)
