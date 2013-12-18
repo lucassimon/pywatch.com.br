@@ -15,9 +15,29 @@ class TimeStampedModel(models.Model):
     """
 
     created = models.DateTimeField(auto_now_add=True)
+    """
+    Atributo da classe TimeStampedModel para
+    referenciar um campo de data de criação
+
+    Caracteristicas:
+    DateTimeField
+    auto now add: True
+    """
+
     modified = models.DateTimeField(auto_now=True)
+    """
+    Atributo da classe TimeStampedModel para
+    referenciar um campo de data de modificado
+
+    Caracteristicas:
+    DateTimeField
+    auto now: True
+    """
 
     class Meta:
+        """
+        Seta a classe como abstrata
+        """
         abstract = True
 
 
@@ -32,17 +52,45 @@ class StandardItemStuffModel(models.Model):
         'speakers.Speaker',
         verbose_name=_(u'Palestrante'),
     )
+    """
+    Atributo da classe StandardItemStuffModel para
+    referenciar um objeto da classe speaker
+
+    Caracteristicas:
+    ForeignKey
+    verbose name: palestrante
+    """
 
     title = models.CharField(
         verbose_name=_(u'Titulo'),
         max_length=255
     )
+    """
+    Atributo da classe StandardItemStuffModel para
+    setar um titulo
+
+    Caracteristicas:
+    CharField
+    verbose name: Titulo
+    max length: 255
+    """
 
     summary = models.TextField(
         verbose_name=_(u'Sumário')
     )
+    """
+    Atributo da classe StandardItemStuffModel para
+    setar um sumário
+
+    Caracteristicas:
+    TextField
+    verbose name: Sumário
+    """
 
     class Meta:
+        """
+        Seta a classe como abstrata
+        """
         abstract = True
 
 
@@ -65,15 +113,43 @@ class Media(TimeStampedModel):
         max_length=3,
         choices=_KIND_MEDIAS
     )
+    """
+    Atributo da classe Media para escolher as
+    opcoes setada na tupla KINDS
+
+    Caracteristicas:
+    CharField
+    max length: 2
+    """
 
     title = models.CharField(
         verbose_name=_(u'Titulo'),
         max_length=255
     )
+    """
+    Atributo da classe Media para
+    setar um titulo
+
+    Caracteristicas:
+    CharField
+    verbose name: Titulo
+    max length: 255
+    """
 
     url = models.URLField(
         verbose_name=_('URL'),
     )
+    """
+    Atributo da classe Media para
+    setar uma url valida
+
+    Caracteristicas:
+    UrlField
+    verbose name: URL
+    """
 
     class Meta:
+        """
+        Seta a classe como abstrata
+        """
         abstract = True
