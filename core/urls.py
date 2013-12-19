@@ -1,5 +1,13 @@
 #-*- coding:utf-8 -*-
 
-from django.conf.urls import patterns, url, include
-from django.core.urlresolvers import reverse_lazy
-from django.conf import settings
+from django.conf.urls import patterns, url
+
+from .views import IndexHomePageTemplateView
+
+urlpatterns = patterns(
+    'core.views',
+    url(
+        r'^$',
+        IndexHomePageTemplateView.as_view()
+    )
+)
