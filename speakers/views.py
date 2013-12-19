@@ -4,6 +4,7 @@
 
 # Core Django imports
 from rest_framework import generics
+from django.views.generic.list import ListView
 
 # Third-party app imports
 
@@ -25,3 +26,33 @@ class SpeakerDetail(generics.RetrieveUpdateAPIView):
     palestrantes sejam atualizados.
     '''
     model = Speaker
+
+
+class SpeakerListView(ListView):
+    """
+    Classe responsavel por gerar uma lista
+    paginada com os palestrantes cadastrados
+    no sistema.
+    """
+
+    models = Speaker
+    """
+    Define o model a ser atribuido
+    """
+
+    template_name = "speaker_list.html"
+    """
+    Define o nome do template a ser utilizado
+    """
+
+    context_object_name = "speaker_list"
+    """
+    Define o nome do objeto a ser renderizado
+    no contexto da requisição
+    """
+
+    paginate_by = 10
+    """
+    Define o tamanho dos items a serem
+    paginados
+    """

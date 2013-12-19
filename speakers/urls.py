@@ -1,8 +1,14 @@
 #-*- coding:utf-8 -*-
 
-from django.conf.urls import patterns, url, include
-from django.core.urlresolvers import reverse_lazy
-from django.conf import settings
+from django.conf.urls import patterns, url
+
+from .views import SpeakerListView
 
 urlpatterns = patterns(
+    'speakers.views',
+    url(
+        r'palestrantes/^$',
+        SpeakerListView.as_view(),
+        name='speaker-list'
+    )
 )
