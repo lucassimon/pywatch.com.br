@@ -6,12 +6,26 @@
 
 {% block content %}
     {% if speaker_list %}
-        <ul id="">
+        <dl >
             {% for speaker in speaker_list %}
-                <li>{{ speaker.name }} - {{ speaker.bio }}</td>
+                <dt> {{ speaker.name }}</dt>
+                <dd>
+                    {{ speaker.bio|truncatewords:8 }}
+                </dd>
+                {% for contact in speaker.kindcontact_set.all %}
+                    <dd> 
+                        {% if contact.kind == 'E' %}
+                            <a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
+                        {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
+                            {{ contact.get_kind_display }}: {{ contact.value }}
+                        {% else %}
+                            <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a>
+                        {% endif %}
+                        
+                    </dd>
+                {% endfor %}
             {% endfor %}
-        </ul>
-        {# .... **Now the pagination section** .... #}
+        </dl>
         {% if is_paginated %}
             <div class="pagination">
                 <span class="page-links">
