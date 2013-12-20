@@ -35,7 +35,7 @@ class SpeakerListView(ListView):
     no sistema.
     """
 
-    models = Speaker
+    model = Speaker
     """
     Define o model a ser atribuido
     """
@@ -56,3 +56,10 @@ class SpeakerListView(ListView):
     Define o tamanho dos items a serem
     paginados
     """
+
+    def get_queryset(self):
+        """
+        Personaliza o queryset dos palestrantes
+        resgatando o contatos caso existam
+        """
+        return Speaker.objects.all().select_related('KindContact')
