@@ -10,7 +10,22 @@
             {% for speaker in speaker_list %}
                 <dt> {{ speaker.name }}</dt>
                 <dd>
-                    {{ speaker.bio|truncatewords:8 }}
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse_speaker_contact_{{ speaker.pk }}">
+                                        Biografia
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse_speaker_contact_{{ speaker.pk }}" class="panel-collapse collapse out">
+                                <div class="panel-body">
+                                    {{ speaker.bio }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </dd>
                 {% for contact in speaker.kindcontact_set.all %}
                     <dd> 
