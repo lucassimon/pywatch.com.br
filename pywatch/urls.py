@@ -9,8 +9,17 @@ urlpatterns = patterns(
     '',
     url(
         r'^$',
-        include('core.urls'),
-        namespace='core'
+        include(
+            'core.urls',
+            namespace='core'
+        )
+    ),
+    url(
+        r'^palestrantes/',
+        include(
+            'speakers.urls',
+            namespace='speakers'
+        )
     ),
     url(r'^admin/', include(admin.site.urls)),
 
