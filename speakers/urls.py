@@ -7,7 +7,7 @@ from .views import SpeakerListView
 urlpatterns = patterns(
     'speakers.views',
     url(
-        r'palestrantes/^$',
+        r'^$',
         SpeakerListView.as_view(),
         name='speaker-list'
     )
