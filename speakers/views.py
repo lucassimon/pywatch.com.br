@@ -62,4 +62,8 @@ class SpeakerListView(ListView):
         Personaliza o queryset dos palestrantes
         resgatando o contatos caso existam
         """
-        return Speaker.objects.all().select_related('KindContact')
+        return (
+            Speaker.objects.all()
+            .select_related('KindContact')
+            .order_by('name')
+        )
