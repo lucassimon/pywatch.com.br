@@ -5,27 +5,33 @@
 
 
 {% block content %}
+<h1> Palestrantes </h1>
     {% if speaker_list %}
-        <dl >
+        <section>
             {% for speaker in speaker_list %}
-                <dt> {{ speaker.name }}</dt>
-                <dd>
-                {{ speaker.bio }}
-                </dd>
-                {% for contact in speaker.kindcontact_set.all %}
-                    <dd> 
-                        {% if contact.kind == 'E' %}
-                            <a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
-                        {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
-                            {{ contact.get_kind_display }}: {{ contact.value }}
-                        {% else %}
-                            <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a>
-                        {% endif %}
-                        
-                    </dd>
-                {% endfor %}
+                <article>
+                    <header>
+                        <h2>  {{ speaker.name }} </h2>
+                    </header>
+
+                    {{ speaker.bio }}
+
+                    {% if speaker.kindcontact_set.all %}
+                        <footer> 
+                            {% for contact in speaker.kindcontact_set.all %}
+                                {% if contact.kind == 'E' %}
+                                    <a href="mailto:{{ contact.value }}">{{ contact.value }}</a> - 
+                                {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
+                                    {{ contact.get_kind_display }}: {{ contact.value }} - 
+                                {% else %}
+                                    <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> - 
+                                {% endif %}
+                            {% endfor %}
+                        </footer>
+                    {% endif %}
+                </article>
             {% endfor %}
-        </dl>
+        </section>
         {% if is_paginated %}
             <div class="pagination">
                 <span class="page-links">
@@ -46,7 +52,6 @@
             </div>
         {% endif %}
     {% else %}
-        <h3>Palestrantes</h3>
         <p>Nenhum palestrante encontrado!!! :(</p>
     {% endif %}
 {% endblock %}
