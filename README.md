@@ -19,6 +19,8 @@ autores.
 
 A inspiração surgiu ao ver o projeto emberwatch.com.
 
+[http://pywatch.readthedocs.org/en/latest/](http://pywatch.readthedocs.org/en/latest/)
+
 Contribuindo com o PyWatch
 ==========================
 
