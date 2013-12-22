@@ -68,7 +68,7 @@ Primeiro o syncdb. ::
 
 Segundo, executar as migrates. ::
 
-    $ python manage.py migrate --alle --settings=pywatch.settings.dev
+    $ python manage.py migrate --all --settings=pywatch.settings.dev
 
 Executar o runserver
 --------------------
