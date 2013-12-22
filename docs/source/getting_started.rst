@@ -1,7 +1,6 @@
 Começando
 =========
 
-
 Buscando ajuda
 --------------
 
@@ -13,26 +12,30 @@ Configurando o ambiente.
 ------------------------
 
 Instalando os pacotes necessarios. ::
+
     $ sudo aptitude install build-essential libpq-dev git git-core python-dev python-virtualenv python-pip libcurl4-gnutls-dev
 
 Configurando o virtualenv ou virtualenvwrapper.
 -----------------------------------------------
 
 VirtualEnv. ::
+
     $ mkdir ~/venvs
     $ cd ~/venvs
-    $ virtualenv --unzip-setuptools [nomedoprojeto]
-    $ source ~/venvs/[nomedoprojeto]/bin/activate
+    $ virtualenv --unzip-setuptools pywatch
+    $ source ~/venvs/pywatch/bin/activate
 
 Virtualenvwrapper. ::
+
     $ mkdir ~/venvs
     $ sudo pip install virtualenvwrapper
     $ echo >> "source '/usr/local/bin/virtualenvwrapper.sh'" .bashrc/.zshrc
     $ echo >> "WORKON_HOME='~/venvs'
-    $ mkvirtualenv [nomedoprojeto]
+    $ mkvirtualenv pywatch
 
 Ativar o ambiente. ::
-    $ workon [nomedoprojeto]
+
+    $ workon pywatch
 
 Clonando o repositorio do projeto
 ---------------------------------
@@ -40,28 +43,19 @@ Clonando o repositorio do projeto
 Definir uma pasta para conter os projetos:
 code, workspace-django, projetos etc... ::
 
-    $ mkdir ~/Code
-    $ cd ~/Code
-    $ git clone git@github.com:intip/portal-casablanca.git
-    $ cd ~/Code/portal-casablanca/cblanca
-
-Configurando o projeto
-----------------------
-
-Inicializar os submodulos. ::
-
-    $ cd ~/code/portal-casablanca/
-    $ git submodule init
-    $ git submodule update
-
+    $ mkdir ~/workspace-django
+    $ cd ~/workspace-django
+    $ git clone git@github.com:lucassimon/pywatch.com.br.git
+    $ cd pywatch.com.br
 
 Instalando os pacotes do requirements.txt
 -----------------------------------------
 
 
-Pacotes do WebServices. ::
-    $ cd ~/Code/portal-casablanca/cblanca/webservices
-    $ pip install -r requirements.txt
+Pacotes de desenvolvimento. ::
+
+    $ cd workspace-django/pywatch.com.br
+    $ pip install -r requirements/dev.txt
 
 
 Executar o syncdb e fazer as migrações
@@ -69,24 +63,17 @@ Executar o syncdb e fazer as migrações
 
 Primeiro o syncdb. ::
 
-    $ cd ~/code/portal-casablanca/cblanca
-    $ python manage.py syncdb
+    $ cd pywatch.com.br
+    $ python manage.py syncdb --migrate --settings=pywatch.settings.dev
 
-LER ATENTAMENTE O QUE ESTA SENDO PEDIDO
+Segundo, executar as migrates. ::
 
-egundo, executar as migrates. ::
-
-    $ python manage.py migrate --all
-
-LER ATENTAMENTE O QUE ESTA SENDO PEDIDO. SE GERAR ERRO FAZER AS MIGRACOES UMA A UMA.
-
-
+    $ python manage.py migrate --alle --settings=pywatch.settings.dev
 
 Executar o runserver
 --------------------
 
-Execute.::
+Execute. ::
 
-    $ cd ~/code/portal-casablanca/cblanca
-    $ python manage.py runserver
-
+    $ cd pywatch.com.br
+    $ python manage.py runserver --settings=pywatch.settings.dev

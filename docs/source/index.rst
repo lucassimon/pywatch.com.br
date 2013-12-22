@@ -36,7 +36,7 @@ Baixe e instale o PyWatch. ::
 
     git clone git@github.com:lucassimon/pywatch.com.br.git
     cd pywatch.com.br
-    pip install -r pywatch/requirements/dev.txt
+    pip install -r requirements/dev.txt
 
 Sincronize o banco de dados. ::
 

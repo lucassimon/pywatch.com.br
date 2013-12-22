@@ -247,6 +247,7 @@ SETTINGS = PROJECT_DIR.child('pywatch')
 sys.path.append(str(SETTINGS))
 SPEAKERS = PROJECT_DIR.child('speakers')
 sys.path.append(str(PROJECT_DIR))
-from django.core.management import setup_environ
-from settings import base
-setup_environ(base)
+#import ipdb; ipdb.set_trace()
+#from django.core.management import setup_environ
+#from settings import base
+#setup_environ(base)
