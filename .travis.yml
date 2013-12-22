@@ -1,0 +1,18 @@
+language: python
+python:
+  - "2.7"
+env:
+  - DJANGO=1.6 DB=postgres
+before_script:
+  - psql -c 'create database test_pywatch;' -U postgres
+install:
+  - pip install -r requirements/ci.txt --use-mirrors
+script:
+  - mkdir media
+  - python manage.py syncdb --settings=pywatch.settings.ci --noinput
+  - python manage.py migrate --all --settings=pywatch.settings.ci
+  - python manage.py test --settings=pywatch.settings.ci
+notifications:
+  email:
+    recipients:
+      - lucassrod@gmail.com
