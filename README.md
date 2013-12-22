@@ -73,4 +73,4 @@ ROADMAP for 0.1.1
 CHANGELOG
 =========
 
-[LEIA AQUI] (https://github.com/lucassimon/pywatch.com.br/tree/staging/docs/CHANGELOG.md)
+[LEIA AQUI] (https://github.com/lucassimon/pywatch.com.br/blob/master/docs/CHANGELOG.md)
