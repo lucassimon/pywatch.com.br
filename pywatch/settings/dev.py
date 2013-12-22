@@ -79,17 +79,11 @@ DEBUG_TOOLBAR_CONFIG = {
     # method for displaying the toolbar which contains your custom logic.
     # This
     # method should return True or False.
-    'SHOW_TOOLBAR_CALLBACK': None,
 
     # An array of custom signals that might be in your project, defined as
     # the
     # python path to the signal.
     'EXTRA_SIGNALS': [],
-
-    # If set to True (the default) then code in Django itself won't be
-    # shown in
-    # SQL stacktraces.
-    'HIDE_DJANGO_SQL': True,
 
     # If set to True (the default) then a template's context will be
     # included
@@ -98,10 +92,5 @@ DEBUG_TOOLBAR_CONFIG = {
     # have large template contexts, or you have template contexts with lazy
     # datastructures that you don't want to be evaluated.
     'SHOW_TEMPLATE_CONTEXT': True,
-
-    # If set, this will be the tag to which debug_toolbar will attach the
-    # debug
-    # toolbar. Defaults to 'body'.
-    'TAG': 'body',
 }
 ########## END DJANGO-DEBUG-TOOLBAR CONFIGURATION
