@@ -8,6 +8,22 @@ from django.utils.translation import ugettext as _
 from core.models import TimeStampedModel
 
 
+class SpeakerMostRecentCreatedManager(models.Manager):
+    """
+    Manager responsavel por trazer os
+    palestrantes criados recentemente
+    """
+
+    def latest_with_limits(self, limit):
+        """
+        Retorna os ultimos palestrantes
+        de acordo com o limit setado
+        :param limit: Integer seta o limite da busca
+        """
+        self.limit = limit
+        return self.order_by("-created")[:self.limit]
+
+
 class Speaker(TimeStampedModel):
     """
     Classe model para criar um objeto model
@@ -49,6 +65,8 @@ class Speaker(TimeStampedModel):
     Caracteristicas:
     TextField
     """
+
+    objects = SpeakerMostRecentCreatedManager()
 
     class Meta:
         """
