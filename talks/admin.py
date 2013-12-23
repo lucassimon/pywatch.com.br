@@ -25,6 +25,9 @@ class TalkAdmin(admin.ModelAdmin):
 
     inlines = [MediaInline, ]
 
+    # campo slug setado como pre-populado de acordo com o que se digita no nome
+    prepopulated_fields = {'slug': ('title', )}
+
     # campos a serem exibidos na tabela
     list_display = (
         'speaker', 'title', 'summary',
