@@ -9,6 +9,6 @@ urlpatterns = patterns(
     url(
         r'^$',
         SpeakerListView.as_view(),
-        name='speaker-list'
+        name='speaker-list-view'
     )
 )

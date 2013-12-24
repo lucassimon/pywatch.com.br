@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
+from .managers import SpeakerMostRecentCreatedManager
 
 
 class Speaker(TimeStampedModel):
@@ -50,6 +51,8 @@ class Speaker(TimeStampedModel):
     TextField
     """
 
+    objects = SpeakerMostRecentCreatedManager()
+
     class Meta:
         """
         Seta a ordenação da listagem pelo campo `created` ascendente
@@ -81,7 +84,8 @@ class KindContact(models.Model):
 
     speaker = models.ForeignKey(
         'Speaker',
-        verbose_name=_('Palestrante')
+        verbose_name=_('Palestrante'),
+        related_name='contacts'
     )
 
     """
