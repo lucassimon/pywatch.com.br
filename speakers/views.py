@@ -10,6 +10,7 @@ from django.views.generic.list import ListView
 
 # Imports from your apps
 from .models import Speaker
+from .serializers import SpeakerSerializer
 
 
 class SpeakerList(generics.ListCreateAPIView):
@@ -18,6 +19,7 @@ class SpeakerList(generics.ListCreateAPIView):
     palestrantes sejam cadastrados.
     """
     model = Speaker
+    serializer_class = SpeakerSerializer
 
 
 class SpeakerDetail(generics.RetrieveUpdateAPIView):
@@ -26,6 +28,7 @@ class SpeakerDetail(generics.RetrieveUpdateAPIView):
     palestrantes sejam atualizados.
     '''
     model = Speaker
+    serializer_class = SpeakerSerializer
 
 
 class SpeakerListView(ListView):

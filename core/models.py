@@ -75,6 +75,12 @@ class StandardItemStuffModel(models.Model):
     max length: 255
     """
 
+    slug = models.SlugField(
+        verbose_name=_(u'Slug'),
+        unique=True,
+        null=True
+    )
+
     summary = models.TextField(
         verbose_name=_(u'Sumário')
     )

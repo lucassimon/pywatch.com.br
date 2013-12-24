@@ -53,7 +53,7 @@ Funcionalidades
 
 * Escrito em Django
 * CRUD de palestrantes
-* API V1 palestrantes
+* API REST V1 palestrantes
 * CRUD de palestras
 
 Suporte ao Browser
