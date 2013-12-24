@@ -16,13 +16,13 @@
 
                     {{ speaker.bio }}
 
-                    {% if speaker.kindcontact_set.all %}
+                    {% if speaker.contacts.all %}
                         <footer> 
-                            {% for contact in speaker.kindcontact_set.all %}
+                            {% for contact in speaker.contacts.all %}
                                 {% if contact.kind == 'E' %}
                                     <a href="mailto:{{ contact.value }}">{{ contact.value }}</a> - 
                                 {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
-                                    {{ contact.get_kind_display }}: {{ contact.value }} - 
+                                    {{ contact.get_kind_display }}: {{ contact.value }} -
                                 {% else %}
                                     <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> - 
                                 {% endif %}
