@@ -12,3 +12,4 @@ django_nose
 nose
 splinter
 fabric
+sphinx
