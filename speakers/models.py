@@ -6,22 +6,7 @@ from django.utils.translation import ugettext as _
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
-
-
-class SpeakerMostRecentCreatedManager(models.Manager):
-    """
-    Manager responsavel por trazer os
-    palestrantes criados recentemente
-    """
-
-    def latest_with_limits(self, limit):
-        """
-        Retorna os ultimos palestrantes
-        de acordo com o limit setado
-        :param limit: Integer seta o limite da busca
-        """
-        self.limit = limit
-        return self.order_by("-created")[:self.limit]
+from .managers import SpeakerMostRecentCreatedManager
 
 
 class Speaker(TimeStampedModel):
@@ -99,7 +84,8 @@ class KindContact(models.Model):
 
     speaker = models.ForeignKey(
         'Speaker',
-        verbose_name=_('Palestrante')
+        verbose_name=_('Palestrante'),
+        related_name='contacts'
     )
 
     """
