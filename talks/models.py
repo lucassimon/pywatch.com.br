@@ -7,12 +7,15 @@ from django.utils.translation import ugettext as _
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel, StandardItemStuffModel,\
     Media
+from .managers import TalkMostRecentCreatedManager
 
 
 class Talk(TimeStampedModel, StandardItemStuffModel):
     """
     Model responsavel pelos palestrante
     """
+
+    objects = TalkMostRecentCreatedManager()
 
     class Meta:
         ordering = ['created']
@@ -31,8 +34,14 @@ class MediaTalk(Media):
 
     talk = models.ForeignKey(
         'Talk',
-        verbose_name=_(u'Palestras')
+        verbose_name=_(u'Palestras'),
+        related_name='medias'
     )
+
+    """
+    Atributo da classe MediaTalk para referenciar
+    ao objeto da classe Talk
+    """
 
     class Meta:
         ordering = ['created']
