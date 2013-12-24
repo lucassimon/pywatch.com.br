@@ -4,3 +4,37 @@
 Coleção de materiais para aprendizagem em Python incluindo videos, palestras, artigos, slides e muito mais.
 {% endblock meta_description %}
 {% block meta_keywords %} Python, Palestrantes, Tutoriais, Palestras, Screencasts{% endblock meta_keywords %}
+
+{% block content %}
+
+<section>
+    <h2> Últimos palestras cadastradas </h2>
+    {% if most_recent_talks_list %}
+        <ul class="list-unstyled">
+            {% for talk in most_recent_talks_list %}
+                <li> 
+                    {{ talk.title }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma palestra encontrada!!! :(</p>
+    {% endif %}
+</section>
+
+<section>
+    <h2> Últimos palestrantes cadastrados </h2>
+    {% if most_recent_speakers_list %}
+        <ul class="list-unstyled">
+            {% for speaker in most_recent_speakers_list %}
+                <li> 
+                    {{ speaker.name }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum palestrante encontrado!!! :(</p>
+    {% endif %}
+</section>
+
+{% endblock %}
