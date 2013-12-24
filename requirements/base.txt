@@ -10,4 +10,4 @@ dj-database-url
 django-decouple
 djangorestframework
 django-filter
-sphinx
+django-markdown
