@@ -2,9 +2,14 @@
 
 from django.conf.urls import patterns, url
 from speakers.views import SpeakerList, SpeakerDetail
+from .views import api_root
 
 urlpatterns = patterns(
-    'api.views',
+    '',
+    url(
+        r'^$',
+        api_root
+    ),
     url(
         r'^speakers/$',
         SpeakerList.as_view(),
