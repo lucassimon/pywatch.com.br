@@ -21,5 +21,6 @@ def api_root(request, format=None):
     return Response(
         {
             'speakers': reverse('speaker-list', request=request),
+            'talks': reverse('talk-list', request=request),
         }
     )
