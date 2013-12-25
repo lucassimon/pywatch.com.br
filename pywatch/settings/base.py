@@ -39,7 +39,7 @@ STATIC_ROOT = PROJECT_DIR.child('public')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    PROJECT_DIR.child("assets"),
+    PROJECT_DIR.child("assets")
 )
 
 STATICFILES_FINDERS = (
@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'rest_framework',
+    'haystack',
 )
 
 REST_FRAMEWORK = {
@@ -105,6 +106,13 @@ REST_FRAMEWORK = {
         #'rest_framework.authentication.SessionAuthentication',
     ),
 
+}
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+    },
 }
 
 LOGGING = {
