@@ -4,6 +4,13 @@ from decouple import ConfigIni
 import dj_database_url
 
 
+########## DEBUG CONFIGURATION
+DEBUG = True
+
+TEMPLATE_DEBUG = DEBUG
+
+########## END DEBUG CONFIGURATION
+
 config = ConfigIni(PROJECT_DIR.child('confs')+'/settings.ini')
 ########## INSTALLED APPS CONFIGURATION
 
@@ -24,7 +31,7 @@ os.environ['REUSE_DB'] = "1"
 ########## DATABASE CONFIGURATION
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_TEST_URL')
+        default=config('DATABASE_STAGING_URL')
     )
 }
 ########## END DATABASE CONFIGURATION
