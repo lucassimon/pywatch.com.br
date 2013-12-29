@@ -36,3 +36,5 @@ DATABASES = {
     )
 }
 ########## END DATABASE CONFIGURATION
+
+ALLOWED_HOSTS = ['staging-pywatch.lucassimon.com.br', '*.staging-pywatch.lucassimon.com.br', '192.81.211.65']
