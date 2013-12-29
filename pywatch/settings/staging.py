@@ -17,6 +17,7 @@ config = ConfigIni(PROJECT_DIR.child('confs')+'/settings.ini')
 INSTALLED_APPS += (
     'django_nose',
     'nose',
+    'gunicorn',
 )
 
 ########## TEST SETTINGS
