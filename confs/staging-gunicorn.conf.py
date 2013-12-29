@@ -1,6 +1,6 @@
 import os
 
-bind = "127.0.0.1:8000"
+bind = "127.0.0.1:9002"
 workers = (os.sysconf("SC_NPROCESSORS_ONLN") * 2) + 1
 loglevel = "error"
 pidfile = "/home/pywatch/run/staging-pywatch-site.pid"
