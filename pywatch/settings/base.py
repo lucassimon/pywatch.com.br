@@ -39,7 +39,7 @@ STATIC_ROOT = PROJECT_DIR.child('public')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    PROJECT_DIR.child("assets")
+    PROJECT_DIR.child("assets"),
 )
 
 STATICFILES_FINDERS = (
