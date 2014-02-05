@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %} Palestras {% endblock title %}
+{% block meta_description %} Listagem de palestras feitas pela comunidade Python. {% endblock meta_description %}
+{% block meta_keywords %} Palestras, Comunidade, Python {% endblock meta_keywords %}
+
+
+{% block content %}
+<h1> Palestras </h1>
+    {% if talk_list %}
+        <section>
+            {% for talk in talk_list %}
+                <article>
+                    <header>
+                        <h2 id="{{talk.slug}}"> {{ talk.title }} </h2>
+                        <h3>  {{ talk.speaker.name }} </h3>
+                    </header>
+                    {{ talk.summary }}
+                    {% if talk.medias.all %}
+                        <footer> 
+                            {% for media in talk.medias.all %}
+                                <a href="{{ media.url }}">{{ media.title }}</a> - 
+                            {% endfor %}
+                        </footer>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </section>
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="/palestras?page={{ page_obj.previous_page_number }}">
+                            anterior
+                        </a>
+                    {% endif %}
+                    <span class="page-current">
+                        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="/palestras?page={{ page_obj.next_page_number }}">
+                            próximo
+                        </a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Nenhuma palestra encontrada!!! :(</p>
+    {% endif %}
+{% endblock %}

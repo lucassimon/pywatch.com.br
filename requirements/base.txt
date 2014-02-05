@@ -11,3 +11,6 @@ django-decouple
 djangorestframework
 django-filter
 django-markdown
+django-haystack
+pysolr
+requests

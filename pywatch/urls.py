@@ -21,6 +21,13 @@ urlpatterns = patterns(
             namespace='speakers'
         )
     ),
+    url(
+        r'^palestras/',
+        include(
+            'talks.urls',
+            namespace='talks'
+        )
+    ),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/v1/', include('api.urls')),

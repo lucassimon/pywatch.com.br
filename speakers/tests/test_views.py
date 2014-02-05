@@ -28,7 +28,7 @@ class SpeakerListViewTest(TestCase):
         Inicializa os testes
         """
         self.response = self.client.get(
-            reverse('speakers:speaker-list')
+            reverse('speakers:speaker-list-view')
         )
 
     def test_response_200_on_get(self):
