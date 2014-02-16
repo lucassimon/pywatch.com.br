@@ -34,7 +34,7 @@ MEDIA_ROOT = PROJECT_DIR.child('media')
 
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = PROJECT_DIR.child('public')
+STATIC_ROOT = PROJECT_DIR.child('static')
 
 STATIC_URL = '/static/'
 
