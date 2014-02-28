@@ -110,8 +110,8 @@ REST_FRAMEWORK = {
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://127.0.0.1:8983/solr'
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': PROJECT_DIR + 'whoosh_index',
     },
 }
 
