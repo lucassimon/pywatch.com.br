@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Palestras {% endblock title %}
+{% block meta_description %} {% endblock meta_description %}
+{% block meta_keywords %} {% endblock meta_keywords %}
+
+
+{% block content %}
+<article>
+    <header>
+        <h1> {{ object.title }} </h1>
+        <h2>  {{ object.speaker.name }} </h2>
+    </header>
+    {{ object.summary }}
+    {% if object.medias.all %}
+    <footer> 
+        {% for media in object.medias.all %}
+        <a href="{{ media.url }}">{{ media.title }}</a> - 
+        {% endfor %}
+    </footer>
+    {% endif %}
+</article>
+
+{% endblock %}
