@@ -68,7 +68,15 @@ ROADMAP for 0.1.1
 
 [ ] Melhorar a homepage
 
-[ ] Criar a listagem de palestras
+[X] Criar a listagem de palestras
+
+[X] Criar a listagem de palestrantes
+
+[X] Criar a detalhes de palestras
+
+[X] Criar a listagem de palestrantes
+
+[X] Criar pesquisa de palestras com django-haystack e whoosh
 
 [ ] Melhorar o layout de listagem de palestras e palestrantes
 
