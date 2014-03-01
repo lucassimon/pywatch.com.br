@@ -11,7 +11,11 @@
             {% for speaker in speaker_list %}
                 <article>
                     <header>
-                        <h2 id="{{speaker.slug}}">  {{ speaker.name }} </h2>
+                        <h2 id="{{speaker.slug}}"> 
+                            <a href="{% url 'speakers:speaker-detail-view' slug=speaker.slug %}">
+                                {{ speaker.name }}
+                            </a>
+                        </h2>
                     </header>
                     {{ speaker.bio }}
                     {% if speaker.contacts.all %}
