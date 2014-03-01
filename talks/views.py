@@ -5,6 +5,7 @@
 # Core Django imports
 from rest_framework import generics
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 # Third-party app imports
 
@@ -68,3 +69,20 @@ class TalkListView(ListView):
             .select_related('MediaTalk')
             .order_by('title')
         )
+
+
+class TalkDetailView(DetailView):
+    """
+    Classe responsavel por gerar o detalhe
+    da palestra
+    """
+
+    model = Talk
+    """
+    Define o model a ser atribuido
+    """
+
+    template_name = "talk_detail.html"
+    """
+    Define o nome do template a ser utilizado
+    """
