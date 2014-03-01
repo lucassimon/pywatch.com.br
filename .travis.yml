@@ -19,6 +19,7 @@ install:
 script:
   - mkdir media
   - python manage.py syncdb --settings=pywatch.settings.ci --noinput
+  - python manage.py migrate taggit --settings=pywatch.settings.ci
   - python manage.py migrate --all --settings=pywatch.settings.ci
   - python manage.py test --settings=pywatch.settings.ci
 notifications:
