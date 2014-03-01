@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'rest_framework',
     'haystack',
+    'taggit',
 )
 
 REST_FRAMEWORK = {
