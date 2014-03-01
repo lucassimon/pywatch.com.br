@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-{% block title %} Palestras {% endblock title %}
-{% block meta_description %} {% endblock meta_description %}
-{% block meta_keywords %} {% endblock meta_keywords %}
+{% block title %} Palestra - {{ object.title }} {% endblock title %}
+{% block meta_description %}{{ object.summary|truncatewords:20 }}{% endblock meta_description %}
+{% block meta_keywords %}{{ object.tags.all|safeseq|join:", " }}{% endblock meta_keywords %}
 
 
 {% block content %}
 <article>
     <header>
         <h1> {{ object.title }} </h1>
-        <h2>  {{ object.speaker.name }} </h2>
+        <h2> {{ object.speaker.name }} </h2>
     </header>
     {{ object.summary }}
     {% if object.medias.all %}
