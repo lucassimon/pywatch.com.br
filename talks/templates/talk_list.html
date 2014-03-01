@@ -11,7 +11,11 @@
             {% for talk in talk_list %}
                 <article>
                     <header>
-                        <h2 id="{{talk.slug}}"> {{ talk.title }} </h2>
+                        <h2 id="{{talk.slug}}">
+                            <a href="{% url 'talks:talk-detail-view' slug=talk.slug %}">
+                                {{ talk.title }}
+                            </a>
+                        </h2>
                         <h3>  {{ talk.speaker.name }} </h3>
                     </header>
                     {{ talk.summary }}
