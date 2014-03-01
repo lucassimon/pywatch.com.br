@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 # Realative imports of the 'app-name' package
+from taggit.managers import TaggableManager
 
 
 class TimeStampedModel(models.Model):
@@ -91,6 +92,15 @@ class StandardItemStuffModel(models.Model):
     Caracteristicas:
     TextField
     verbose name: Sumário
+    """
+
+    tags = TaggableManager()
+    """
+    Atributo da classe StandardItemStuffModel para
+    setar as tags através do pacote django-taggit
+
+    Caracteristicas:
+    ManyToMany
     """
 
     class Meta:
