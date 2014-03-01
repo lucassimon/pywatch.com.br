@@ -12,5 +12,6 @@ djangorestframework
 django-filter
 django-markdown
 django-haystack
-pysolr
 requests
+django-taggit
+whoosh

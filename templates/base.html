@@ -13,7 +13,7 @@
         <!-- Mobile Metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <meta name="description" content="Pywatch - {% block meta_description %} A sua biblioteca digital em Python {% endblock %}">
+        <meta name="description" content="{% block meta_description %} Pywatch - A sua biblioteca digital em Python {% endblock %}">
         <meta name="keyworkds" content="{% block meta_keywords %}{% endblock %}">
         <meta name="author" content="Lucas Simon Rodrigues Magalhaes">
         
@@ -70,16 +70,16 @@
                     <!--<ul class="nav navbar-nav">-->
                         <!--<li><a href="http://twitter.com/emberwatch"><i class="fa fa-twitter"></i> &nbsp;@pywatch</a></li>-->
                     <!--</ul>-->
-                    <!--<div class="col-lg-4 pull-right">-->
-                        <!--<form class="navbar-form navbar-right" role="form">-->
-                            <!--<div class="input-group">-->
-                                <!--<input name="q" type="text" placeholder="Buscar" class="form-control">-->
-                                <!--<span class="input-group-btn">-->
-                                    <!--<button class="btn btn-default" type="submit">Buscar!</button>-->
-                                <!--</span>-->
-                            <!--</div>-->
-                        <!--</form>-->
-                    <!--</div>-->
+                    <div class="col-lg-4 pull-right">
+                        <form class="navbar-form navbar-right" role="form" action="{% url 'haystack_search' %}">
+                            <div class="input-group">
+                                <input name="q" type="text" placeholder="" class="form-control">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Buscar!</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
                 </div><!--/.nav-collapse -->
             </div>
         </div>
@@ -107,7 +107,6 @@
 
         <footer id="footerwrap">
             <div class="container"> 
-                <a href="#main-menu" class="scrolltop" style="display: inline;">Top</a>
                 <div class="span12 text-center">
                     <p>Desenvolvido com <span>Django</span> por Lucas Simon Rodrigues Magalhães</p>
                 </div>

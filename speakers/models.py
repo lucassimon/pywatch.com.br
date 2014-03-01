@@ -3,6 +3,7 @@
 # Core Django imports
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
@@ -42,6 +43,9 @@ class Speaker(TimeStampedModel):
 
     bio = models.TextField(
         verbose_name=_(u'Biográfia'),
+        blank=True,
+        null=True,
+        default=''
     )
     """
     Atributo da classe Speaker para setar a biografria
@@ -52,6 +56,15 @@ class Speaker(TimeStampedModel):
     """
 
     objects = SpeakerMostRecentCreatedManager()
+
+    def get_absolute_url(self):
+        """
+        Retorna o caminho absoluto da instancia
+        do objeto, através do reverse
+        usando namespace definido no arquivo
+        urls.py
+        """
+        return reverse('speakers:speaker-detail-view', args=[self.slug])
 
     class Meta:
         """

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %} Palestrante - {{ object.name }} {% endblock title %}
+{% block meta_description %}{{ object.bio|truncatewords:20 }}{% endblock meta_description %}
+{% block meta_keywords %}{% endblock meta_keywords %}
+
+
+{% block content %}
+<article>
+    <header>
+        <h1> {{ object.name }} </h1>
+    </header>
+    {{ object.bio }}
+
+    {% if object.talk_set.all %}
+        <section>
+            <h2> Palestras relacionadas </h2>
+            <ul class="list-unstyled">
+                {% for talk in object.talk_set.all %}
+                    <li>
+                        <a href="{% url 'talks:talk-detail-view' slug=talk.slug %}">
+                            {{ talk.title }}
+                        </a>
+                    </li>    
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    {% if object.contacts.all %}
+    <footer> 
+        <h3> Contatos </h3>
+        {% for contact in objects.contacts.all %}
+            {% if contact.kind == 'E' %}
+                <a href="mailto:{{ contact.value }}">{{ contact.value }}</a> - 
+            {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
+                {{ contact.get_kind_display }}: {{ contact.value }} -
+            {% else %}
+                <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> - 
+            {% endif %}
+        {% endfor %}
+    </footer>
+    {% endif %}
+</article>
+
+{% endblock %}

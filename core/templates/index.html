@@ -13,7 +13,9 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
         <ul class="list-unstyled">
             {% for talk in most_recent_talks_list %}
                 <li> 
-                    {{ talk.title }}
+                    <a href="{% url 'talks:talk-detail-view' slug=talk.slug %}"> 
+                        {{ talk.title }}
+                    </a>
                 </li>
             {% endfor %}
         </ul>
@@ -28,7 +30,9 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
         <ul class="list-unstyled">
             {% for speaker in most_recent_speakers_list %}
                 <li> 
-                    {{ speaker.name }}
+                    <a href="{% url 'speakers:speaker-detail-view' slug=speaker.slug %}"> 
+                        {{ speaker.name }}
+                    </a>
                 </li>
             {% endfor %}
         </ul>

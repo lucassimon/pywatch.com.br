@@ -2,7 +2,7 @@
 
 from django.conf.urls import patterns, url
 
-from .views import TalkListView
+from .views import TalkListView, TalkDetailView
 
 urlpatterns = patterns(
     'talks.views',
@@ -10,5 +10,10 @@ urlpatterns = patterns(
         r'^$',
         TalkListView.as_view(),
         name='talk-list-view'
+    ),
+    url(
+        r'^(?P<slug>[-_\w]+)/$',
+        TalkDetailView.as_view(),
+        name='talk-detail-view'
     )
 )
