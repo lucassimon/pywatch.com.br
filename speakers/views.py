@@ -5,6 +5,7 @@
 # Core Django imports
 from rest_framework import generics
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 # Third-party app imports
 
@@ -70,3 +71,24 @@ class SpeakerListView(ListView):
             .select_related('KindContact')
             .order_by('name')
         )
+
+
+class SpeakerDetailView(DetailView):
+    """
+    Classe responsavel por gerar o detalhe
+    da palestra
+    """
+
+    model = Speaker
+    """
+    Define o model a ser atribuido
+    """
+
+    template_name = "speaker_detail.html"
+    """
+    Define o nome do template a ser utilizado
+    """
+
+    def get_context_data(self, **kwargs):
+        context = super(SpeakerDetailView, self).get_context_data(**kwargs)
+        return context
