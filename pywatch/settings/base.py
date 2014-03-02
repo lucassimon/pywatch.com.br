@@ -112,7 +112,7 @@ REST_FRAMEWORK = {
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': PROJECT_DIR + 'whoosh_index',
+        'PATH': PROJECT_DIR + '/whoosh_index',
     },
 }
 
