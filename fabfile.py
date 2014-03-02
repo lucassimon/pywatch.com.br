@@ -5,203 +5,101 @@ Starter fabfile for deploying the {{ project_name }} project.
 
 Change all the things marked CHANGEME. Other things can be left at their
 defaults if you are happy with the default layout.
+
+1 - Entrar no projeto
+2 - Ativar virtualenv
+3 - git pull no repositorio
+4 - Instalar requirements de producao/staging
+5 - Executar as migrates OBS executar migrate do taggit antes
+6 - Executar o collect static
+6 - restart no supervisor
+7 - restart no nginx
 """
 
-import posixpath
-
-from fabric.api import run, local, env, settings, cd, task, sudo
+from fabric.api import run, env,  cd, task, sudo
 from fabric.contrib.files import exists
-from fabric.operations import _prefix_commands, _prefix_env_vars
 from fabric.colors import green, red
 #from fabric.decorators import runs_once
-#from fabric.context_managers import cd, lcd, settings, hide
-
+from fabric.context_managers import shell_env
 # CHANGEME
-env.hosts = ['pywatch@192.81.211.65']
-env.project_name = 'pywatch'
-#env.shell = '/bin/zsh -c'
-#env.code_dir = '/srv/www/{{ project_name }}'
-#env.project_dir = '/srv/www/{{ project_name }}/{{ project_name }}'
-#env.static_root = '/srv/www/{{ project_name }}/static/'
-#env.virtualenv = '/srv/www/{{ project_name }}/.virtualenv'
-env.git_repo = 'git@github.com:lucassimon/pywatch.com.br.git'
-#env.django_settings_module = '{{ project_name }}.settings'
 
-# Python version
-PYTHON_BIN = "python2.7"
-PYTHON_PREFIX = ""  # e.g. /usr/local  Use "" for automatic
-PYTHON_FULL_PATH = "%s/bin/%s" % (PYTHON_PREFIX, PYTHON_BIN) if PYTHON_PREFIX else PYTHON_BIN
+if not hasattr(env, 'server'):
+    print(green('Server de Produção'))
+    env.server = u'production'
+    env.hosts = ['pywatch@107.170.42.37:52022']
+    env.project_name = u'pywatch'
+    env.shell = u'/bin/zsh -c'
+    env.code_dir = u'~/sites/pywatch.com.br'
+    env.git_repo = u'git@github.com:lucassimon/pywatch.com.br.git'
+    env.settings = u'--settings=pywatch.settings.production'
+    env.virtualenv = u'~/venvs/pywatch.com.br/'
+    env.python_bin = env.virtualenv + 'bin/python'
+    env.pip_bin = env.virtualenv + 'bin/pip'
+    env.webserver = u'nginx'
+elif env.server == 'staging':
+    print(green('Server de Staging'))
+    env.server = 'staging'
 
-# Set to true if you can restart your webserver (via wsgi.py), false to stop/start your webserver
-# CHANGEME
-DJANGO_SERVER_RESTART = False
+
+def print_env_and_user():
+    """
+    Print the envirioment and user
+    """
+    print(red("Executing on %s as %s" % (env.host, env.user)))
+
+
+def django_manage(command='help', virtualenv='pywatch.com.br', settings=env.settings):
+    return "/bin/bash -l -c 'source /usr/local/bin/virtualenvwrapper.sh && workon " + virtualenv + " && " + env.python_bin + " " + env.code_dir + "/manage.py " + command + " " + settings + "'"
+
+
+def git(cmd):
+    with cd(env.code_dir):
+        run("git %s" % cmd)
+
+
+def checkout_master():
+    git("checkout master")
+
+
+def pull():
+    git("pull --rebase")
+
+
+def restart():
+    sudo("supervisorctl restart pywatch:gunicorn_pywatch_com_br")
+    sudo("service %s restart" % env.webserver)
+
+
+def start():
+    sudo("supervisorctl start pywatch:gunicorn_pywatch_com_br")
+    sudo("service %s restart" % env.webserver)
+
+
+def stop():
+    sudo("supervisorctl stop pywatch:gunicorn_pywatch_com_br")
+
+
+def install_requirements():
+    with cd(env.code_dir):
+        run("%s install -M -r requirements/"+env.server+".txt" % env.pip_bin)
+
+
+def collectstatic():
+    with shell_env(WORKON_HOME='~/venvs'):
+        run(django_manage(command='collectstatic -l --noinput'))
 
 
 @task
 def uname():
     """ Prints information about the host. """
-    run("uname -a")
+    #print_env_and_user()
+    #run("uname -a")
+    #checkout_master()
+    with shell_env(WORKON_HOME='~/venvs'):
+        run(django_manage())
 
 
 @task
-def first_deployment_mode():
-    """
-    Use before first deployment to switch on fake south migrations.
-    """
-    env.initial_deploy = True
-    print(green("Primeiro deploy......."))
-
-    run_aptitude_update_and_upgrade()
-
-    install_initial_packages()
-
-    setup_git()
-
-    boost_power_vim()
-
-    #boost_power_shell_zsh()
-
-    install_pip_packages()
-
-    create_directories()
-
-    print(red('Insira a chave publica gerada em .ssh/id_rsa.pub no github'))
-    input('Pressione uma tecla para continuar')
-
-    #create_staging()
-
-
-@task
-def run_aptitude_update_and_upgrade():
-    """
-    Run aptitude update and aptitude upgrade
-    """
-    print(green("Atualizando a lista de pacotes"))
-    sudo('aptitude update')
-
-    print(green("Atualizando pacotes do sistema"))
-    sudo('aptitude safe-upgrade -y')
-
-
-@task
-def install_initial_packages():
-    """
-    Install the core packages of the system
-    """
-    run_aptitude_update_and_upgrade()
-    print(green("Instala pacotes do ambiente django"))
-    sudo('aptitude install build-essential libpq-dev git git-core python-dev \
-python-setuptools python-virtualenv python-psycopg2 python-pip \
-python-software-properties vim zsh ntp ntpdate openssl xclip \
-exuberant-ctags vim-gnome nginx supervisor -y')
-
-
-@task
-def install_pip_packages():
-    """
-    Install flake8 and virtualenvwrapper
-    """
-    print(green("Instalando o flake8 e virtualenvwrapper"))
-    sudo('pip install flake8 virtualenvwrapper')
-    run("echo 'source /usr/local/bin/virtualenvwrapper.sh' >> .zshrc ")
-    run("echo 'export WORKON_HOME=$HOME/venvs' >> .zshrc ")
-    run("source .zshrc ")
-
-
-@task
-def setup_git():
-    """
-    Setup and generate ssh-keygen
-    """
-    print(green('Baixando o arquivo .gitconfig'))
-    run('wget --no-check-certificate https://gist.github.com/lucassimon/6224006/raw/175ac76748c067ed92a89d5add3e23dccda85cae/.gitconfig')
-    run('ssh-keygen -t rsa -C "lucassrod@gmail.com"')
-
-
-@task
-def boost_power_vim():
-    """
-    Boost power of vim
-    """
-    print(green("Bombando o vim"))
-    run('curl https://raw.github.com/lerrua/vimfiles/master/bootstrap.sh -o- | sh')
-
-
-@task
-def upgrade_bundle_vim():
-    """
-    Upgrade packages of vim
-    """
-    print(green("Atualizando os pacotes do Bundle"))
-    with cd('$HOME/.vim/'):
-        run('git pull')
-        run('vim +BundleUpdate +qall')
-        run('pwd')
-
-    with cd('$HOME'):
-        print(green("Atualizado"))
-
-
-@task
-def boost_power_shell_zsh():
-    """
-    Boost power of shell
-    """
-    print(green("Bombando o shell"))
-    run('curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh')
-    sudo('chsh -s /bin/zsh')
-
-
-@task
-def create_directories():
-    """
-    Create directories
-    """
-    print(green("Criando os diretorios"))
-    run('mkdir run venvs sites')
-    run('mkdir -p logs/{gunicorn,nginx,supervisor}')
-    sudo('chgrp www-data logs/nginx')
-    sudo('chmod -R 775 logs/nginx')
-
-
-@task
-def create_staging():
-    """
-    Create staging app
-    """
-    print(green("Criando ambiente virtual staging"))
-    run('export WORKON_HOME=$HOME/venvs')
-    run('source /usr/local/bin/virtualenvwrapper.sh && mkvirtualenv --system-site-packages staging-%s' % env.project_name)
-    with cd('$HOME/sites'):
-        run('git clone %s staging-%s' % (env.git_repo, env.project_name))
-
-    with cd('$HOME/sites/staging-%s' % (env.project_name)):
-        run('git checkout -b staging origin/staging')
-        install_dependencies('staging')
-
-
-@task
-def install_dependencies(branch=None):
-    """
-    Install dependencies by branch
-    """
-    with cd('$HOME'):
-        print(green("Instalando as dependencias"))
-    print(branch)
-    print(type(branch))
-    print(branch == 'staging')
-    if branch is None:
-        return 0
-    elif branch == 'staging':
-        print('bucetaaaaaa')
-        run('export WORKON_HOME=$HOME/venvs')
-        run('source /usr/local/bin/virtualenvwrapper.sh && workon staging-%s' % env.project_name)
-        with cd('$HOME/sites/staging-%s' % (env.project_name)):
-            run('pip install -r requirements/dev.txt --upgrade')
-    elif branch is 'master':
-        run('export WORKON_HOME=$HOME/venvs')
-        run('source /usr/local/bin/virtualenvwrapper.sh && workon staging-%s' % env.project_name)
-        with cd('$HOME/sites/%s' % (env.project_name)):
-            run('pip install -r requirements/production.txt --upgrade')
-    else:
-        return 0
+def deploy():
+    """ Deploy the application """
+    pull()
