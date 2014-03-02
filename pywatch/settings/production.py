@@ -3,7 +3,7 @@ from decouple import ConfigIni
 import dj_database_url
 
 
-config = ConfigIni(PROJECT_DIR.child('confs')+'/settings.ini')
+config = ConfigIni(PROJECT_DIR.child('confs')+'/settings-production.ini')
 
 ##########  MAILTRAP CONFIGURATION
 
