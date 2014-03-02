@@ -11,7 +11,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ########## END DEBUG CONFIGURATION
 
-config = ConfigIni(PROJECT_DIR.child('confs')+'/settings.ini')
+config = ConfigIni(PROJECT_DIR.child('confs')+'/settings-staging.ini')
 ########## INSTALLED APPS CONFIGURATION
 
 INSTALLED_APPS += (
@@ -47,4 +47,4 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 
 ##########  END MAILTRAP CONFIGURATION
 
-ALLOWED_HOSTS = ['staging-pywatch.lucassimon.com.br', '*.staging-pywatch.lucassimon.com.br', '192.81.211.65']
+ALLOWED_HOSTS = ['*']
