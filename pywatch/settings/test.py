@@ -17,7 +17,14 @@ TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
 TEST_DISCOVER_TOP_LEVEL = PROJECT_DIR
 TEST_DISCOVER_ROOT = PROJECT_DIR
 TEST_DISCOVER_PATTERN = "test_*"
-NOSE_ARGS = ['--verbosity=2', '-x', '-d']
+NOSE_ARGS = [
+    '--verbosity=2',
+    '-x',
+    '-d',
+    '--with-specplugin',
+    '--with-xtraceback',
+    '--with-progressive',
+]
 os.environ['REUSE_DB'] = "1"
 ########## END TEST SETTINGS
 
