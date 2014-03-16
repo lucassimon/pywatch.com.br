@@ -14,3 +14,7 @@ splinter
 fabric
 sphinx
 Whoosh
+spec
+django-webtest
+nose-progressive
+xtraceback
