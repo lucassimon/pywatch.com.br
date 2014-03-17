@@ -13,6 +13,7 @@ INSTALLED_APPS += (
 )
 
 ########## TEST SETTINGS
+os.environ['REUSE_DB'] = "1"
 TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
 TEST_DISCOVER_TOP_LEVEL = PROJECT_DIR
 TEST_DISCOVER_ROOT = PROJECT_DIR
@@ -25,7 +26,6 @@ NOSE_ARGS = [
     '--with-xtraceback',
     '--with-progressive',
 ]
-os.environ['REUSE_DB'] = "1"
 ########## END TEST SETTINGS
 
 ########## DEBUG CONFIGURATION
