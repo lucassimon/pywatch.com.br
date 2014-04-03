@@ -13,4 +13,3 @@ nose
 splinter
 fabric
 sphinx
-Whoosh
