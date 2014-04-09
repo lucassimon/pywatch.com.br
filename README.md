@@ -32,6 +32,10 @@ Exemplos para contribuir inclui:
 * Melhorar a documentação
 * Reportar bugs
 
+Para contribuir por favor crie um branch como exemplo, dev_lucas e faça os commits nele.
+
+Testes sempre!
+
 Executando um exemplo
 =====================
 
@@ -53,7 +57,9 @@ Baixe e instale o PyWatch.
 Sincronize o banco de dados.
 
     cd pywatch.com.br
-    python manage.py syncdb --migrate --settings=pywatch.settings.dev
+    python manage.py syncdb --settings=pywatch.settings.dev
+    python manage.py migrate taggit --settings=pywatch.settings.dev
+    python manage.py migrate --all --settings=pywatch.settings.dev
 
 
 Execute o PyWatch.
@@ -61,6 +67,23 @@ Execute o PyWatch.
     cd pywatch.com.br
     python manage.py runserver --settings=pywatch.settings.dev
 
+Executando os testes
+====================
+
+Crie um banco de dados chamado test_pywatch
+
+Sincronize o banco de dados.
+
+    cd pywatch.com.br
+    python manage.py syncdb --settings=pywatch.settings.test
+    python manage.py migrate taggit --settings=pywatch.settings.test
+    python manage.py migrate --all --settings=pywatch.settings.test
+
+
+Execute o PyWatch.
+
+    cd pywatch.com.br
+    python manage.py test --settings=pywatch.settings.test
 
 
 ROADMAP for 0.1.1
