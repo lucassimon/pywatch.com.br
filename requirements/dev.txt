@@ -15,5 +15,6 @@ fabric
 sphinx
 spec
 django-webtest
+webtest
 nose-progressive
 xtraceback
