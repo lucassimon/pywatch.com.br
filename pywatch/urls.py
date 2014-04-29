@@ -42,6 +42,13 @@ urlpatterns = patterns(
     url(r'^search/', include('haystack.urls')),
 
     url(r'^accounts/', include('allauth.urls')),
+
+    #url(
+        #r'^accounts/profile/',
+        #include(
+            #'dashboard.urls'
+        #)
+    #),
 )
 
 
