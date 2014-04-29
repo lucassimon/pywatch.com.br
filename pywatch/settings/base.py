@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'core',
     'speakers',
     'talks',
+    'screencasts',
 
     'south',
     'django_extensions',
