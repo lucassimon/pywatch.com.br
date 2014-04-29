@@ -129,9 +129,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "allauth.socialaccount.context_processors.socialaccount",
 )
 
-UTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
