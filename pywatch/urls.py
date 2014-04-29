@@ -40,6 +40,8 @@ urlpatterns = patterns(
     url(r'^api/v1/', include('api.urls')),
 
     url(r'^search/', include('haystack.urls')),
+
+    url(r'^accounts/', include('allauth.urls')),
 )
 
 
