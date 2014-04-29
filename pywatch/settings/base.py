@@ -89,6 +89,10 @@ INSTALLED_APPS = (
     'rest_framework',
     'haystack',
     'taggit',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
 )
 
 REST_FRAMEWORK = {
@@ -116,6 +120,21 @@ HAYSTACK_CONNECTIONS = {
         'PATH': PROJECT_DIR + '/whoosh_index',
     },
 }
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # Required by allauth template tags
+    "django.core.context_processors.request",
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+)
+
+UTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 
 LOGGING = {
     'version': 1,
