@@ -28,6 +28,13 @@ urlpatterns = patterns(
             namespace='talks'
         )
     ),
+    url(
+        r'^screencasts/',
+        include(
+            'screencasts.urls',
+            namespace='screencasts'
+        )
+    ),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/v1/', include('api.urls')),
