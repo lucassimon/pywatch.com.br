@@ -11,7 +11,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel, StandardItemStuffModel,\
     Media
-from .managers import TalkMostRecentCreatedManager
+from .managers import TalkManager
 
 
 class Event(TimeStampedModel):
@@ -80,7 +80,7 @@ class Talk(TimeStampedModel, StandardItemStuffModel):
     verbose name: Evento
     """
 
-    objects = TalkMostRecentCreatedManager()
+    objects = TalkManager()
 
     def get_absolute_url(self):
         """
