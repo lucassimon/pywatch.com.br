@@ -18,4 +18,3 @@ django-webtest
 webtest
 nose-progressive
 xtraceback
-webtest
