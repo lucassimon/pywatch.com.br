@@ -70,6 +70,8 @@ TEMPLATE_DIRS = (
     PROJECT_DIR.child("templates"),
 )
 
+AUTH_USER_MODEL = 'speakers.SpeakerUser'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
