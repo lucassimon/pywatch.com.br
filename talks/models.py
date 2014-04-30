@@ -36,6 +36,7 @@ class Event(TimeStampedModel):
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
+        max_length=255,
         unique=True,
         null=True
     )
