@@ -4,6 +4,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
@@ -15,6 +16,8 @@ class Speaker(TimeStampedModel):
     Classe model para criar um objeto model
     de palestrante.
     """
+
+    user = models.OneToOneField("auth.User")
 
     name = models.CharField(
         verbose_name=_(u'Nome'),
@@ -30,6 +33,8 @@ class Speaker(TimeStampedModel):
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
+        db_index=True,
+        max_length=255,
         unique=True
     )
     """
@@ -38,6 +43,19 @@ class Speaker(TimeStampedModel):
 
     Caracteristicas:
     max length: 255
+    index: True
+    unique: True
+    """
+
+    email = models.EmailField(
+        verbose_name=_(u'Email'),
+        unique=True
+    )
+    """
+    Atributo da classe Speaker para setar o email
+    do palestrante.
+
+    Caracteristicas:
     unique: True
     """
 
