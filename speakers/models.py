@@ -4,25 +4,37 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
-from .managers import SpeakerMostRecentCreatedManager
+from .managers import SpeakerManager
 
 
-class Speaker(TimeStampedModel):
+class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     """
     Classe model para criar um objeto model
     de palestrante.
     """
 
-    name = models.CharField(
-        verbose_name=_(u'Nome'),
-        max_length=255
+    first_name = models.CharField(
+        verbose_name=_(u'Primeiro Nome'),
+        max_length=100
     )
     """
-    Atributo da classe Speaker para setar o nome
+    Atributo da classe Speaker para setar o primeiro nome
+    do palestrante.
+
+    Caracteristicas:
+    max length: 255
+    """
+
+    last_name = models.CharField(
+        verbose_name=_(u'Último Nome'),
+        max_length=100
+    )
+    """
+    Atributo da classe Speaker para setar o último nome
     do palestrante.
 
     Caracteristicas:
@@ -72,7 +84,52 @@ class Speaker(TimeStampedModel):
     TextField
     """
 
-    objects = SpeakerMostRecentCreatedManager()
+    is_admin = models.BooleanField(
+        verbose_name=_(u'Administrador'),
+        default=False,
+        help_text=_(u'Designa este usuário como administrador.')
+    )
+    """
+    Atributo da classe Speaker para
+    setar o palestrante como administrador.
+
+    Caracteristicas:
+    BooleanField
+    Default: False
+    """
+
+    is_staff = models.BooleanField(
+        verbose_name=_(u'staff status'),
+        default=False,
+        help_text=_(u'Designa este usuário logue no site admin.')
+    )
+    """
+    Atributo da classe Speaker para
+    setar o palestrante como manager.
+
+    Caracteristicas:
+    BooleanField
+    Default: False
+    """
+
+    is_active = models.BooleanField(
+        verbose_name=_(u'active'),
+        default=True,
+        help_text=_(u'Designa este usuário como ativo.')
+    )
+    """
+    Atributo da classe Speaker para
+    setar o palestrante como usuario ativo.
+
+    Caracteristicas:
+    BooleanField
+    Default: True
+    """
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = SpeakerManager()
 
     def get_absolute_url(self):
         """
@@ -82,6 +139,23 @@ class Speaker(TimeStampedModel):
         urls.py
         """
         return reverse('speakers:speaker-detail-view', args=[self.slug])
+
+    def get_full_name(self):
+        """
+        Retorna o primeiro nome mais o ultimo nome, com
+        um espaço entre eles
+        """
+        full_name = u'%s %s' % (
+            self.first_name,
+            self.last_name
+        )
+        return full_name.strip()
+
+    def get_short_name(self):
+        """
+        Retorna somente o primeiro nome
+        """
+        return u'%s' % (self.first_name)
 
     class Meta:
         """
