@@ -17,8 +17,6 @@ class Speaker(TimeStampedModel):
     de palestrante.
     """
 
-    user = models.OneToOneField("auth.User")
-
     name = models.CharField(
         verbose_name=_(u'Nome'),
         max_length=255
@@ -49,7 +47,8 @@ class Speaker(TimeStampedModel):
 
     email = models.EmailField(
         verbose_name=_(u'Email'),
-        unique=True
+        unique=True,
+        db_index=True,
     )
     """
     Atributo da classe Speaker para setar o email
