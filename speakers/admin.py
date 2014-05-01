@@ -26,18 +26,18 @@ class SpeakerAdmin(admin.ModelAdmin):
     inlines = [ContactInline, ]
 
     # campo slug setado como pre-populado de acordo com o que se digita no nome
-    prepopulated_fields = {'slug': ('name', )}
+    prepopulated_fields = {'slug': ('first_name', 'last_name')}
 
     # campos a serem exibidos na tabela
     list_display = (
-        'name', 'slug', 'bio',
+        'first_name', 'last_name', 'slug', 'bio',
         'created'
     )
 
     date_hierarchy = 'created'
 
     # campos que utilizam buscas no model
-    search_fields = ('name', 'slug', 'created', )
+    search_fields = ('first_name', 'slug', 'created', )
 
     list_filter = ('created', )
 
