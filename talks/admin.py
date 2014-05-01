@@ -4,6 +4,7 @@
 from django.contrib import admin
 
 # Third-party app imports
+from mptt.admin import MPTTModelAdmin
 
 # Realative imports of the 'app-name' package
 from .models import Talk, MediaTalk, Event
@@ -42,14 +43,14 @@ class TalkAdmin(admin.ModelAdmin):
     list_filter = ('created', )
 
 
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(MPTTModelAdmin):
     """
     Classe admin utilizada no django admin para oferecer as
     opcoes de CRUD do model event
     """
 
     # campo slug setado como pre-populado de acordo com o que se digita no nome
-    prepopulated_fields = {'slug': ('name', )}
+    prepopulated_fields = {'slug': ('parent', 'name')}
 
     # campos a serem exibidos na tabela
     list_display = (
