@@ -2,11 +2,14 @@
 
 # Core Django imports
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import ugettext as _
 
 # Third-party app imports
 
 # Realative imports of the 'app-name' package
 from .models import Speaker, KindContact
+from .forms import SpeakerUserCreationForm, SpeakerUserChangeForm
 
 
 class ContactInline(admin.TabularInline):
@@ -17,28 +20,121 @@ class ContactInline(admin.TabularInline):
     extra = 2
 
 
-class SpeakerAdmin(admin.ModelAdmin):
+class SpeakerUserAdmin(UserAdmin):
     """
     Classe admin utilizada no django admin para oferecer as
     opcoes de CRUD do model Speaker
     """
+    # formulario para adicionar usuarios palestrantes
+    add_form = SpeakerUserCreationForm
+
+    # formulario para alterar usuarios
+    form = SpeakerUserChangeForm
 
     inlines = [ContactInline, ]
 
     # campo slug setado como pre-populado de acordo com o que se digita no nome
-    prepopulated_fields = {'slug': ('name', )}
+    prepopulated_fields = {'slug': ('first_name', 'last_name')}
 
     # campos a serem exibidos na tabela
     list_display = (
-        'name', 'slug', 'bio',
+        'first_name',
+        'last_name',
+        'email',
+        'is_staff',
+        'slug',
+        'bio',
         'created'
+    )
+
+    # campos que podem ser filtrados
+    list_filter = (
+        'created',
+        'is_staff',
+        'is_superuser',
+        'is_active',
+        'groups'
+    )
+
+    # campos que utilizam buscas no model
+    search_fields = (
+        'first_name',
+        'email',
+        'slug',
+        'created',
+    )
+
+    filter_horizontal = (
+        'groups',
+        'user_permissions',
+    )
+
+    fieldsets = (
+        (
+            None,
+            {
+                'fields': (
+                    'email',
+                    'password'
+                )
+            }
+        ),
+        (
+            _(u'Informações pessoais'),
+            {
+                'fields': (
+                    'first_name',
+                    'last_name',
+                    'slug',
+                    'bio',
+                )
+            }
+        ),
+        (
+            _(u'Permissões'),
+            {
+                'fields': (
+                    'is_active',
+                    'is_staff',
+                    'is_superuser',
+                    'groups',
+                    'user_permissions',
+                )
+            }
+        ),
+        (
+            _(u'Datas importantes'),
+            {
+                'fields': (
+                    'last_login',
+                    'created',
+                    'modified',
+                )
+            }
+        ),
+    )
+
+    add_fieldsets = (
+        (
+            None,
+            {
+                'classes': (
+                    'wide',
+                ),
+                'fields': (
+                    'email',
+                    'password',
+                    'repeat_password'
+                )
+            }
+        )
+    )
+
+    ordering = (
+        'email',
     )
 
     date_hierarchy = 'created'
 
-    # campos que utilizam buscas no model
-    search_fields = ('name', 'slug', 'created', )
 
-    list_filter = ('created', )
-
-admin.site.register(Speaker, SpeakerAdmin)
+admin.site.register(SpeakerUser, SpeakerUserAdmin)
