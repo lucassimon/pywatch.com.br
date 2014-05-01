@@ -17,7 +17,18 @@ class Speaker(TimeStampedModel):
     de palestrante.
     """
 
-    name = models.CharField(
+    first_name = models.CharField(
+        verbose_name=_(u'Nome'),
+        max_length=255
+    )
+    """
+    Atributo da classe Speaker para setar o nome
+    do palestrante.
+
+    Caracteristicas:
+    max length: 255
+    """
+    last_name = models.CharField(
         verbose_name=_(u'Nome'),
         max_length=255
     )
@@ -83,6 +94,23 @@ class Speaker(TimeStampedModel):
         """
         return reverse('speakers:speaker-detail-view', args=[self.slug])
 
+    def get_full_name(self):
+        """
+        Retorna o primeiro nome mais o ultimo nome, com
+        um espaço entre eles
+        """
+        full_name = u'%s %s' % (
+            self.first_name,
+            self.last_name
+        )
+        return full_name.strip()
+
+    def get_short_name(self):
+        """
+        Retorna somente o primeiro nome
+        """
+        return u'%s' % (self.first_name)
+
     class Meta:
         """
         Seta a ordenação da listagem pelo campo `created` ascendente
@@ -97,7 +125,7 @@ class Speaker(TimeStampedModel):
         Retorna o nome do palestrante
         como unicode.
         """
-        return u'%s' % (self.name)
+        return u'%s' % (self.get_full_name())
 
 
 class KindContact(models.Model):
