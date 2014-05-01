@@ -43,13 +43,13 @@ class ScreencastAdmin(admin.ModelAdmin):
     list_filter = ('created', )
 
 
-class SerieAdmin(admin.ModelAdmin):
+class SerieAdmin(MPTTModelAdmin):
     """
     Classe admin utilizada no django admin para oferecer as
     opcoes de CRUD do model Serie
     """
     # campo slug setado como pre-populado de acordo com o que se digita no nome
-    prepopulated_fields = {'slug': ('name', )}
+    prepopulated_fields = {'slug': ('parent', 'name', )}
 
     # campos a serem exibidos na tabela
     list_display = (
