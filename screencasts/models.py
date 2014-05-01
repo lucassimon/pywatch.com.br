@@ -13,10 +13,26 @@ from core.models import TimeStampedModel, StandardItemStuffModel,\
     Media
 
 
-class Serie(TimeStampedModel):
+class Serie(MPTTModel, TimeStampedModel):
     """
     Model reponsável por cadastrar as series
     e podem conter vários screencasts.
+    """
+    parent = TreeForeignKey(
+        'self',
+        verbose_name=_(u'Evento Pai'),
+        null=True,
+        blank=True,
+        related_name='children'
+    )
+    """
+    Atributo da classe  para identificar um evento
+    é pai de outro evento utilizando a estrutura
+    de uma arvore mptt
+
+    Caracteristicas:
+    TreeForeignKey
+    verbose name: Evento pai
     """
 
     name = models.CharField(
@@ -48,13 +64,27 @@ class Serie(TimeStampedModel):
     max length: 255
     """
 
+    def save(self, *args,  **kwargs):
+        """
+        Customiza o metodo salvar da classe
+        para guardar o slug do evento
+        """
+        from uuslug import uuslug as slugify
+        if not self.parent:
+            slug_str = "%s" % (self.name)
+        else:
+            slug_str = "%s %s" % (self.parent.name, self.name)
+
+        self.slug = slugify(slug_str, instance=self)
+        super(Serie, self).save(**kwargs)
+
     class Meta:
         ordering = ['created']
         verbose_name = _(u'Serie')
         verbose_name_plural = _(u'Series')
 
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u'%s%s' % ('-' * self.level, self.name)
 
 
 class Screencast(TimeStampedModel, StandardItemStuffModel):
