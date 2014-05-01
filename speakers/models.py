@@ -171,7 +171,7 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         Retorna o nome do palestrante
         como unicode.
         """
-        return u'%s' % (self.name)
+        return u'%s' % (self.get_full_name())
 
 
 class KindContact(models.Model):
@@ -187,7 +187,7 @@ class KindContact(models.Model):
     )
 
     speaker = models.ForeignKey(
-        'Speaker',
+        'SpeakerUser',
         verbose_name=_('Palestrante'),
         related_name='contacts'
     )
