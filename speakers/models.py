@@ -157,6 +157,17 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         """
         return u'%s' % (self.first_name)
 
+    def save(self, self, *args,  **kwargs):
+        """
+        Customiza o metodo salvar da classe
+        para guardar o slug do palestrante
+        """
+        from uuslug import uuslug as slugify
+        slug_str = "%s %s" % (self.first_name, self.last_name)
+
+        self.slug = slugify(slug_str, instance=self)
+        super(SpeakerUser, self).save(**kwargs)
+
     class Meta:
         """
         Seta a ordenação da listagem pelo campo `created` ascendente
