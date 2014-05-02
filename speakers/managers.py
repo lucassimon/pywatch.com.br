@@ -25,7 +25,14 @@ class SpeakerManager(BaseUserManager, models.Manager):
     def get_queryset(self):
         return SpeakerQueryset(self.model, using=self._db)
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(
+        self,
+        first_name,
+        last_name,
+        email,
+        password=None,
+        **extra_fields
+    ):
         """
         Cria e salva um usuário com o email passado e senha
         """
@@ -43,12 +50,21 @@ class SpeakerManager(BaseUserManager, models.Manager):
 
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(
+        self,
+        first_name,
+        last_name,
+        email,
+        password=None,
+        **extra_fields
+    ):
         """
         Cria e salva um super-usuário com o email passado e senha
         """
 
         user = self.create_user(
+            first_name,
+            last_name,
             email,
             password,
             **extra_fields
