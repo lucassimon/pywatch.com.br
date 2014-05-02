@@ -15,6 +15,22 @@ class SpeakerUserCreationForm(forms.ModelForm):
     Um formulário para criar novos usuários. Incluindo
     todos os campos requeridos
     """
+    first_name = forms.CharField(
+        label=_(u'Primeiro Nome'),
+        max_length=100,
+    )
+    """
+    Atributo do formulário para setar o primeiro nome
+    """
+
+    last_name = forms.CharField(
+        label=_(u'Último Nome'),
+        max_length=100,
+    )
+    """
+    Atributo do formulário para setar o ultimo nome
+    """
+
     password = forms.CharField(
         label=_(u'Senha'),
         widget=forms.PasswordInput
