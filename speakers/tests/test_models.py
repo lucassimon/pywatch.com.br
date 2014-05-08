@@ -1,16 +1,16 @@
 # -*- coding:utf-8 -*-
 
-#Core Django imports
+# Core Django imports
 from django.test import TestCase
 
-#Third-party app imports
+# Third-party app imports
 from model_mommy import mommy
 from model_mommy.recipe import Recipe, foreign_key
 
 # Relative imports of the 'app-name' package
 from speakers.models import Speaker, KindContact
 
-######### WHAT WE NEED TEST #########
+# ######## WHAT WE NEED TEST #########
 #
 # 1 - creating / criação
 # 2 - reading / leitura
@@ -20,7 +20,7 @@ from speakers.models import Speaker, KindContact
 # 6 - model managers / não ha tradução para isto
 # 7 - model managers methods / não ha tradução para isto
 
-############# TIPS ##################
+# ############ TIPS ##################
 #
 # 1 - Cada função de test deve haver apenas 1 assert
 #
@@ -50,7 +50,10 @@ class SpeakerTestModel(TestCase):
         Testa o retorno do metodo unicode
         para ver se os campos estao corretos
         """
-        self.assertEqual(self.speaker.__unicode__(), self.speaker.get_full_name())
+        self.assertEqual(
+            self.speaker.__unicode__(),
+            self.speaker.get_full_name()
+        )
 
     def test_return_three_most_recent_created(self):
         """
