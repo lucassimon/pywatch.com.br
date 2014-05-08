@@ -5,6 +5,5 @@ from speakers.models import Speaker
 
 speaker_test_functional = Recipe(
     Speaker,
-    name='Speaker Test',
     bio='lorem ipsum dolor'
 )
