@@ -60,23 +60,6 @@ class SpeakerTestModel(TestCase):
         Testa se ira trazer os 3 palestrantes mais
         recentes criados
         """
-
-        # self.speaker = mommy.make(SpeakerUser, name='speaker-1')
-        # self.speaker_two = mommy.make(SpeakerUser, name='speaker-2')
-        # self.speaker_three = mommy.make(SpeakerUser, name='speaker-3')
-        # self.speaker_four = mommy.make(SpeakerUser, name='speaker-4')
-        # self.speaker_five = mommy.make(SpeakerUser, name='speaker-5')
-        # self.speaker_six = mommy.make(SpeakerUser, name='speaker-6')
-
-        # qs = Speaker.objects.all().order_by('-created')[:3]
-        # self.assertQuerysetEqual(
-        # qs,
-        # [
-        # "<Speaker: speaker-6>",
-        # "<Speaker: speaker-5>",
-        # "<Speaker: speaker-4>"
-        # ]
-        # )
         pass
 
     def test_return_latest_three_most_recent_created_manager(self):
