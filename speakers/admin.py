@@ -33,11 +33,9 @@ class SpeakerUserAdmin(UserAdmin):
 
     inlines = [ContactInline, ]
 
-    # campo slug setado como pre-populado de acordo com o que se digita no nome
-    prepopulated_fields = {'slug': ('first_name', 'last_name')}
-
     # campos a serem exibidos na tabela
     list_display = (
+        'username',
         'first_name',
         'last_name',
         'email',
@@ -107,27 +105,9 @@ class SpeakerUserAdmin(UserAdmin):
             {
                 'fields': (
                     'last_login',
-                    'created',
-                    'modified',
                 )
             }
         ),
-    )
-
-    add_fieldsets = (
-        (
-            None,
-            {
-                'classes': (
-                    'wide',
-                ),
-                'fields': (
-                    'email',
-                    'password',
-                    'repeat_password'
-                )
-            }
-        )
     )
 
     ordering = (
