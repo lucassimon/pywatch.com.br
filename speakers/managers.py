@@ -30,6 +30,7 @@ class SpeakerManager(BaseUserManager, models.Manager):
         first_name,
         last_name,
         email,
+        bio,
         password=None,
         **extra_fields
     ):
@@ -41,6 +42,9 @@ class SpeakerManager(BaseUserManager, models.Manager):
             raise ValueError(_(u'Usuários devem possuir um email'))
 
         user = self.model(
+            first_name=first_name,
+            last_name=last_name,
+            bio=bio,
             email=SpeakerManager.normalize_email(email),
             **extra_fields
         )
@@ -66,6 +70,7 @@ class SpeakerManager(BaseUserManager, models.Manager):
             first_name,
             last_name,
             email,
+            bio,
             password,
             **extra_fields
         )
