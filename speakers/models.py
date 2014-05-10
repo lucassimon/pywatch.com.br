@@ -45,7 +45,8 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         verbose_name=_(u'Slug'),
         db_index=True,
         max_length=255,
-        unique=True
+        null=True,
+        blank=True
     )
     """
     Atributo da classe Speaker para setar o slug
@@ -84,50 +85,8 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     TextField
     """
 
-    is_admin = models.BooleanField(
-        verbose_name=_(u'Administrador'),
-        default=False,
-        help_text=_(u'Designa este usuário como administrador.')
-    )
-    """
-    Atributo da classe Speaker para
-    setar o palestrante como administrador.
-
-    Caracteristicas:
-    BooleanField
-    Default: False
-    """
-
-    is_staff = models.BooleanField(
-        verbose_name=_(u'staff status'),
-        default=False,
-        help_text=_(u'Designa este usuário logue no site admin.')
-    )
-    """
-    Atributo da classe Speaker para
-    setar o palestrante como manager.
-
-    Caracteristicas:
-    BooleanField
-    Default: False
-    """
-
-    is_active = models.BooleanField(
-        verbose_name=_(u'active'),
-        default=True,
-        help_text=_(u'Designa este usuário como ativo.')
-    )
-    """
-    Atributo da classe Speaker para
-    setar o palestrante como usuario ativo.
-
-    Caracteristicas:
-    BooleanField
-    Default: True
-    """
-
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'bio']
 
     objects = SpeakerManager()
 
