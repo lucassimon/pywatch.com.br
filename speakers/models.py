@@ -4,42 +4,19 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
 from .managers import SpeakerManager
 
 
-class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
+class SpeakerUser(AbstractUser, TimeStampedModel):
     """
     Classe model para criar um objeto model
     de palestrante.
     """
-
-    first_name = models.CharField(
-        verbose_name=_(u'Primeiro Nome'),
-        max_length=100
-    )
-    """
-    Atributo da classe Speaker para setar o primeiro nome
-    do palestrante.
-
-    Caracteristicas:
-    max length: 255
-    """
-
-    last_name = models.CharField(
-        verbose_name=_(u'Último Nome'),
-        max_length=100
-    )
-    """
-    Atributo da classe Speaker para setar o último nome
-    do palestrante.
-
-    Caracteristicas:
-    max length: 255
-    """
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'bio']
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
@@ -58,19 +35,6 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     unique: True
     """
 
-    email = models.EmailField(
-        verbose_name=_(u'Email'),
-        unique=True,
-        db_index=True,
-    )
-    """
-    Atributo da classe Speaker para setar o email
-    do palestrante.
-
-    Caracteristicas:
-    unique: True
-    """
-
     bio = models.TextField(
         verbose_name=_(u'Biográfia'),
         blank=True,
@@ -85,8 +49,19 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     TextField
     """
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'bio']
+    is_admin = models.BooleanField(
+        verbose_name=_(u'Administrador'),
+        default=False,
+        help_text=_(u'Designa este usuário como administrador.')
+    )
+    """
+    Atributo da classe Speaker para
+    setar o palestrante como administrador.
+
+    Caracteristicas:
+    BooleanField
+    Default: False
+    """
 
     objects = SpeakerManager()
 
@@ -116,7 +91,7 @@ class SpeakerUser(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         """
         return u'%s' % (self.first_name)
 
-    def save(self, self, *args,  **kwargs):
+    def save(self, *args,  **kwargs):
         """
         Customiza o metodo salvar da classe
         para guardar o slug do palestrante
