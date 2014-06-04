@@ -3,6 +3,7 @@
 # Core Django imports
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
+from django.utils.translation import ugettext as _
 
 # Relative imports of the 'app-name' package
 
@@ -37,7 +38,7 @@ class SpeakerManager(BaseUserManager, models.Manager):
         """
         Cria e salva um usuário com o email passado e senha
         """
-
+        import pudb; pudb.set_trace()
         if not email:
             raise ValueError(_(u'Usuários devem possuir um email'))
 
@@ -59,6 +60,7 @@ class SpeakerManager(BaseUserManager, models.Manager):
         first_name,
         last_name,
         email,
+        bio,
         password=None,
         **extra_fields
     ):
