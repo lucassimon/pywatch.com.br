@@ -44,7 +44,6 @@ class SpeakerUserAdmin(UserAdmin):
         'bio',
         'created'
     )
-
     # campos que podem ser filtrados
     list_filter = (
         'created',
@@ -61,18 +60,12 @@ class SpeakerUserAdmin(UserAdmin):
         'slug',
         'created',
     )
-
-    filter_horizontal = (
-        'groups',
-        'user_permissions',
-    )
-
     fieldsets = (
         (
             None,
             {
                 'fields': (
-                    'email',
+                    'username',
                     'password'
                 )
             }
@@ -81,6 +74,7 @@ class SpeakerUserAdmin(UserAdmin):
             _(u'Informações pessoais'),
             {
                 'fields': (
+                    'email',
                     'first_name',
                     'last_name',
                     'slug',
@@ -109,7 +103,6 @@ class SpeakerUserAdmin(UserAdmin):
             }
         ),
     )
-
     ordering = (
         'email',
     )
