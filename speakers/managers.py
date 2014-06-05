@@ -38,7 +38,6 @@ class SpeakerManager(BaseUserManager, models.Manager):
         """
         Cria e salva um usuário com o email passado e senha
         """
-        import pudb; pudb.set_trace()
         if not email:
             raise ValueError(_(u'Usuários devem possuir um email'))
 
