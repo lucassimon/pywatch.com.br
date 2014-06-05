@@ -6,11 +6,11 @@ from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 
 # Thirdy Apps imports
-from mptt.models import MPTTModel, TreeForeignKey
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel, StandardItemStuffModel,\
     Media
+from .managers import ScreencastManager
 
 
 class Serie(TimeStampedModel):
@@ -78,6 +78,8 @@ class Screencast(TimeStampedModel, StandardItemStuffModel):
     ForeignKey
     verbose name: Evento
     """
+
+    objects = ScreencastManager()
 
     def get_absolute_url(self):
         """
