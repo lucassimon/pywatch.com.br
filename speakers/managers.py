@@ -12,7 +12,7 @@ class SpeakerQueryset(models.query.QuerySet):
     """
     Classe para definir os querysets do model palestrante
     """
-    def latest_with_limits(self, l):
+    def latest_with_limits(self, l=1):
         """
         :param l: Número para limitar a busca
         """
