@@ -82,9 +82,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'core',
+    'dashboards',
+    'screencasts',
     'speakers',
     'talks',
-    'screencasts',
 
     'south',
     'django_extensions',
