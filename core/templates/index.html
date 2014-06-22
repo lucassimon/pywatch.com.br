@@ -31,7 +31,7 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
             {% for speaker in most_recent_speakers_list %}
                 <li> 
                     <a href="{% url 'speakers:speaker-detail-view' slug=speaker.slug %}"> 
-                        {{ speaker.name }}
+                        {{ speaker.get_full_name }}
                     </a>
                 </li>
             {% endfor %}
