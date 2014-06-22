@@ -140,6 +140,10 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
