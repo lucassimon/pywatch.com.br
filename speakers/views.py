@@ -67,9 +67,10 @@ class SpeakerListView(ListView):
         resgatando o contatos caso existam
         """
         return (
-            Speaker.objects.all()
+            SpeakerUser.objects.all()
             .select_related('KindContact')
-            .order_by('name')
+            .order_by('first_name')
+            .exclude(username='root')
         )
 
 
