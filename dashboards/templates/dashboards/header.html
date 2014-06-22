@@ -1,5 +1,5 @@
-
-<a href="{% url 'dashboards:dashboard-index-view %}" class="logo">
+{% load i18n %}
+<a href="{% url 'dashboards:dashboard-index-view' %}" class="logo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
     Pywatch Admin
 </a>
@@ -32,7 +32,7 @@
                         <p>
                             {{ request.user.get_full_name }}
                             <small>
-                                {% trans "Membro desde " %}
+                                {% trans "Membro desde" %}
                                 {{ request.user.created|date:"SHORT_DATE_FORMAT" }}
                             </small>
                         </p>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <aside class="left-side sidebar-offcanvas">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -27,7 +28,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="active">
-                <a href="{% url 'dashboards:dashboard-index-view %}" class="">
+                <a href="{% url 'dashboards:dashboard-index-view' %}" class="">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
