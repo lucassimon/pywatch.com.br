@@ -16,7 +16,7 @@ class SpeakerQueryset(models.query.QuerySet):
         """
         :param l: Número para limitar a busca
         """
-        return self.order_by("-created")[:l]
+        return self.exclude(username='root').order_by("-created")[:l]
 
 
 class SpeakerManager(BaseUserManager, models.Manager):
