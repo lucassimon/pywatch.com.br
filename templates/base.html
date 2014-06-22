@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load url from future %}
+{% load i18n %}
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
@@ -61,14 +62,22 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="{% url 'talks:talk-list-view' %}">Palestras</a>
+                            <a href="{% url 'talks:talk-list-view' %}">
+                                {% trans "Palestras" %}
+                            </a>
                         </li>
                         <li>
-                            <a href="{% url 'screencasts:screencast-list-view' %}">Videos</a>
+                            <a href="{% url 'screencasts:screencast-list-view' %}">
+                                {% trans "Videos" %}
+                            </a>
                         </li>
                         <!--<li><a href="/screencasts">Screencasts</a></li>-->
                         <!--<li><a href="/palestras">Tutoriais</a></li>-->
-                        <li><a href="{% url 'speakers:speaker-list-view' %}">Palestrantes</a></li>
+                        <li>
+                            <a href="{% url 'speakers:speaker-list-view' %}">
+                                {% trans "Palestrantes" %}
+                            </a>
+                        </li>
                     </ul>
                     <!--<ul class="nav navbar-nav">-->
                         <!--<li><a href="http://twitter.com/emberwatch"><i class="fa fa-twitter"></i> &nbsp;@pywatch</a></li>-->
@@ -78,10 +87,46 @@
                             <div class="input-group">
                                 <input name="q" type="text" placeholder="" class="form-control">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">Buscar!</button>
+                                    <button class="btn btn-default" type="submit">
+                                        {% trans "Buscar!" %}
+                                    </button>
                                 </span>
                             </div>
                         </form>
+                    </div>
+                    <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                        <ul class="nav ">
+                            {% if user.is_authenticated %}
+                            <li class="">
+                                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                    <span class="">
+                                        <small>{% trans "Bem Vindo" %},</small>
+                                        {{ request.user.get_fullname }}
+                                    </span>
+                                    <i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                    <li>
+                                        <a href="{% url 'account_email' %}">
+                                            {% trans "Alterar Senha" %}
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="{% url 'account_logout' %}">
+                                            {% trans "Sair" %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="{% url 'account_login' %}">
+                                    {% trans "Entrar" %}
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
                     </div>
                 </div><!--/.nav-collapse -->
             </div>
@@ -111,7 +156,11 @@
         <footer id="footerwrap">
             <div class="container"> 
                 <div class="span12 text-center">
-                    <p>Desenvolvido com <span>Django</span> por Lucas Simon Rodrigues Magalhães</p>
+                    <p>
+                        {% blocktrans %}
+                        Desenvolvido com <span>Django</span> por Lucas Simon Rodrigues Magalhães
+                        {% endblocktrans %}
+                    </p>
                 </div>
             </div>
         </footer>
