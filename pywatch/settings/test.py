@@ -13,6 +13,8 @@ INSTALLED_APPS += (
 )
 
 # ######### TEST SETTINGS
+SOUTH_TESTS_MIGRATE = False
+REUSE_DB = 1
 TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
 TEST_DISCOVER_TOP_LEVEL = PROJECT_DIR
 TEST_DISCOVER_ROOT = PROJECT_DIR
@@ -39,7 +41,7 @@ COMPRESS_ENABLED = not DEBUG
 # ######### DATABASE CONFIGURATION
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_TEST_URL')
+        default=config('DATABASE_URL')
     )
 }
 # ########## END DATABASE CONFIGURATION
