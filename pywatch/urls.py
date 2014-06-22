@@ -43,6 +43,14 @@ urlpatterns = patterns(
 
     url(r'^accounts/', include('allauth.urls')),
 
+    url(
+        r'^dashboard/',
+        include(
+            'dashboards.urls',
+            namespace='dashboards'
+        )
+    ),
+
     #url(
         #r'^accounts/profile/',
         #include(
