@@ -57,6 +57,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
         <!-- Morris.js charts -->
         <!-- Sparkline -->
         <!-- jvectormap -->
@@ -68,6 +69,8 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.1/icheck.min.js"></script>
         <!-- AdminLTE App -->
 
-        <script src="{% static 'js/app.css' %}"></script>
+        <script src="{% static 'js/app.js' %}"></script>
+        {% block js %}
+        {% endblock %}
     </body>
 </html>
