@@ -10,7 +10,7 @@ from django.views.generic.detail import DetailView
 # Third-party app imports
 
 # Imports from your apps
-from .models import Speaker
+from .models import SpeakerUser
 from .serializers import SpeakerSerializer
 
 
@@ -19,7 +19,7 @@ class SpeakerList(generics.ListCreateAPIView):
     Endpoint que representa a lista de palestrantes, e permite que novos
     palestrantes sejam cadastrados.
     """
-    model = Speaker
+    model = SpeakerUser
     serializer_class = SpeakerSerializer
 
 
@@ -28,7 +28,7 @@ class SpeakerDetail(generics.RetrieveUpdateAPIView):
     Endpoint que representa uma instancia de palestrante, e permite que novos
     palestrantes sejam atualizados.
     '''
-    model = Speaker
+    model = SpeakerUser
     serializer_class = SpeakerSerializer
 
 
@@ -39,7 +39,7 @@ class SpeakerListView(ListView):
     no sistema.
     """
 
-    model = Speaker
+    model = SpeakerUser
     """
     Define o model a ser atribuido
     """
@@ -67,9 +67,10 @@ class SpeakerListView(ListView):
         resgatando o contatos caso existam
         """
         return (
-            Speaker.objects.all()
+            SpeakerUser.objects.all()
             .select_related('KindContact')
-            .order_by('name')
+            .order_by('first_name')
+            .exclude(username='root')
         )
 
 
@@ -79,7 +80,7 @@ class SpeakerDetailView(DetailView):
     da palestra
     """
 
-    model = Speaker
+    model = SpeakerUser
     """
     Define o model a ser atribuido
     """

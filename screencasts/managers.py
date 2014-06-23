@@ -6,9 +6,9 @@ from django.db import models
 # Relative imports of the 'app-name' package
 
 
-class TalkQueryset(models.query.QuerySet):
+class ScreencastQueryset(models.query.QuerySet):
     """
-    Classe para definir os querysets do model palestras
+    Classe para definir os querysets do model screencasts
     """
     def latest_with_limits(self, l):
         """
@@ -17,12 +17,12 @@ class TalkQueryset(models.query.QuerySet):
         return self.order_by("-created")[:l]
 
 
-class TalkManager(models.Manager):
+class ScreencastManager(models.Manager):
     """
-    Define um manager para o model de palestras
+    Define um manager para o model de screencasts
     """
     def get_queryset(self):
-        return TalkQueryset(self.model, using=self._db)
+        return ScreencastQueryset(self.model, using=self._db)
 
     def latest_with_limits(self, limit):
         """

@@ -50,7 +50,7 @@ class StandardItemStuffModel(models.Model):
     """
 
     speaker = models.ForeignKey(
-        'speakers.Speaker',
+        'speakers.SpeakerUser',
         verbose_name=_(u'Palestrante'),
     )
     """

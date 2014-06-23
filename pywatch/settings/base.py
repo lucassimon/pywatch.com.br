@@ -70,6 +70,8 @@ TEMPLATE_DIRS = (
     PROJECT_DIR.child("templates"),
 )
 
+AUTH_USER_MODEL = 'speakers.SpeakerUser'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,9 +82,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'core',
+    'dashboards',
+    'screencasts',
     'speakers',
     'talks',
-    'screencasts',
 
     'south',
     'django_extensions',
@@ -136,10 +139,11 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+LOGIN_REDIRECT_URL = '/dashboard/'
+
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'taggit.south_migrations',
 }
-
 
 LOGGING = {
     'version': 1,

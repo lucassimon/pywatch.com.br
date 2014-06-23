@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 # Third-party app imports
 
 # Imports from your apps
-from speakers.models import Speaker
+from speakers.models import SpeakerUser
 from talks.models import Talk
 
 
@@ -31,7 +31,7 @@ class IndexHomePageTemplateView(TemplateView):
             IndexHomePageTemplateView, self
         ).get_context_data(**kwargs)
         context['most_recent_speakers_list'] = (
-            Speaker.objects.latest_with_limits(5)
+            SpeakerUser.objects.latest_with_limits(5)
         )
         context['most_recent_talks_list'] = (
             Talk.objects.latest_with_limits(5)

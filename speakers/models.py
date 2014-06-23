@@ -4,47 +4,26 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
-from .managers import SpeakerMostRecentCreatedManager
+from .managers import SpeakerManager
 
 
-class Speaker(TimeStampedModel):
+class SpeakerUser(AbstractUser, TimeStampedModel):
     """
     Classe model para criar um objeto model
     de palestrante.
     """
-
-    first_name = models.CharField(
-        verbose_name=_(u'Nome'),
-        max_length=255
-    )
-    """
-    Atributo da classe Speaker para setar o nome
-    do palestrante.
-
-    Caracteristicas:
-    max length: 255
-    """
-    last_name = models.CharField(
-        verbose_name=_(u'Nome'),
-        max_length=255
-    )
-    """
-    Atributo da classe Speaker para setar o nome
-    do palestrante.
-
-    Caracteristicas:
-    max length: 255
-    """
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'bio']
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
         db_index=True,
         max_length=255,
-        unique=True
+        null=True,
+        blank=True
     )
     """
     Atributo da classe Speaker para setar o slug
@@ -53,19 +32,6 @@ class Speaker(TimeStampedModel):
     Caracteristicas:
     max length: 255
     index: True
-    unique: True
-    """
-
-    email = models.EmailField(
-        verbose_name=_(u'Email'),
-        unique=True,
-        db_index=True,
-    )
-    """
-    Atributo da classe Speaker para setar o email
-    do palestrante.
-
-    Caracteristicas:
     unique: True
     """
 
@@ -83,7 +49,21 @@ class Speaker(TimeStampedModel):
     TextField
     """
 
-    objects = SpeakerMostRecentCreatedManager()
+    is_admin = models.BooleanField(
+        verbose_name=_(u'Administrador'),
+        default=False,
+        help_text=_(u'Designa este usuário como administrador.')
+    )
+    """
+    Atributo da classe Speaker para
+    setar o palestrante como administrador.
+
+    Caracteristicas:
+    BooleanField
+    Default: False
+    """
+
+    objects = SpeakerManager()
 
     def get_absolute_url(self):
         """
@@ -110,6 +90,17 @@ class Speaker(TimeStampedModel):
         Retorna somente o primeiro nome
         """
         return u'%s' % (self.first_name)
+
+    def save(self, *args,  **kwargs):
+        """
+        Customiza o metodo salvar da classe
+        para guardar o slug do palestrante
+        """
+        from uuslug import uuslug as slugify
+        slug_str = "%s %s" % (self.first_name, self.last_name)
+
+        self.slug = slugify(slug_str, instance=self)
+        super(SpeakerUser, self).save(**kwargs)
 
     class Meta:
         """
@@ -141,7 +132,7 @@ class KindContact(models.Model):
     )
 
     speaker = models.ForeignKey(
-        'Speaker',
+        'SpeakerUser',
         verbose_name=_('Palestrante'),
         related_name='contacts'
     )

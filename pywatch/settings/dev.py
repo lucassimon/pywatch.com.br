@@ -13,7 +13,7 @@ COMPRESS_ENABLED = not DEBUG
 config = ConfigIni(PROJECT_DIR.child('confs')+'/settings.ini')
 
 ##########  MAILTRAP CONFIGURATION
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
@@ -94,3 +94,38 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
 }
 ########## END DJANGO-DEBUG-TOOLBAR CONFIGURATION
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'sqlhandler': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'sqlformatter'
+        }
+    },
+    'formatters': {
+        'sqlformatter': {
+            '()': 'sqlformatter.SqlFormatter',
+            'format': '%(levelname)s %(message)s',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', 'sqlhandler'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    }
+}
