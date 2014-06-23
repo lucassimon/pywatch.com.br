@@ -11,7 +11,6 @@
                 <p>
                     {% trans "Olá" %}, {{ request.user.get_short_name }}
                 </p>
-
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
@@ -34,16 +33,25 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-bar-chart-o"></i>
+                    <i class="fa fa-comments-o"></i>
                     <span>
                         {% trans "Palestras" %}
                     </span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Morris</a></li>
-                    <li><a href="pages/charts/flot.html"><i class="fa fa-angle-double-right"></i> Flot</a></li>
-                    <li><a href="pages/charts/inline.html"><i class="fa fa-angle-double-right"></i> Inline charts</a></li>
+                    <li>
+                        <a href="pages/charts/morris.html">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Adicionar" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/charts/flot.html">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Listar" %}
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">
@@ -55,11 +63,18 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/UI/general.html"><i class="fa fa-angle-double-right"></i> General</a></li>
-                    <li><a href="pages/UI/icons.html"><i class="fa fa-angle-double-right"></i> Icons</a></li>
-                    <li><a href="pages/UI/buttons.html"><i class="fa fa-angle-double-right"></i> Buttons</a></li>
-                    <li><a href="pages/UI/sliders.html"><i class="fa fa-angle-double-right"></i> Sliders</a></li>
-                    <li><a href="pages/UI/timeline.html"><i class="fa fa-angle-double-right"></i> Timeline</a></li>
+                    <li>
+                        <a href="pages/charts/morris.html">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Adicionar" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/charts/flot.html">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Listar" %}
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">
@@ -71,9 +86,18 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> General Elements</a></li>
-                    <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>
-                    <li><a href="pages/forms/editors.html"><i class="fa fa-angle-double-right"></i> Editors</a></li>
+                    <li>
+                        <a href="pages/charts/morris.html">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Adicionar" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/charts/flot.html">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Listar" %}
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
