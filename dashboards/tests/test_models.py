@@ -25,17 +25,3 @@ from model_mommy import mommy
 # 1 - Cada função de test deve haver apenas 1 assert
 #
 # ####################################
-
-class ModelNameTests(TestCase):
-    """
-    """
-
-    def test_genre_creation_mommy(self):
-        # o que eu quero criar
-        what = mommy.make(Model)
-        self.assertTrue(isinstance(what, Genre))
-
-    def test_genre_return__unicode_title_mommy(self):
-        # o que eu quero criar
-        what = mommy.make(Model)
-        self.assertEqual(what.__unicode__(), what.title)
