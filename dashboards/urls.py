@@ -14,7 +14,9 @@ from .views import (
     DashboardIndexTemplateView,
     TalkIndexTemplateView,
     TalkCreateView,
+    TalkUpdateView,
     TalkListView,
+    TalkDeleteView,
     ScreencastIndexTemplateView,
 )
 
@@ -36,9 +38,19 @@ urlpatterns = patterns(
         name='dashboard-talk-create-view'
     ),
     url(
+        r'^talks/update/(?P<pk>\d+)$',
+        TalkUpdateView.as_view(),
+        name='dashboard-talk-update-view'
+    ),
+    url(
         r'^talks/list/$',
         TalkListView.as_view(),
         name='dashboard-talk-list-view'
+    ),
+    url(
+        r'^talks/delete/(?P<pk>\d+)$',
+        TalkDeleteView.as_view(),
+        name='dashboard-talk-delete-view'
     ),
     url(
         r'^screencasts/$',
