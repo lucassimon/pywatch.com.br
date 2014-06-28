@@ -34,12 +34,17 @@
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">
-                        {% trans 'Crie sua palestra' %}
+                        {% if talk.id %}
+                           {% trans 'Edite sua palestra' %}
+                        {% else %}
+                           {% trans 'Crie sua palestra' %}
+                        {% endif %}
+
                     </h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
-                <form role="form" action="." method="post">{% csrf_token %}
+                <form role="form" action="{% if talk.id %}{% url "dashboards:dashboard-talk-update-view" talk.id %}{% else %}.{% endif %}" method="post">{% csrf_token %}
                     <div class="box-body">
                         <div class="form-group ">
                             {{ form.event.label_tag }} 
