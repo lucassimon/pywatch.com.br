@@ -11,12 +11,12 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
                 <i class="fa fa-dashboard"></i> Home
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{% url 'dashboards:dashboard-talk-index-view' %}">
                 <i class="fa fa-comments-o"></i>
                 {% trans 'Palestras' %}
             </a>
@@ -28,8 +28,11 @@
 </section>
 <!-- Main content -->
 <section class="content">
+    <a href="{% url 'dashboards:dashboard-talk-create-view' %}" class="btn btn-app">
+        <i class="fa fa-plus"></i>
+        {% trans "Criar Palestras" %}
+    </a>
     <!-- Small boxes (Stat box) -->
-    <div class="row">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">
@@ -61,7 +64,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th style="width: 10px">#</th>
                             <th>{% trans 'Evento' %}</th>
                             <th>{% trans 'Titulo' %}</th>
                             <th>{% trans 'Sumário' %}</th>
@@ -74,9 +76,6 @@
                             {% for talk in talk_list %}
                             <tr>
                                 <td>
-                                    {{ talk.id }}
-                                </td>
-                                <td>
                                     {{ talk.event }}
                                 </td>
                                 <td>
@@ -86,10 +85,17 @@
                                     {{ talk.summary }}
                                 </td>
                                 <td>
-                                    tags
+                                    {{ talk.tags.all|safeseq|join:", " }}
                                 </td>
                                 <td>
-                                    Editar Deletar
+                                    <a href="{% url 'dashboards:dashboard-talk-update-view' talk.id %}" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                        {% trans "Editar" %}
+                                    </a>
+                                    <a href="{% url 'dashboards:dashboard-talk-delete-view' talk.id %}" class="btn btn-danger btn-sm">
+                                        <i class="fa  fa-trash-o"></i>
+                                        {% trans "Deletar" %}
+                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -102,6 +108,5 @@
                 </table>
             </div><!-- /.box-body -->
         </div>
-    </div>
 </section>
 {% endblock %}
