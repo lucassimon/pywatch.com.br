@@ -10,7 +10,7 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
                 <i class="fa fa-dashboard"></i> Home
             </a>
         </li>
@@ -21,17 +21,33 @@
 </section>
 <!-- Main content -->
 <section class="content">
-    <div class="callout callout-info">
-        <h4>
-            {% blocktrans %}
-            Crie, atualize, liste ou exclua suas palestras!
-            {% endblocktrans %}
-        </h4>
-        <p>
-            {% blocktrans %}
-                Para realizar as ações desejadas clique nos links abaixo. Ou use o menu lateral.
-            {% endblocktrans %}
-        </p>
-    </div>
+        <div class="callout callout-info">
+            <h4>
+                {% blocktrans %}
+                Crie, atualize, liste ou exclua suas palestras!
+                {% endblocktrans %}
+            </h4>
+            <p>
+                {% blocktrans %}
+                    Para realizar as ações desejadas clique nos links abaixo. Ou use o menu lateral.
+                {% endblocktrans %}
+            </p>
+        </div>
+        <a href="" class="btn btn-app">
+            <i class="fa fa-plus"></i>
+            {% trans "Criar Eventos" %}
+        </a>
+        <a href="" class="btn btn-app">
+            <i class="fa fa-list"></i>
+            {% trans "Listar Eventos" %}
+        </a>
+        <a href="{% url 'dashboards:dashboard-talk-create-view' %}" class="btn btn-app">
+            <i class="fa fa-plus"></i>
+            {% trans "Criar Palestras" %}
+        </a>
+        <a href="{% url 'dashboards:dashboard-talk-list-view' %}" class="btn btn-app">
+            <i class="fa fa-list"></i>
+            {% trans "Listar Palestras" %}
+        </a>
 </section>
 {% endblock %}
