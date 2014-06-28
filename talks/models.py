@@ -6,7 +6,6 @@ from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 
 # Thirdy Apps imports
-from mptt.models import MPTTModel, TreeForeignKey
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel, StandardItemStuffModel,\
@@ -68,6 +67,7 @@ class Talk(TimeStampedModel, StandardItemStuffModel):
     event = models.ForeignKey(
         Event,
         verbose_name=_(u'Evento'),
+        help_text=_(u'Selecione o evento correspondente ou deixe em branco'),
         blank=True,
         null=True
     )
