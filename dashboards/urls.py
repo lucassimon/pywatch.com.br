@@ -13,6 +13,7 @@ from django.conf import settings
 from .views import (
     DashboardIndexTemplateView,
     TalkIndexTemplateView,
+    TalkCreateView,
     TalkListView,
     ScreencastIndexTemplateView,
 )
@@ -28,6 +29,11 @@ urlpatterns = patterns(
         r'^talks/$',
         TalkIndexTemplateView.as_view(),
         name='dashboard-talk-index-view'
+    ),
+    url(
+        r'^talks/create/$',
+        TalkCreateView.as_view(),
+        name='dashboard-talk-create-view'
     ),
     url(
         r'^talks/list/$',
