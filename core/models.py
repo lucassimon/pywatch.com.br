@@ -52,6 +52,7 @@ class StandardItemStuffModel(models.Model):
     speaker = models.ForeignKey(
         'speakers.SpeakerUser',
         verbose_name=_(u'Palestrante'),
+        help_text=_(u'A quem essa palestra pertence'),
     )
     """
     Atributo da classe StandardItemStuffModel para
@@ -64,6 +65,7 @@ class StandardItemStuffModel(models.Model):
 
     title = models.CharField(
         verbose_name=_(u'Titulo'),
+        help_text=_(u'Informe um titulo da palestra'),
         max_length=255
     )
     """
@@ -78,12 +80,14 @@ class StandardItemStuffModel(models.Model):
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
+        help_text=_(u'Informe um slug para o titulo da palestra'),
         unique=True,
         null=True
     )
 
     summary = models.TextField(
-        verbose_name=_(u'Sumário')
+        verbose_name=_(u'Sumário'),
+        help_text=_(u'Descreva um sumário para sua palestra')
     )
     """
     Atributo da classe StandardItemStuffModel para
