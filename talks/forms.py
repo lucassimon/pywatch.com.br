@@ -3,6 +3,7 @@
 # Core Django imports
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.forms.formsets import formset_factory
 
 # Thirdy Apps imports
 
@@ -62,3 +63,82 @@ class TalkForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class EventForm(forms.ModelForm):
+    u"""
+    Classe do formulario de eventos
+    """
+
+    class Meta:
+        u"""
+        Define atributos do formulario
+        """
+
+        model = Event
+        u"""
+        Define qual Model será utilizado
+        """
+
+        exclude = ['slug']
+        u"""
+        Exclui o atributo speaker/palestrante do formulário
+        """
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira um nome'),
+                }
+            ),
+        }
+
+
+class MediaTalkForm(forms.ModelForm):
+    u"""
+    Classe do formulario de medias
+    """
+
+    class Meta:
+        u"""
+        Define atributos do formulario
+        """
+
+        model = MediaTalk
+        u"""
+        Define qual Model será utilizado
+        """
+
+        exclude = ['talk']
+        u"""
+        Exclui o atributo speaker/palestrante do formulário
+        """
+
+        help_texts = {
+            'type': _(
+                _(u'Escolha uma das opções')
+            ),
+        }
+
+        widgets = {
+            'type': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira um titulo'),
+                }
+            ),
+            'url': forms.URLInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira a url aqui'),
+                }
+            ),
+        }
+
+
+MediaTalkFormSet = formset_factory(MediaTalkForm, extra=2)
