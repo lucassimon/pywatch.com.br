@@ -41,6 +41,12 @@
                 </a>
                 <ul class="treeview-menu">
                     <li>
+                        <a href="{% url 'dashboards:dashboard-talk-index-view' %}">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Index" %}
+                        </a>
+                    </li>
+                    <li>
                         <a href="{% url 'dashboards:dashboard-talk-create-view' %}">
                             <i class="fa fa-angle-double-right"></i>
                             {% trans "Adicionar" %}
