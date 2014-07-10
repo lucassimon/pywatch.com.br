@@ -33,11 +33,11 @@
                 {% endblocktrans %}
             </p>
         </div>
-        <a href="" class="btn btn-app">
+        <a href="{% url 'dashboards:dashboard-event-create-view' %}" class="btn btn-app">
             <i class="fa fa-plus"></i>
             {% trans "Criar Eventos" %}
         </a>
-        <a href="" class="btn btn-app">
+        <a href="{% url 'dashboards:dashboard-event-list-view'  %}" class="btn btn-app">
             <i class="fa fa-list"></i>
             {% trans "Listar Eventos" %}
         </a>
