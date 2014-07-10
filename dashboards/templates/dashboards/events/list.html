@@ -1,0 +1,100 @@
+{% extends 'dashboards/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        {% trans 'Palestras' %}
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
+                <i class="fa fa-dashboard"></i> Home
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'dashboards:dashboard-talk-index-view' %}">
+                <i class="fa fa-comments-o"></i>
+                {% trans 'Eventos' %}
+            </a>
+        </li>
+        <li class="active">
+            {% trans 'Listar' %}
+        </li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <a href="{% url 'dashboards:dashboard-event-create-view' %}" class="btn btn-app">
+        <i class="fa fa-plus"></i>
+        {% trans "Criar Eventos" %}
+    </a>
+    <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    {% trans 'Lista de eventos' %}
+                </h3>
+                <div class="box-tools">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li>
+                            {% if page_obj.has_previous %}
+                                <a href="{% url 'dashboards:dashboard-event-list-view' %}?page={{ page_obj.previous_page_number }}">
+                                    {% trans 'anterior' %}
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {{ page_obj.number }}
+                        </li>
+                        <li>
+                            {% if page_obj.has_next %}
+                                <a href="{% url 'dashboards:dashboard-event-list-view' %}?page={{ page_obj.next_page_number }}">
+                                    {% trans 'Próximo' %}
+                                </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{% trans 'Nome' %}</th>
+                            <th>{% trans 'Actions' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if event_list %}
+                            {% for event in event_list %}
+                            <tr>
+                                <td>
+                                    {{ event.name }}
+                                </td>
+                                <td>
+                                    <a href="{% url 'dashboards:dashboard-event-update-view' event.id %}" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                        {% trans "Editar" %}
+                                    </a>
+                                    <a href="{% url 'dashboards:dashboard-event-delete-view' event.id %}" class="btn btn-danger btn-sm">
+                                        <i class="fa  fa-trash-o"></i>
+                                        {% trans "Deletar" %}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">{% trans 'Nenhuma palestra encontrada!!! :(' %}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div>
+</section>
+{% endblock %}
