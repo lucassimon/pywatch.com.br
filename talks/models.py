@@ -21,6 +21,7 @@ class Event(TimeStampedModel):
 
     name = models.CharField(
         verbose_name=_(u'Nome'),
+        help_text=_(u'Escolha um nome para o evento'),
         max_length=255
     )
     """
