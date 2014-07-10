@@ -130,6 +130,7 @@ class Media(TimeStampedModel):
 
     type = models.CharField(
         verbose_name=_(u'Tipo'),
+        help_text=_(u'Escolha uma opção'),
         max_length=3,
         choices=_KIND_MEDIAS
     )
@@ -144,6 +145,7 @@ class Media(TimeStampedModel):
 
     title = models.CharField(
         verbose_name=_(u'Titulo'),
+        help_text=_(u'Escolha um Titulo da media. Exemplo Youtube,Slideshare'),
         max_length=255
     )
     """
@@ -158,6 +160,7 @@ class Media(TimeStampedModel):
 
     url = models.URLField(
         verbose_name=_('URL'),
+        help_text=_(u'Escolha a Url que esta localizada a media'),
     )
     """
     Atributo da classe Media para
