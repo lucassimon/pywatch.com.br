@@ -12,13 +12,24 @@ from django.conf import settings
 # Imports from your apps
 from .views import (
     DashboardIndexTemplateView,
+    ScreencastIndexTemplateView,
+)
+
+from .talk_views import (
     TalkIndexTemplateView,
     TalkCreateView,
     TalkUpdateView,
     TalkListView,
     TalkDeleteView,
-    ScreencastIndexTemplateView,
 )
+
+from .event_views import (
+    EventCreateView,
+    EventUpdateView,
+    EventListView,
+    EventDeleteView,
+)
+
 
 urlpatterns = patterns(
     'dashboards.views',
@@ -51,6 +62,26 @@ urlpatterns = patterns(
         r'^talks/delete/(?P<pk>\d+)$',
         TalkDeleteView.as_view(),
         name='dashboard-talk-delete-view'
+    ),
+    url(
+        r'^events/create/$',
+        EventCreateView.as_view(),
+        name='dashboard-event-create-view'
+    ),
+    url(
+        r'^events/update/(?P<pk>\d+)$',
+        EventUpdateView.as_view(),
+        name='dashboard-event-update-view'
+    ),
+    url(
+        r'^events/list/$',
+        EventListView.as_view(),
+        name='dashboard-event-list-view'
+    ),
+    url(
+        r'^events/delete/(?P<pk>\d+)$',
+        EventDeleteView.as_view(),
+        name='dashboard-event-delete-view'
     ),
     url(
         r'^screencasts/$',
