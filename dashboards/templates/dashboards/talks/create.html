@@ -48,7 +48,7 @@
                     <div class="box-body">
                         <div class="form-group ">
                             {{ form.event.label_tag }} 
-                            <a href="">
+                            <a href="{% url "dashboards:dashboard-event-create-view"  %}">
                                 <i class="fa fa-plus text-green"></i>
                             </a>
                             {{ form.event }}
@@ -93,6 +93,53 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% with mediatalk_formset as medias %}
+                    <div class="box-body">
+                        {{ medias.management_form }}
+                        {% for media_form in medias %}
+                            <h3 class="box-title">Inserir medias utilizadas</h3>
+                            <div class="form-group{% if media_form.type.errors %} has-error{% endif %}">
+                                {{ media_form.type.label_tag }}
+                                {{ media_form.type }}
+                                <p class="text-aqua">
+                                    {{ media_form.type.help_text }}
+                                </p>
+                                {% if media_form.type.errors %}
+                                    {% for error in media_form.type.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group{% if media_form.title.errors %} has-error{% endif %}">
+                                {{ media_form.title.label_tag }}
+                                {{ media_form.title }}
+                                <p class="text-aqua">
+                                    {{ media_form.title.help_text }}
+                                </p>
+                                {% if media_form.title.errors %}
+                                    {% for error in media_form.title.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group{% if media_form.url.errors %} has-error{% endif %}">
+                                {{ media_form.url.label_tag }}
+                                {{ media_form.url }}
+                                <p class="text-aqua">
+                                    {{ media_form.url.help_text }}
+                                </p>
+                                {% if media_form.url.errors %}
+                                    {% for error in media_form.url.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% endwith %}
+
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">
                             {% trans "Enviar" %}
