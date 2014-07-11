@@ -94,12 +94,16 @@
                                     {{ talk.tags.all|safeseq|join:", " }}
                                 </td>
                                 <td>
+                                    <a href="{% url 'dashboards:dashboard-talk-update-view' talk.id %}" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-picture-o"></i>
+                                        {% trans "Medias" %}
+                                    </a>
                                     <a href="{% url 'dashboards:dashboard-talk-update-view' talk.id %}" class="btn btn-warning btn-sm">
                                         <i class="fa fa-edit"></i>
                                         {% trans "Editar" %}
                                     </a>
                                     <a href="{% url 'dashboards:dashboard-talk-delete-view' talk.id %}" class="btn btn-danger btn-sm">
-                                        <i class="fa  fa-trash-o"></i>
+                                        <i class="fa fa-trash-o"></i>
                                         {% trans "Deletar" %}
                                     </a>
                                 </td>
