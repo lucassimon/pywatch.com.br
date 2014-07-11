@@ -141,4 +141,9 @@ class MediaTalkForm(forms.ModelForm):
         }
 
 
-MediaTalkFormSet = formset_factory(MediaTalkForm, extra=2)
+MediaTalkFormSet = formset_factory(
+    MediaTalkForm,
+    extra=2,
+    can_delete=True,
+    can_order=True,
+)
