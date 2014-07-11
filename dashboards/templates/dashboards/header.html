@@ -47,14 +47,13 @@
                         <div class="col-xs-4 text-center">
                             <a href="#">
                                 {% trans "Videos" %}
-
                             </a>
                         </div>
-                        <div class="col-xs-4 text-center">
-                            <a href="#">
-                                {% trans "Tutoriais" %}
-                            </a>
-                        </div>
+                        <!-- <div class="col-xs-4 text-center"> -->
+                        <!--     <a href="#"> -->
+                        <!--         {% trans "Tutoriais" %} -->
+                        <!--     </a> -->
+                        <!-- </div> -->
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
@@ -64,7 +63,7 @@
                             </a>
                         </div>
                         <div class="pull-right">
-                            <a href="#" class="btn btn-default btn-flat">
+                            <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">
                                 {% trans "Sair" %}
                             </a>
                         </div>
