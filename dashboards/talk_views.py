@@ -89,23 +89,36 @@ class TalkCreateView(CreateView):
         # associa o palestrante de acordo
         # com uma pesquisa feito no model SpeakerUser
         # filtrando pelo usuario logado
-
-        self.object = talk.save()
-        # salvar a o formulario
-        if mediatalk_forms.is_valid():
-            for media in mediatalk_forms:
-                import pudb; pudb.set_trace()
-                media.save(commit=False)
-                media.talk = self.object
-                media.save()
-
+        talk.save()
         super(TalkCreateView, self).form_valid(form)
         # chama o metodo super
+
+        # salvar as medias no formulario
+        if mediatalk_forms.is_valid():
+            for idx, media in enumerate(mediatalk_forms):
+                media_type, media_title, media_url = self.get_media_form_data(
+                    media,
+                    idx
+                )
+                if media_type and media_title and media_url:
+                    media.save(commit=False)
+                    media.instance.talk = talk
+                    media.save()
 
         # e retorna para a página de sucesso
         return HttpResponseRedirect(
             self.get_success_url()
         )
+
+    def get_media_form_data(self, media, idx):
+        """
+        Retorna os valores dos atributos do formset media talk
+        """
+        mtype = media.data.get("form-%d-type" % idx, "")
+        mtitle = media.data.get("form-%d-title" % idx, "")
+        murl = media.data.get("form-%d-url" % idx, "")
+
+        return mtype, mtitle, murl
 
     def get_form_kwargs(self):
         """
@@ -234,11 +247,18 @@ class TalkListView(ListView):
         context = super(
             TalkListView, self
         ).get_context_data(**kwargs)
-        context['talk_list'] = Talk.objects.filter(
-            speaker=context.get('view').request.user
-        )
-
         return context
+
+    def get_queryset(self):
+        """
+        Personaliza o queryset dos palestrantes
+        resgatando o contatos caso existam
+        """
+        return (
+            Talk.objects.filter(
+                speaker=self.request.user
+            )
+        )
 
 
 class TalkDeleteView(DeleteView):
