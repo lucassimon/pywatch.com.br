@@ -3,12 +3,12 @@
 {% load url from future %}
 {% load i18n %}
 
-{% block title %}{% trans "Registrar" %}{% endblock %}
+{% block head_title %}{% trans "Registrar" %}{% endblock %}
 
 {% block content %}
 <div class="form-box" id="login-box">
     <div class="header">
-        {% trans "Entrar" %}
+        {% trans "Registrar" %}
     </div>
     <form action="{% url 'account_signup' %}" method="POST">
         {% csrf_token %}
