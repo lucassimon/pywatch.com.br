@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "account/base.html" %}
 
 {% load i18n %}
 {% load account %}
@@ -7,42 +7,75 @@
 {% block title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-4">
-        <div> 
-            <div>
-                <h1>{% trans "Sign In" %}</h1>
-            </div> 
-            <div>
-                <form method="POST" action="{% url 'account_login' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                    {% endif %}
-                    <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-                    <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-                </form> 
-            </div>      
-        </div>
+<div class="form-box" id="login-box">
+    <div class="header">
+        {% trans "Entrar" %}
     </div>
-    <div class="col-md-2">
-        <div class="horizontal-divider"></div>
-    </div>
-    <div class="col-md-4">
-        <div class="">
-            {% if socialaccount.providers  %}
-                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-                {% include "socialaccount/snippets/login_extra.html" %}
-            {% endif %}
-                <p>
-                    {% blocktrans %}
-                        Se voce nao possui uma conta criada ainda, então por favor
-                        <a href="{{ signup_url }}">registre-se</a>.
-                    {% endblocktrans %}
+    <form action="{% url 'account_login' %}" method="POST">
+        {% csrf_token %}
+        <div class="body bg-gray">
+            <div class="form-group{% if form.login.errors %} has-error{% endif %}">
+                {{ form.login }}
+                <p class="text-aqua">
+                    {{ form.login.help_text }}
                 </p>
+                {% if form.login.errors %}
+                    {% for error in form.login.errors %}
+                        <p class="text-red"> {{ error }} </p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+                {{ form.password }}
+                <p class="text-aqua">
+                    {{ form.password.help_text }}
+                </p>
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <p class="text-red"> {{ error }} </p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group{% if form.remeber.errors %} has-error{% endif %}">
+                {{ form.remember.label_tag }}
+                {{ form.remember }}
+                <p class="text-aqua">
+                    {{ form.remember.help_text }}
+                </p>
+                {% if form.remember.errors %}
+                    {% for error in form.remember.errors %}
+                        <p class="text-red"> {{ error }} </p>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
+        <div class="footer">                                                               
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit" class="btn bg-olive btn-block">
+                {% trans "Entrar" %}
+            </button>  
+            <p>
+                <a href="{% url 'account_reset_password' %}">
+                    {% trans "Eu esqueci minha senha" %}
+                </a>
+            </p>
+
+            <a href="{{ signup_url }}" class="text-center">
+                {% trans "Registre-se como um novo membro" %}
+            </a>
+        </div>
+    </form>
+
+    <div class="margin text-center">
+        <span>{% trans "Entre utilizando com uma conta de rede social" %}</span>
+        <br>
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        {% include "socialaccount/snippets/login_extra.html" %}
+        <!-- <button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button> -->
+        <!-- <button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button> -->
+        <!-- <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button> -->
     </div>
-    <div class="col-md-1"></div>
 </div>
 {% endblock %}
