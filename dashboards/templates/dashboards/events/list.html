@@ -43,17 +43,19 @@
                         <li>
                             {% if page_obj.has_previous %}
                                 <a href="{% url 'dashboards:dashboard-event-list-view' %}?page={{ page_obj.previous_page_number }}">
-                                    {% trans 'anterior' %}
+                                    <i class="fa fa-angle-double-left"></i>
                                 </a>
                             {% endif %}
                         </li>
                         <li>
-                            {{ page_obj.number }}
+                            <a href="{% url 'dashboards:dashboard-talk-list-view' %}?page={{ page_obj.number }}">
+                                {{ page_obj.number }}
+                            </a>
                         </li>
                         <li>
                             {% if page_obj.has_next %}
                                 <a href="{% url 'dashboards:dashboard-event-list-view' %}?page={{ page_obj.next_page_number }}">
-                                    {% trans 'Próximo' %}
+                                    <i class="fa fa-angle-double-right"></i>
                                 </a>
                             {% endif %}
                         </li>
