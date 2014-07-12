@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'djrill',
 )
 
 REST_FRAMEWORK = {
@@ -105,15 +106,15 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_PERMISSION_CLASSES': [
-        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.OAuth2Authentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.OAuth2Authentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
 
 }
@@ -140,6 +141,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_REDIRECT_URL = '/dashboard/'
+DEFAULT_FROM_EMAIL = 'contato@pywatch.com.br'
 
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'taggit.south_migrations',
