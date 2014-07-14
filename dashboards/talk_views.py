@@ -18,6 +18,18 @@ from talks.models import Talk
 from talks.forms import TalkForm, MediaTalkFormSet
 
 
+class TalkProfileTemplateView(TemplateView):
+    """
+    Classe generica para renderizar o template
+    da index de palestras no dashboard
+    """
+
+    template_name = "dashboards/talks/profile.html"
+    """
+    Define o nome do template a ser utilizado
+    """
+
+
 class TalkIndexTemplateView(TemplateView):
     """
     Classe generica para renderizar o template
