@@ -3,10 +3,7 @@
 # Stdlib imports
 
 # Core Django imports
-from django.contrib.auth.decorators import login_required
-from django.conf.urls import patterns, url, include
-from django.core.urlresolvers import reverse_lazy
-from django.conf import settings
+from django.conf.urls import patterns, url
 # Third-party app imports
 
 # Imports from your apps
@@ -21,7 +18,6 @@ from .talk_views import (
     TalkUpdateView,
     TalkListView,
     TalkDeleteView,
-    TalkProfileTemplateView,
 )
 
 from .event_views import (
@@ -50,11 +46,6 @@ urlpatterns = patterns(
         r'^talks/$',
         TalkIndexTemplateView.as_view(),
         name='dashboard-talk-index-view'
-    ),
-    url(
-        r'^talks/profile/$',
-        TalkProfileTemplateView.as_view(),
-        name='dashboard-talk-profile-view'
     ),
     url(
         r'^talks/create/$',
