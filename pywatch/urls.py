@@ -52,13 +52,6 @@ urlpatterns = patterns(
             namespace='dashboards'
         )
     ),
-
-    #url(
-        #r'^accounts/profile/',
-        #include(
-            #'dashboard.urls'
-        #)
-    #),
 )
 
 
