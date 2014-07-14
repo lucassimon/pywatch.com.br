@@ -35,6 +35,13 @@
                 <a href="{{ login_url }}">Login</a>.
             {% endblocktrans %}
         </p>
+        <p>
+            {% blocktrans %}
+                <a href="{% url "core:home-page" %}">
+                    Retornar a página principal
+                </a> 
+            {% endblocktrans %}
+        </p>
     </div>
 </div>
 {% endblock %}

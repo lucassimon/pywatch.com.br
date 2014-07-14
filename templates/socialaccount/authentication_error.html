@@ -10,6 +10,14 @@
         <h1>{% trans "Social Network Login Failure" %}</h1>
 
         <p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
+        
+        <p>
+            {% blocktrans %}
+                <a href="{% url "core:home-page" %}">
+                    Retornar a página principal
+                </a> 
+            {% endblocktrans %}
+        </p>
     </div>
 </div>
 {% endblock %}

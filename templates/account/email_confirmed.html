@@ -19,6 +19,13 @@
                 is an e-mail address for user {{ user_display }}.
             {% endblocktrans %}
         </p>
+        <p>
+            {% blocktrans %}
+                <a href="{% url "core:home-page" %}">
+                    Retornar a página principal
+                </a> 
+            {% endblocktrans %}
+        </p>
     </div>
 </div>
 {% endblock %}
