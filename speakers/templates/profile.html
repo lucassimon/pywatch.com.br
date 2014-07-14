@@ -1,0 +1,73 @@
+{% extends 'dashboards/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        {% trans 'Perfil' %}
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
+                <i class="fa fa-dashboard"></i> Home
+            </a>
+        </li>
+        <li class="active">
+            {% trans 'Perfil' %}
+        </li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">
+                       {% trans 'Visualizar o perfil' %}
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="profile-image">
+                </div>
+                <div class="profile-content">
+                    <h4>
+                        {{ request.user.get_full_name }}
+                    </h4>
+                    <h5>
+                        {% trans "Sobre" %}
+                    </h5>
+                    <p>
+                        {{ request.user.bio }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                           {% trans 'Trocar senha' %}
+                        </h3>
+                    </div><!-- /.box-header -->
+                </div>
+            </div>
+            <div class="row">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                           {% trans 'Informações pessoais' %}
+                        </h3>
+                    </div><!-- /.box-header -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
