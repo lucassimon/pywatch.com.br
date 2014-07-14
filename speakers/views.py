@@ -3,6 +3,9 @@
 # Stdlib imports
 
 # Core Django imports
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic.base import TemplateView
 from rest_framework import generics
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -30,6 +33,31 @@ class SpeakerDetail(generics.RetrieveUpdateAPIView):
     '''
     model = SpeakerUser
     serializer_class = SpeakerSerializer
+
+
+class SpeakerProfileTemplateView(TemplateView):
+    u"""
+    Classe generica para renderizar o template
+    da index de palestras no dashboard
+    """
+
+    template_name = "profile.html"
+    u"""
+    Define o nome do template a ser utilizado
+    """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(SpeakerProfileTemplateView, self).dispatch(
+            *args,
+            **kwargs
+        )
 
 
 class SpeakerListView(ListView):

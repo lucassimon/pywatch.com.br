@@ -1,8 +1,12 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from django.conf.urls import patterns, url
 
-from .views import SpeakerListView, SpeakerDetailView
+from .views import (
+    SpeakerListView,
+    SpeakerDetailView,
+    SpeakerProfileTemplateView
+)
 
 urlpatterns = patterns(
     'speakers.views',
@@ -10,6 +14,11 @@ urlpatterns = patterns(
         r'^$',
         SpeakerListView.as_view(),
         name='speaker-list-view'
+    ),
+    url(
+        r'^profile/$',
+        SpeakerProfileTemplateView.as_view(),
+        name='speaker-profile-view'
     ),
     url(
         r'^(?P<slug>[-_\w]+)/$',
