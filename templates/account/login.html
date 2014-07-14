@@ -15,6 +15,7 @@
         {% csrf_token %}
         <div class="body bg-gray">
             <div class="form-group{% if form.login.errors %} has-error{% endif %}">
+                {{ form.login.label_tag }}
                 {{ form.login }}
                 <p class="text-aqua">
                     {{ form.login.help_text }}
@@ -26,24 +27,13 @@
                 {% endif %}
             </div>
             <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+                {{ form.password.label_tag }}
                 {{ form.password }}
                 <p class="text-aqua">
                     {{ form.password.help_text }}
                 </p>
                 {% if form.password.errors %}
                     {% for error in form.password.errors %}
-                        <p class="text-red"> {{ error }} </p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div class="form-group{% if form.remeber.errors %} has-error{% endif %}">
-                {{ form.remember.label_tag }}
-                {{ form.remember }}
-                <p class="text-aqua">
-                    {{ form.remember.help_text }}
-                </p>
-                {% if form.remember.errors %}
-                    {% for error in form.remember.errors %}
                         <p class="text-red"> {{ error }} </p>
                     {% endfor %}
                 {% endif %}

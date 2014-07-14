@@ -20,11 +20,9 @@
             <button class="btn bg-olive" type="submit">{% trans 'Sign Out' %}</button>
         </form>
         <p>
-            {% blocktrans %}
-                <a href="{% url "core:home-page" %}">
-                    Retornar a página principal
-                </a> 
-            {% endblocktrans %}
+            <a href="{% url "core:home-page" %}">
+                {% trans "Retornar a página principal" %}
+            </a> 
         </p>
     </div>
 </div>

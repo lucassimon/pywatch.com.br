@@ -11,11 +11,9 @@
         <h1>{% trans "Sign Up Closed" %}</h1>
         <p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
         <p>
-            {% blocktrans %}
-                <a href="{% url "core:home-page" %}">
-                    Retornar a página principal
-                </a> 
-            {% endblocktrans %}
+            <a href="{% url "core:home-page" %}">
+                {% trans "Retornar a página principal" %}
+            </a> 
         </p>
     </div>
 </div>
