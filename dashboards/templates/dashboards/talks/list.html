@@ -94,7 +94,7 @@
                                     {{ talk.tags.all|safeseq|join:", " }}
                                 </td>
                                 <td>
-                                    <a href="{% url 'dashboards:dashboard-talk-update-view' talk.id %}" class="btn btn-primary btn-sm">
+                                    <a href="{% url 'dashboards:dashboard-mediatalk-list-view' talk.id %}" class="btn btn-primary btn-sm">
                                         <i class="fa fa-picture-o"></i>
                                         {% trans "Medias" %}
                                     </a>
