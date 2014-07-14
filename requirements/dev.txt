@@ -20,3 +20,4 @@ webtest
 nose-progressive
 xtraceback
 sqlformatter
+selenium
