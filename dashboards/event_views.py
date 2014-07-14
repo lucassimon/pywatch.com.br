@@ -3,6 +3,8 @@
 # Stdlib imports
 
 # Core Django imports
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DeleteView
@@ -13,7 +15,6 @@ from django.utils.translation import ugettext as _
 # Third-party app imports
 
 # Imports from your apps
-from speakers.models import SpeakerUser
 from talks.models import Event
 from talks.forms import EventForm
 
@@ -28,6 +29,16 @@ class EventIndexTemplateView(TemplateView):
     """
     Define o nome do template a ser utilizado
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(EventIndexTemplateView, self).dispatch(*args, **kwargs)
 
 
 class EventCreateView(CreateView):
@@ -49,6 +60,16 @@ class EventCreateView(CreateView):
     """
     Define a url de sucesso apos criar o objeto de evento
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(EventCreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         """
@@ -98,6 +119,16 @@ class EventUpdateView(UpdateView):
     """
     Define a url de sucesso apos criar o objeto de evento
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(EventUpdateView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         """
@@ -182,6 +213,16 @@ class EventListView(ListView):
     paginados
     """
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(EventListView, self).dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         """
         Seta objetos para o contexto
@@ -213,6 +254,16 @@ class EventDeleteView(DeleteView):
     u"""
     Define a url de sucesso apos criar o objeto de evento
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(EventDeleteView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         """
