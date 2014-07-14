@@ -92,12 +92,12 @@ urlpatterns = patterns(
     ),
     url(
         r'^mediatalks/create/(?P<talk_pk>\d+)/$',
-        EventCreateView.as_view(),
+        MediaTalkCreateView.as_view(),
         name='dashboard-mediatalk-create-view'
     ),
     url(
         r'^mediatalks/update/(?P<talk_pk>\d+)/(?P<pk>\d+)/$',
-        EventUpdateView.as_view(),
+        MediaTalkUpdateView.as_view(),
         name='dashboard-mediatalk-update-view'
     ),
     url(
@@ -107,7 +107,7 @@ urlpatterns = patterns(
     ),
     url(
         r'^mediatalks/delete/(?P<talk_pk>\d+)/(?P<pk>\d+)/$',
-        EventDeleteView.as_view(),
+        MediaTalkDeleteView.as_view(),
         name='dashboard-mediatalk-delete-view'
     ),
     url(
