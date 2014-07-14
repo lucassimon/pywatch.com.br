@@ -93,6 +93,7 @@ INSTALLED_APPS = (
     'haystack',
     'taggit',
     'mptt',
+    'django_gravatar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
