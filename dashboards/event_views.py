@@ -45,7 +45,7 @@ class EventCreateView(CreateView):
     Define o formulario a ser renderizado no template
     """
 
-    success_url = reverse_lazy('dashboards:dashboard-talk-create-view')
+    success_url = reverse_lazy('dashboards:dashboard-event-list-view')
     """
     Define a url de sucesso apos criar o objeto de evento
     """
