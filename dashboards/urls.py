@@ -30,6 +30,13 @@ from .event_views import (
     EventDeleteView,
 )
 
+from .media_talks_views import (
+    MediaTalkCreateView,
+    MediaTalkUpdateView,
+    MediaTalkListView,
+    MediaTalkDeleteView,
+)
+
 
 urlpatterns = patterns(
     'dashboards.views',
@@ -82,6 +89,26 @@ urlpatterns = patterns(
         r'^events/delete/(?P<pk>\d+)$',
         EventDeleteView.as_view(),
         name='dashboard-event-delete-view'
+    ),
+    url(
+        r'^mediatalks/create/(?P<talk_pk>\d+)/$',
+        EventCreateView.as_view(),
+        name='dashboard-mediatalk-create-view'
+    ),
+    url(
+        r'^mediatalks/update/(?P<talk_pk>\d+)/(?P<pk>\d+)/$',
+        EventUpdateView.as_view(),
+        name='dashboard-mediatalk-update-view'
+    ),
+    url(
+        r'^mediatalks/list/(?P<talk_pk>\d+)/$',
+        MediaTalkListView.as_view(),
+        name='dashboard-mediatalk-list-view'
+    ),
+    url(
+        r'^mediatalks/delete/(?P<talk_pk>\d+)/(?P<pk>\d+)/$',
+        EventDeleteView.as_view(),
+        name='dashboard-mediatalk-delete-view'
     ),
     url(
         r'^screencasts/$',
