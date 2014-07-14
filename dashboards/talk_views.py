@@ -3,6 +3,8 @@
 # Stdlib imports
 
 # Core Django imports
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DeleteView
@@ -18,28 +20,26 @@ from talks.models import Talk
 from talks.forms import TalkForm, MediaTalkFormSet
 
 
-class TalkProfileTemplateView(TemplateView):
-    """
-    Classe generica para renderizar o template
-    da index de palestras no dashboard
-    """
-
-    template_name = "dashboards/talks/profile.html"
-    """
-    Define o nome do template a ser utilizado
-    """
-
-
 class TalkIndexTemplateView(TemplateView):
-    """
+    u"""
     Classe generica para renderizar o template
     da index de palestras no dashboard
     """
 
     template_name = "dashboards/talks/index.html"
-    """
+    u"""
     Define o nome do template a ser utilizado
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(TalkIndexTemplateView, self).dispatch(*args, **kwargs)
 
 
 class TalkCreateView(CreateView):
@@ -61,6 +61,16 @@ class TalkCreateView(CreateView):
     """
     Define a url de sucesso apos criar o objeto de palestra
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(TalkCreateView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         u"""
@@ -161,6 +171,16 @@ class TalkUpdateView(UpdateView):
     Define a url de sucesso apos criar o objeto de palestra
     """
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(TalkUpdateView, self).dispatch(*args, **kwargs)
+
     def get_object(self, queryset=None):
         """
         Sobrescreve o metodo para buscar a palestra
@@ -252,6 +272,16 @@ class TalkListView(ListView):
     paginados
     """
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(TalkListView, self).dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         """
         Seta objetos para o contexto
@@ -292,6 +322,16 @@ class TalkDeleteView(DeleteView):
     u"""
     Define a url de sucesso apos criar o objeto de palestra
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(TalkDeleteView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         """
