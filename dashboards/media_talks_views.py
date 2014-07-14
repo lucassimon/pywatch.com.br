@@ -3,6 +3,8 @@
 # Stdlib imports
 
 # Core Django imports
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DeleteView
@@ -13,7 +15,6 @@ from django.utils.translation import ugettext as _
 # Third-party app imports
 
 # Imports from your apps
-from speakers.models import SpeakerUser
 from talks.models import MediaTalk
 from talks.forms import MediaTalkCreateAndUpdateForm
 
@@ -28,6 +29,19 @@ class MediaTalkIndexTemplateView(TemplateView):
     """
     Define o nome do template a ser utilizado
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(MediaTalkIndexTemplateView, self).dispatch(
+            *args,
+            **kwargs
+        )
 
 
 class MediaTalkCreateView(CreateView):
@@ -44,6 +58,19 @@ class MediaTalkCreateView(CreateView):
     """
     Define o formulario a ser renderizado no template
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(MediaTalkCreateView, self).dispatch(
+            *args,
+            **kwargs
+        )
 
     def form_valid(self, form):
         """
@@ -88,6 +115,19 @@ class MediaTalkUpdateView(UpdateView):
     """
     Define o formulario a ser renderizado no template
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(MediaTalkUpdateView, self).dispatch(
+            *args,
+            **kwargs
+        )
 
     def get_object(self, queryset=None):
         """
@@ -172,6 +212,19 @@ class MediaTalkListView(ListView):
     paginados
     """
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(MediaTalkListView, self).dispatch(
+            *args,
+            **kwargs
+        )
+
     def get_context_data(self, **kwargs):
         """
         Seta objetos para o contexto
@@ -213,6 +266,19 @@ class MediaTalkDeleteView(DeleteView):
     u"""
     Define a url de sucesso apos criar o objeto de evento
     """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(MediaTalkDeleteView, self).dispatch(
+            *args,
+            **kwargs
+        )
 
     def get_object(self, queryset=None):
         """
