@@ -141,7 +141,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_REDIRECT_URL = '/dashboard/'
-DEFAULT_FROM_EMAIL = 'contato@pywatch.com.br'
+DEFAULT_FROM_EMAIL = 'no-reply@pywatch.com.br'
 
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'taggit.south_migrations',
