@@ -22,7 +22,8 @@
                     {% if screencast.medias.all %}
                         <footer> 
                             {% for media in screencast.medias.all %}
-                                <a href="{{ media.url }}">{{ media.title }}</a> - 
+                                <a href="{{ media.url }}">{{ media.title }}</a>
+                                {% if not forloop.last %}- {% endif %}
                             {% endfor %}
                         </footer>
                     {% endif %}

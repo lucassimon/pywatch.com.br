@@ -31,12 +31,13 @@
         <h3> Contatos </h3>
         {% for contact in objects.contacts.all %}
             {% if contact.kind == 'E' %}
-                <a href="mailto:{{ contact.value }}">{{ contact.value }}</a> - 
+                <a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
             {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
-                {{ contact.get_kind_display }}: {{ contact.value }} -
+                {{ contact.get_kind_display }}: {{ contact.value }}
             {% else %}
-                <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> - 
+                <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> 
             {% endif %}
+            {% if not forloop.last %} - {% endif %}
         {% endfor %}
     </footer>
     {% endif %}
