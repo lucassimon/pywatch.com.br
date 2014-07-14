@@ -1,6 +1,8 @@
 {% extends 'dashboards/base.html' %}
 
 {% load i18n %}
+{% load gravatar %}
+
 
 {% block content %}
 <!-- Content Header (Page header) -->
@@ -32,6 +34,7 @@
                     </h3>
                 </div><!-- /.box-header -->
                 <div class="profile-image">
+                    <img src="{% gravatar_url request.user.email 150 %}">
                 </div>
                 <div class="profile-content">
                     <h4>
