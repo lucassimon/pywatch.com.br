@@ -21,6 +21,7 @@ from .talk_views import (
     TalkUpdateView,
     TalkListView,
     TalkDeleteView,
+    TalkProfileTemplateView,
 )
 
 from .event_views import (
@@ -49,6 +50,11 @@ urlpatterns = patterns(
         r'^talks/$',
         TalkIndexTemplateView.as_view(),
         name='dashboard-talk-index-view'
+    ),
+    url(
+        r'^talks/profile/$',
+        TalkProfileTemplateView.as_view(),
+        name='dashboard-talk-profile-view'
     ),
     url(
         r'^talks/create/$',
