@@ -141,6 +141,53 @@ class MediaTalkForm(forms.ModelForm):
         }
 
 
+class MediaTalkCreateAndUpdateForm(forms.ModelForm):
+    u"""
+    Classe do formulario de medias
+    """
+
+    class Meta:
+        u"""
+        Define atributos do formulario
+        """
+
+        model = MediaTalk
+        u"""
+        Define qual Model será utilizado
+        """
+
+        help_texts = {
+            'type': _(
+                _(u'Escolha uma das opções')
+            ),
+        }
+
+        widgets = {
+            'talk': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'type': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira um titulo'),
+                }
+            ),
+            'url': forms.URLInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira a url aqui'),
+                }
+            ),
+        }
+
+
 MediaTalkFormSet = formset_factory(
     MediaTalkForm,
     extra=2,
