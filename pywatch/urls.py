@@ -7,10 +7,11 @@ from django.contrib import admin
 admin.site = DjrillAdminSite()
 admin.autodiscover()
 
+
 urlpatterns = patterns(
     '',
     url(
-        r'^$',
+        r'^',
         include(
             'core.urls',
             namespace='core'
