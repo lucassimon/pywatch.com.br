@@ -25,11 +25,12 @@
             </ul>
         </section>
     {% endif %}
+    
 
     {% if object.contacts.all %}
     <footer> 
         <h3> Contatos </h3>
-        {% for contact in objects.contacts.all %}
+        {% for contact in object.contacts.all %}
             {% if contact.kind == 'E' %}
                 <a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
             {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
