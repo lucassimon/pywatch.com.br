@@ -29,3 +29,62 @@ class SpeakerUserCreationForm(UserCreationForm):
 class SpeakerUserChangeForm(UserChangeForm):
         class Meta:
             model = SpeakerUser
+
+
+class SpeakerBasicInformationForm(forms.ModelForm):
+    u"""
+    Classe para o formulário de edição básica das
+    informações do palestrante
+    """
+    def __init__(self, *args, **kwargs):
+        super(SpeakerBasicInformationForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
+    class Meta:
+        u"""
+        Define atributos do formulario
+        """
+
+        model = SpeakerUser
+        u"""
+        Define qual Model será utilizado
+        """
+
+        fields = ('first_name', 'last_name', 'bio',)
+        u"""
+        Atributos que irão aparecer no formulário
+        """
+
+        help_texts = {
+            'first_name': _(
+                u'Exemplo: Jhon'
+            ),
+            'last_name': _(
+                u'Exemplo: Doe'
+            ),
+            'bio': _(
+                u'Jhon Doe é programador django/python'
+            ),
+        }
+
+        widgets = {
+            'first_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira o primeiro nome'),
+                }
+            ),
+            'last_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira o último nome'),
+                }
+            ),
+            'bio': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Insira um breve texto aqui'),
+                }
+            ),
+        }
