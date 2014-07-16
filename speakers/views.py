@@ -4,6 +4,8 @@
 
 # Core Django imports
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic.base import TemplateView
 from rest_framework import generics
@@ -15,6 +17,7 @@ from django.views.generic.detail import DetailView
 # Imports from your apps
 from .models import SpeakerUser
 from .serializers import SpeakerSerializer
+from .forms import SpeakerBasicInformationForm
 
 
 class SpeakerList(generics.ListCreateAPIView):
@@ -45,6 +48,18 @@ class SpeakerProfileTemplateView(TemplateView):
     u"""
     Define o nome do template a ser utilizado
     """
+
+    def get_context_data(self, **kwargs):
+        u"""
+        Seta váriaveis para o contexto
+        """
+        context = super(SpeakerProfileTemplateView, self).get_context_data(
+            **kwargs
+        )
+        context['basic_information_form'] = SpeakerBasicInformationForm(
+            instance=self.request.user
+        )
+        return context
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -121,3 +136,22 @@ class SpeakerDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(SpeakerDetailView, self).get_context_data(**kwargs)
         return context
+
+
+def save_basic_information_profile(request):
+    u"""
+    Função responsável por salvar os dados do formulário
+    exibidos na página de perfil do dashboard.
+    """
+    form = SpeakerBasicInformationForm(
+        request.POST or None,
+        instance=request.user
+    )
+
+    if form.is_valid():
+        form.save()
+
+    return HttpResponseRedirect(
+        reverse('speakers:speaker-profile-view'),
+        {'basic_information_form': form}
+    )
