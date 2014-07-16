@@ -26,27 +26,22 @@
 <section class="content">
     <div class="row">
         <div class="col-md-4">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">
-                       {% trans 'Visualizar o perfil' %}
-                    </h3>
-                </div><!-- /.box-header -->
-                <div class="profile-image">
-                    <img src="{% gravatar_url request.user.email 150 %}">
-                </div>
-                <div class="profile-content">
-                    <h4>
-                        {{ request.user.get_full_name }}
-                    </h4>
-                    <h5>
-                        {% trans "Sobre" %}
-                    </h5>
-                    <p>
-                        {{ request.user.bio }}
-                    </p>
-                </div>
+            <h3 class="text-center">
+               {% trans 'Visualizar o perfil' %}
+            </h3>
+            <div class="text-center">
+                <img src="{% gravatar_url request.user.email 150 %}" class="img-circle">
+            </div>
+            <div class="">
+                <h4 class="text-center">
+                    {{ request.user.get_full_name }}
+                </h4>
+                <h5>
+                    {% trans "Sobre" %}
+                </h5>
+                <p>
+                    {{ request.user.bio }}
+                </p>
             </div>
         </div>
         <div class="col-md-8">
@@ -68,6 +63,51 @@
                            {% trans 'Informações pessoais' %}
                         </h3>
                     </div><!-- /.box-header -->
+                    <form role="form" action="{% url "speakers:speaker-profile-save-basic-information" %}" method="post">{% csrf_token %}
+                        <div class="box-body">
+                            <div class="form-group{% if basic_information_form.first_name.errors %} has-error{% endif %}">
+                                {{ basic_information_form.first_name.label_tag }}
+                                {{ basic_information_form.first_name }}
+                                <p class="text-aqua">
+                                    {{ basic_information_form.first_name.help_text }}
+                                </p>
+                                {% if basic_information_form.first_name.errors %}
+                                    {% for error in basic_information_form.first_name.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if basic_information_form.last_name.errors %} has-error{% endif %}">
+                                {{ basic_information_form.last_name.label_tag }}
+                                {{ basic_information_form.last_name }}
+                                <p class="text-aqua">
+                                    {{ basic_information_form.last_name.help_text }}
+                                </p>
+                                {% if basic_information_form.last_name.errors %}
+                                    {% for error in basic_information_form.last_name.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if basic_information_form.bio.errors %} has-error{% endif %}">
+                                {{ basic_information_form.bio.label_tag }}
+                                {{ basic_information_form.bio }}
+                                <p class="text-aqua">
+                                    {{ basic_information_form.bio.help_text }}
+                                </p>
+                                {% if basic_information_form.bio.errors %}
+                                    {% for error in basic_information_form.bio.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">
+                                {% trans "Enviar" %}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
