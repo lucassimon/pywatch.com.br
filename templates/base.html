@@ -101,7 +101,7 @@
                                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                     <span class="">
                                         <small>{% trans "Bem Vindo" %},</small>
-                                        {{ request.user.get_full_name }}
+                                        {{ request.user.get_short_name }}
                                     </span>
                                     <i class="fa fa-caret-down"></i>
                                 </a>
@@ -163,7 +163,8 @@
                 <div class="span12 text-center">
                     <p>
                         {% blocktrans %}
-                            Desenvolvido com <span>Django</span> por Lucas Simon Rodrigues Magalhães
+                        <a href="http://www.djangoproject.com/" target="_blank"><img src="https://www.djangoproject.com/m/img/badges/djangopowered126x54.gif" border="0" alt="Powered by Django." title="Powered by Django." /></a>
+                        por Lucas Simon Rodrigues Magalhães
                         {% endblocktrans %}
                     </p>
                 </div>
