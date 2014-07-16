@@ -5,10 +5,28 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
 {% endblock meta_description %}
 {% block meta_keywords %} Python, Palestrantes, Tutoriais, Palestras, Screencasts{% endblock meta_keywords %}
 
-{% block content %}
+{% load i18n %}
 
+{% block content %}
 <section>
-    <h2> Últimos palestras cadastradas </h2>
+    <div class="jumbotron">
+        <h1>Bem vindos ao , PyWatch!</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    {% blocktrans %}
+                        Veja a apresentação do sistema no video ao lado, e popularize seu conhecimento
+                    {% endblocktrans %}
+                </p>
+            </div>
+            <div class="col-md-8 embed-responsive embed-responsive-16by9">
+                <iframe src="http://player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <h2> {% trans "Últimos palestras cadastradas" %} </h2>
     {% if most_recent_talks_list %}
         <ul class="list-unstyled">
             {% for talk in most_recent_talks_list %}
@@ -25,7 +43,7 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
 </section>
 
 <section>
-    <h2> Últimos palestrantes cadastrados </h2>
+    <h2> {% trans "Últimos palestrantes cadastrados" %} </h2>
     {% if most_recent_speakers_list %}
         <ul class="list-unstyled">
             {% for speaker in most_recent_speakers_list %}
@@ -39,6 +57,18 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
     {% else %}
         <p>Nenhum palestrante encontrado!!! :(</p>
     {% endif %}
+</section>
+
+<section class="well">
+    <div class="bs-callout bs-callout-info">
+        <h3>{% trans "Deseja contribuir com códigos e evolução do pywatch?" %}</h3>
+        <p>
+            {% trans "Faça um Fork do projeto" %}
+            <a href="https://github.com/lucassimon/pywatch.com.br" target="_blank" class="btn btn-primary btn-lg">
+                {% trans "Aqui" %}
+            </a>
+        </p>
+    </div>
 </section>
 
 {% endblock %}
