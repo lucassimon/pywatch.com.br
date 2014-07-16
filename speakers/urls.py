@@ -5,7 +5,8 @@ from django.conf.urls import patterns, url
 from .views import (
     SpeakerListView,
     SpeakerDetailView,
-    SpeakerProfileTemplateView
+    SpeakerProfileTemplateView,
+    save_basic_information_profile
 )
 
 urlpatterns = patterns(
@@ -19,6 +20,11 @@ urlpatterns = patterns(
         r'^profile/$',
         SpeakerProfileTemplateView.as_view(),
         name='speaker-profile-view'
+    ),
+    url(
+        r'^profile/basic-information$',
+        save_basic_information_profile,
+        name='speaker-profile-save-basic-information'
     ),
     url(
         r'^(?P<slug>[-_\w]+)/$',
