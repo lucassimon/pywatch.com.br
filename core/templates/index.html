@@ -9,19 +9,23 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
 
 {% block content %}
 <section>
-    <div class="jumbotron">
-        <h1>Bem vindos ao , PyWatch!</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <p>
-                    {% blocktrans %}
-                        Veja a apresentação do sistema no video ao lado, e popularize seu conhecimento
-                    {% endblocktrans %}
-                </p>
-            </div>
-            <div class="col-md-8 embed-responsive embed-responsive-16by9">
-                <iframe src="http://player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-            </div>
+    <div>
+        <h1 class="text-center main-title-call-action">Compartilhe e popularize seu conhecimento</h1>
+        <p class="text-center main-paragraph-call-action">
+           {% blocktrans %}
+                Veja a apresentação e saiba mais dessa base de conhecimento e faça seu registro. 
+            {% endblocktrans %}
+        </p>
+        <div class="text-center">
+            <a href="{% url "core:core-signup" %}" class="btn btn-lg btn-primary btn-call-action">
+                {% trans "Registre-se" %}
+            </a>
+
+            <a href="#" data-toggle="modal" data-target="#tour-modal" data-backdrop="false" class="btn btn-lg btn-info btn-call-action">
+                <span>
+                    {% trans "Veja a apresentação" %}
+                </span>
+            </a>
         </div>
     </div>
 </section>
@@ -59,7 +63,7 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
     {% endif %}
 </section>
 
-<section class="well">
+<section >
     <div class="bs-callout bs-callout-info">
         <h3>{% trans "Deseja contribuir com a evolução do pywatch?" %}</h3>
         <p>
