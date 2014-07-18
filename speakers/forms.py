@@ -5,9 +5,10 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms.models import inlineformset_factory
 
 # Realative imports of the 'app-name' package
-from .models import SpeakerUser
+from .models import SpeakerUser, KindContact
 
 
 class SpeakerUserCreationForm(UserCreationForm):
@@ -88,3 +89,57 @@ class SpeakerBasicInformationForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class SpeakerContactForm(forms.ModelForm):
+    u"""
+    Classe para o formulário de edição básica das
+    informações do palestrante
+    """
+    def __init__(self, *args, **kwargs):
+        super(SpeakerContactForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        u"""
+        Define atributos do formulario
+        """
+
+        model = KindContact
+        u"""
+        Define qual Model será utilizado
+        """
+
+        fields = ('kind', 'value',)
+        u"""
+        Atributos que irão aparecer no formulário
+        """
+
+        help_texts = {
+            'kind': _(
+                u'Escolha um tipo de contato dentre as opções acima'
+            ),
+            'value': _(
+                u'Informe os dados da respectiva opção'
+            ),
+        }
+
+        widgets = {
+
+            'kind': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'value': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': _(u'Informe um valor aqui'),
+                }
+            ),
+        }
+
+ContactFormSet = inlineformset_factory(
+    SpeakerUser,
+    KindContact,
+    form=SpeakerContactForm
+)
