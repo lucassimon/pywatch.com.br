@@ -79,9 +79,7 @@ class TalkCreateView(CreateView):
         context = super(TalkCreateView, self).get_context_data(**kwargs)
         if self.request.POST:
             context['mediatalk_formset'] = MediaTalkFormSet(self.request.POST)
-            context['mediatalk_formset'] = MediaTalkFormSet(self.request.POST)
         else:
-            context['mediatalk_formset'] = MediaTalkFormSet()
             context['mediatalk_formset'] = MediaTalkFormSet()
         return context
 
