@@ -45,16 +45,16 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="row">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                           {% trans 'Trocar senha' %}
-                        </h3>
-                    </div><!-- /.box-header -->
-                </div>
-            </div>
+            <!-- <div class="row"> -->
+            <!--     <1!-- general form elements --1> -->
+            <!--     <div class="box box-primary"> -->
+            <!--         <div class="box-header"> -->
+            <!--             <h3 class="box-title"> -->
+            <!--                {% trans 'Trocar senha' %} -->
+            <!--             </h3> -->
+            <!--         </div><1!-- /.box-header --1> -->
+            <!--     </div> -->
+            <!-- </div> -->
             <div class="row">
                 <!-- general form elements -->
                 <div class="box box-primary">
@@ -112,5 +112,32 @@
             </div>
         </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">
+                       {% trans 'Cadastrar contatos' %}
+                    </h3>
+                </div><!-- /.box-header -->
+                <form role="form" action="{% url "speakers:speaker-profile-save-basic-information" %}" method="post">{% csrf_token %}
+                    <div class="box-body">
+                        {{ contact_form_set.management_form }}
+                        {% for form in contact_form_set %}
+                            {{form}}
+                        {% endfor %}
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            {% trans "Enviar" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
