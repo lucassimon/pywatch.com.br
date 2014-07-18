@@ -97,7 +97,7 @@
                     <div class="box-body">
                         {{ medias.management_form }}
                         {% for media_form in medias %}
-                            <h3 class="box-title">Inserir medias utilizadas</h3>
+                        <h3 class="box-title">Inserir medias utilizadas {{ forloop.counter0 }} </h3>
                             <div class="form-group{% if media_form.type.errors %} has-error{% endif %}">
                                 {{ media_form.type.label_tag }}
                                 {{ media_form.type }}
