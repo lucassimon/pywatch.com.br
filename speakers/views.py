@@ -17,7 +17,10 @@ from django.views.generic.detail import DetailView
 # Imports from your apps
 from .models import SpeakerUser
 from .serializers import SpeakerSerializer
-from .forms import SpeakerBasicInformationForm
+from .forms import (
+    SpeakerBasicInformationForm,
+    ContactFormSet
+)
 
 
 class SpeakerList(generics.ListCreateAPIView):
@@ -59,6 +62,10 @@ class SpeakerProfileTemplateView(TemplateView):
         context['basic_information_form'] = SpeakerBasicInformationForm(
             instance=self.request.user
         )
+        context['contact_form_set'] = ContactFormSet(
+            instance=self.request.user
+        )
+
         return context
 
     @method_decorator(login_required)
