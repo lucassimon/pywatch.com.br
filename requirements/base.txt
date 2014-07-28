@@ -19,3 +19,4 @@ django-allauth
 django-mptt
 djrill
 django-gravatar2
+django-uuslug
