@@ -9,6 +9,7 @@ before_script:
 branches:
   except:
     - dev_lucas
+    - dashboard_feature
 # whitelist
 branches:
   only:
