@@ -47,4 +47,8 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 
 ##########  END MAILTRAP CONFIGURATION
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'http://staging-pywatch.lucassimon.com.br/',
+    'staging-pywatch.lucassimon.com.br/',
+    'www.staging-pywatch.lucassimon.com.br/',
+]
