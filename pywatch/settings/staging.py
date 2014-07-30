@@ -49,4 +49,8 @@ MANDRILL_API_KEY = config('EMAIL_HOST_PASSWORD')
 
 # #########  END MAILTRAP CONFIGURATION
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'http://staging-pywatch.lucassimon.com.br/',
+    'staging-pywatch.lucassimon.com.br/',
+    'www.staging-pywatch.lucassimon.com.br/',
+]
