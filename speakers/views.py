@@ -19,7 +19,8 @@ from .models import SpeakerUser
 from .serializers import SpeakerSerializer
 from .forms import (
     SpeakerBasicInformationForm,
-    ContactFormSet
+    ContactFormSet,
+    SpeakerContactForm
 )
 
 
@@ -162,3 +163,26 @@ def save_basic_information_profile(request):
         reverse('speakers:speaker-profile-view'),
         {'basic_information_form': form}
     )
+
+
+# def save_speaker_contacts_information_profile(request):
+#     u"""
+#     Função responsável por salvar os contatos do palestrantes
+#     """
+#     form = SpeakerContactForm(
+#         request.POST or None,
+#         instance=request.user
+#     )
+
+#     basic_information_form = SpeakerBasicInformationForm(
+#         request.POST or None,
+#         instance=request.user
+#     )
+
+#     if form.is_valid():
+#         form.save()
+
+#     return HttpResponseRedirect(
+#         reverse('speakers:speaker-profile-view'),
+#         {'basic_information_form': basic_information_form}
+#     )

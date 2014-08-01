@@ -24,7 +24,7 @@ class Serie(TimeStampedModel):
         max_length=255
     )
     """
-    Atributo da classe  para identificar um evento
+    Atributo da classe  para identificar uma serie
     e seu nome
 
     Caracteristicas:
@@ -41,7 +41,7 @@ class Serie(TimeStampedModel):
     )
     """
     Atributo da classe para criar um slug baseado
-    no nome do evento
+    no nome do serie
 
     Caracteristicas:
     SlugField

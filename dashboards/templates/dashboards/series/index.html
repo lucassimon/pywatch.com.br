@@ -5,7 +5,7 @@
  <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        {% trans "Videos" %}
+        {% trans "Séries" %}
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
@@ -15,7 +15,7 @@
             </a>
         </li>
         <li class="active">
-            {% trans "Videos" %}
+            {% trans "Séries" %}
         </li>
     </ol>
 </section>
@@ -24,22 +24,22 @@
         <div class="callout callout-info">
             <h4>
                 {% blocktrans %}
-                Crie, atualize, liste ou exclua seus videos!
+                Crie, atualize, liste ou exclua suas séries!
                 {% endblocktrans %}
             </h4>
             <p>
                 {% blocktrans %}
-                    Para realizar as ações desejadas clique nos links abaixo. Ou use o menu lateral.
+                    Para realizar as ações desejadas clique nos links abaixo.
                 {% endblocktrans %}
             </p>
         </div>
-        <a href="{% url 'dashboards:dashboard-serie-create-view' %}" class="btn btn-app">
+        <a href="" class="btn btn-app">
             <i class="fa fa-plus"></i>
-            {% trans "Criar Series" %}
+            {% trans "Criar Séries" %}
         </a>
-        <a href="{% url 'dashboards:dashboard-serie-list-view'  %}" class="btn btn-app">
+        <a href="" class="btn btn-app">
             <i class="fa fa-list"></i>
-            {% trans "Listar Series" %}
+            {% trans "Listar Séries" %}
         </a>
         <a href="{% url 'dashboards:dashboard-screencast-create-view' %}" class="btn btn-app">
             <i class="fa fa-plus"></i>
