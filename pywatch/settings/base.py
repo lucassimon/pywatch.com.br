@@ -71,6 +71,8 @@ TEMPLATE_DIRS = (
 )
 
 AUTH_USER_MODEL = 'speakers.SpeakerUser'
+# AUTH_PROFILE_MODULE = 'speakers.SpeakerUser'
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
