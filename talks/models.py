@@ -4,7 +4,9 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from django.db.models import signals
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Thirdy Apps imports
 
@@ -128,15 +130,10 @@ class MediaTalk(Media):
         return u'%s - %s' % (self.title, self.url)
 
 
-def talk_update_whoosh_index_post_save():
+@receiver(post_save, sender=Talk)
+def talk_update_whoosh_index_post_save(sender, instance, **kwargs):
     u"""
     Metodo para realizar o update dos indices das palestras
     com o django haystack e whoosh.
     """
     pass
-
-
-signals.post_save(
-    talk_update_whoosh_index_post_save,
-    sender=Talk
-)
