@@ -9,7 +9,6 @@ from django.conf.urls import patterns, url
 # Imports from your apps
 from .views import (
     DashboardIndexTemplateView,
-    ScreencastIndexTemplateView,
 )
 
 from .talk_views import (
@@ -34,6 +33,27 @@ from .media_talks_views import (
     MediaTalkDeleteView,
 )
 
+from .screencasts_views import (
+    ScreencastIndexTemplateView,
+    ScreencastCreateView,
+    ScreencastUpdateView,
+    ScreencastListView,
+    ScreencastDeleteView,
+)
+
+from .serie_views import (
+    SerieCreateView,
+    SerieUpdateView,
+    SerieListView,
+    SerieDeleteView,
+)
+
+from .media_screencasts_views import (
+    MediaScreencastCreateView,
+    MediaScreencastUpdateView,
+    MediaScreencastListView,
+    MediaScreencastDeleteView,
+)
 
 urlpatterns = patterns(
     'dashboards.views',
@@ -111,5 +131,65 @@ urlpatterns = patterns(
         r'^screencasts/$',
         ScreencastIndexTemplateView.as_view(),
         name='dashboard-screencast-index-view'
+    ),
+    url(
+        r'^screencasts/create/$',
+        ScreencastCreateView.as_view(),
+        name='dashboard-screencast-create-view'
+    ),
+    url(
+        r'^screencasts/update/(?P<pk>\d+)$',
+        ScreencastUpdateView.as_view(),
+        name='dashboard-screencast-update-view'
+    ),
+    url(
+        r'^screencasts/list/$',
+        ScreencastListView.as_view(),
+        name='dashboard-screencast-list-view'
+    ),
+    url(
+        r'^screencasts/delete/(?P<pk>\d+)$',
+        ScreencastDeleteView.as_view(),
+        name='dashboard-screencast-delete-view'
+    ),
+    url(
+        r'^series/create/$',
+        SerieCreateView.as_view(),
+        name='dashboard-serie-create-view'
+    ),
+    url(
+        r'^series/update/(?P<pk>\d+)$',
+        SerieUpdateView.as_view(),
+        name='dashboard-serie-update-view'
+    ),
+    url(
+        r'^series/list/$',
+        SerieListView.as_view(),
+        name='dashboard-serie-list-view'
+    ),
+    url(
+        r'^series/delete/(?P<pk>\d+)$',
+        SerieDeleteView.as_view(),
+        name='dashboard-serie-delete-view'
+    ),
+    url(
+        r'^mediascreencasts/create/(?P<screencast_pk>\d+)/$',
+        MediaScreencastCreateView.as_view(),
+        name='dashboard-mediascreencast-create-view'
+    ),
+    url(
+        r'^mediascreencasts/update/(?P<screencast_pk>\d+)/(?P<pk>\d+)/$',
+        MediaScreencastUpdateView.as_view(),
+        name='dashboard-mediascreencast-update-view'
+    ),
+    url(
+        r'^mediascreencasts/list/(?P<screencast_pk>\d+)/$',
+        MediaScreencastListView.as_view(),
+        name='dashboard-mediascreencast-list-view'
+    ),
+    url(
+        r'^mediascreencasts/delete/(?P<screencast_pk>\d+)/(?P<pk>\d+)/$',
+        MediaScreencastDeleteView.as_view(),
+        name='dashboard-mediascreencast-delete-view'
     ),
 )
