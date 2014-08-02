@@ -11,15 +11,17 @@ from django.views.generic.base import TemplateView
 from rest_framework import generics
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext as _
 
 # Third-party app imports
 
 # Imports from your apps
-from .models import SpeakerUser
+from .models import SpeakerUser, KindContact
 from .serializers import SpeakerSerializer
 from .forms import (
     SpeakerBasicInformationForm,
-    ContactFormSet,
     SpeakerContactForm
 )
 
@@ -63,8 +65,8 @@ class SpeakerProfileTemplateView(TemplateView):
         context['basic_information_form'] = SpeakerBasicInformationForm(
             instance=self.request.user
         )
-        context['contact_form_set'] = ContactFormSet(
-            instance=self.request.user
+        context['contact_list'] = KindContact.objects.filter(
+            speaker=self.request.user
         )
 
         return context
@@ -165,24 +167,197 @@ def save_basic_information_profile(request):
     )
 
 
-# def save_speaker_contacts_information_profile(request):
-#     u"""
-#     Função responsável por salvar os contatos do palestrantes
-#     """
-#     form = SpeakerContactForm(
-#         request.POST or None,
-#         instance=request.user
-#     )
+class KindContactCreateView(CreateView):
+    """
+    Classe generica para criar as videos
+    do usuário
+    """
+    template_name = "dashboards/kindcontacts/create.html"
+    """
+    Define o nome do template a ser utilizado
+    """
 
-#     basic_information_form = SpeakerBasicInformationForm(
-#         request.POST or None,
-#         instance=request.user
-#     )
+    form_class = SpeakerContactForm
+    """
+    Define o formulario a ser renderizado no template
+    """
 
-#     if form.is_valid():
-#         form.save()
+    success_url = reverse_lazy('speakers:speaker-profile-view')
+    """
+    Define a url de sucesso apos criar o objeto de video
+    """
 
-#     return HttpResponseRedirect(
-#         reverse('speakers:speaker-profile-view'),
-#         {'basic_information_form': basic_information_form}
-#     )
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(KindContactCreateView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        u"""
+        Seta as variaveis do formset para o cotexto do formulário
+        """
+        context = super(KindContactCreateView, self).get_context_data(
+            **kwargs
+        )
+        return context
+
+    def form_valid(self, form):
+        u"""
+        Sobrescreve o metodo form_valid para buscar
+        o palestrante/user através do request
+        """
+        contact = form.save(commit=False)
+        # seta o commit do formulario como false
+
+        contact.speaker = SpeakerUser.objects.get(
+            username=self.request.user.username
+        )
+        # associa o palestrante de acordo
+        # com uma pesquisa feito no model SpeakerUser
+        # filtrando pelo usuario logado
+        contact.save()
+        super(KindContactCreateView, self).form_valid(form)
+        # chama o metodo super
+
+        # e retorna para a página de sucesso
+        return HttpResponseRedirect(
+            self.get_success_url()
+        )
+
+    def get_form_kwargs(self):
+        u"""
+        Retorna o usuário corrente para o formulario
+        """
+        kwargs = super(KindContactCreateView, self).get_form_kwargs()
+        return kwargs
+
+
+class KindContactUpdateView(UpdateView):
+    """
+    Classe generica para criar as videos
+    do usuário
+    """
+    template_name = "dashboards/kindcontacts/create.html"
+    """
+    Define o nome do template a ser utilizado
+    """
+
+    form_class = SpeakerContactForm
+    """
+    Define o formulario a ser renderizado no template
+    """
+
+    success_url = reverse_lazy('speakers:speaker-profile-view')
+    """
+    Define a url de sucesso apos criar o objeto de video
+    """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(KindContactUpdateView, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        """
+        Sobrescreve o metodo para buscar a video
+        de acordo com o id dela
+        """
+        obj = KindContact.objects.get(id=self.kwargs['pk'])
+        return obj
+
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        if pk is not None:
+            contact = KindContact.objects.get(pk=pk)
+        else:
+            raise AttributeError(
+                _(u"Não conseguimos localizar este contato %s" % pk)
+            )
+
+        form = SpeakerContactForm(request.POST, instance=contact)
+
+        if form.is_valid():
+            self.form_valid(form)
+            # e retorna para a página de sucesso
+            return HttpResponseRedirect(
+                self.get_success_url()
+            )
+        else:
+            self.form_invalid(form)
+            return self.render_to_response(self.get_context_data(form=form))
+
+    def form_valid(self, form):
+        u"""
+        Sobrescreve o metodo form_valid para buscar
+        o palestrante/user através do request
+        """
+        contact = form.save(commit=False)
+        # seta o commit do formulario como false
+
+        contact.speaker = SpeakerUser.objects.get(
+            username=self.request.user.username
+        )
+        # associa o palestrante de acordo
+        # com uma pesquisa feito no model SpeakerUser
+        # filtrando pelo usuario logado
+
+        contact.save()
+        # salvar a o formulario
+
+        super(KindContactUpdateView, self).form_valid(form)
+        # chama o metodo super
+
+    def form_invalid(self, form):
+        u"""
+        Sobrescreve o metodo form_invalid para o contexto
+        com o formulario preenchido
+        """
+        super(KindContactUpdateView, self).form_invalid(form)
+
+
+class KindContactDeleteView(DeleteView):
+    u"""
+    Classe generica para deletar os contatos do palestrante
+    """
+    template_name = "dashboards/kindcontacts/delete.html"
+    u"""
+    Define o nome do template a ser utilizado
+    """
+
+    model = KindContact
+    u"""
+    Define o formulario a ser renderizado no template
+    """
+
+    success_url = reverse_lazy('speakers:speaker-profile-view')
+    u"""
+    Define a url de sucesso apos deletar o objeto
+    """
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(KindContactDeleteView, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        """
+        Sobrescreve o metodo para buscar a video
+        de acordo com o id dela
+        """
+        obj = KindContact.objects.get(id=self.kwargs['pk'])
+        return obj
