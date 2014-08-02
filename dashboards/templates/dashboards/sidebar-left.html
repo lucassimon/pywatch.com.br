@@ -72,13 +72,19 @@
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="pages/charts/morris.html">
+                        <a href="{% url 'dashboards:dashboard-screencast-index-view' %}">
+                            <i class="fa fa-angle-double-right"></i>
+                            {% trans "Index" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dashboards:dashboard-screencast-create-view' %}">
                             <i class="fa fa-angle-double-right"></i>
                             {% trans "Adicionar" %}
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'dashboards:dashboard-talk-list-view' %}">
+                        <a href="{% url 'dashboards:dashboard-screencast-list-view' %}">
                             <i class="fa fa-angle-double-right"></i>
                             {% trans "Listar" %}
                         </a>
