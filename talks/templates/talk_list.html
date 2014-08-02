@@ -17,7 +17,9 @@
                                 {{ talk.title }}
                             </a>
                         </h2>
-                        <h3>  {{ talk.speaker.name }} </h3>
+                        <a href="{% url 'speakers:speaker-detail-view' slug=talk.speaker.slug %}">
+                            <h3>  {{ talk.speaker.get_full_name }} </h3>
+                        </a>
                     </header>
                     {{ talk.summary }}
                     {% if talk.medias.all %}
