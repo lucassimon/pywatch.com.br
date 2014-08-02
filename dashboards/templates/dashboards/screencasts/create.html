@@ -17,7 +17,7 @@
         </li>
         <li>
             <a href="{% url 'dashboards:dashboard-screencast-index-view' %}">
-                <i class="fa fa-comments-o"></i>
+                <i class="fa fa-video-camera"></i>
                 {% trans 'Videos' %}
             </a>
         </li>
@@ -93,7 +93,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% with mediatalk_formset as medias %}
+                    {% with mediascreencast_formset as medias %}
                     <div class="box-body">
                         {{ medias.management_form }}
                         {% for media_form in medias %}
