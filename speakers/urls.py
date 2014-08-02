@@ -7,7 +7,9 @@ from .views import (
     SpeakerDetailView,
     SpeakerProfileTemplateView,
     save_basic_information_profile,
-    # save_speaker_contacts_information_profile,
+    KindContactCreateView,
+    KindContactUpdateView,
+    KindContactDeleteView,
 )
 
 urlpatterns = patterns(
@@ -27,11 +29,21 @@ urlpatterns = patterns(
         save_basic_information_profile,
         name='speaker-profile-save-basic-information'
     ),
-    # url(
-    #     r'^profile/contacts$',
-    #     save_speaker_contacts_information_profile,
-    #     name='speaker-profile-save-contacts-information'
-    # ),
+    url(
+        r'^profile/contacts/create/$',
+        KindContactCreateView.as_view(),
+        name='speaker-profile-contact-create-view'
+    ),
+    url(
+        r'^profile/contacts/update/(?P<pk>\d+)$',
+        KindContactUpdateView.as_view(),
+        name='speaker-profile-contact-update-view'
+    ),
+    url(
+        r'^profile/contacts/delete/(?P<pk>\d+)$',
+        KindContactDeleteView.as_view(),
+        name='speaker-profile-contact-delete-view'
+    ),
     url(
         r'^(?P<slug>[-_\w]+)/$',
         SpeakerDetailView.as_view(),
