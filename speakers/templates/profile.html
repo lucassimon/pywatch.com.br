@@ -120,22 +120,54 @@
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">
-                       {% trans 'Cadastrar contatos' %}
+                       {% trans 'Contatos' %}
                     </h3>
                 </div><!-- /.box-header -->
-                <form role="form" action="{% url "speakers:speaker-profile-save-basic-information" %}" method="post">{% csrf_token %}
-                    <div class="box-body">
-                        {{ contact_form_set.management_form }}
-                        {% for form in contact_form_set %}
-                            {{form}}
-                        {% endfor %}
-                    </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">
-                            {% trans "Enviar" %}
-                        </button>
-                    </div>
-                </form>
+                <div class="box-tools">
+                    <a href="{% url 'speakers:speaker-profile-contact-create-view' %}" class="btn btn-app">
+                        <i class="fa fa-plus"></i>
+                        {% trans "Criar Contatos" %}
+                    </a>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Tipo' %}</th>
+                                <th>{% trans 'Value' %}</th>
+                                <th>{% trans 'Actions' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if contact_list %}
+                                {% for contact in contact_list %}
+                                <tr>
+                                    <td>
+                                        {{ contact.get_kind_display }}
+                                    </td>
+                                    <td>
+                                        {{ contact.value }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'speakers:speaker-profile-contact-update-view' contact.id %}" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                            {% trans "Editar" %}
+                                        </a>
+                                        <a href="{% url 'speakers:speaker-profile-contact-delete-view' contact.id %}" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash-o"></i>
+                                            {% trans "Deletar" %}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6">{% trans 'Nenhuma video encontrada!!! :(' %}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
             </div>
         </div>
     </div>
