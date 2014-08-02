@@ -8,7 +8,9 @@
 <article>
     <header>
         <h1> {{ object.title }} </h1>
-        <h2> {{ object.speaker.name }} </h2>
+        <a href="{% url 'speakers:speaker-detail-view' slug=object.speaker.slug %}">
+            <h2> {{ object.speaker.get_full_name }} </h2>
+        </a>
     </header>
     {{ object.summary }}
     {% if object.medias.all %}

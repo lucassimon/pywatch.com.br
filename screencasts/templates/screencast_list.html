@@ -16,7 +16,9 @@
                                 {{ screencast.title }}
                             </a>
                         </h2>
-                        <h3>  {{ screencast.speaker.name }} </h3>
+                        <a href="{% url 'speakers:speaker-detail-view' slug=screencast.speaker.slug %}">
+                            <h3>  {{ screencast.speaker.get_full_name }} </h3>
+                        </a>
                     </header>
                     {{ screencast.summary }}
                     {% if screencast.medias.all %}
