@@ -129,6 +129,8 @@ class KindContact(models.Model):
         ('TT', _('Twitter')),
         ('GH', _('Github')),
         ('GG', _('Google')),
+        ('ST', _('Site')),
+        ('BL', _('Blog')),
     )
 
     speaker = models.ForeignKey(
