@@ -129,7 +129,7 @@ class SpeakerListView(ListView):
             .order_by('first_name')
             .exclude(username='root')
         )
-    
+
     def latest_entry(request):
         u"""
         Metodo responsavel por retornar o ultimo objeto criado
@@ -150,8 +150,6 @@ class SpeakerListView(ListView):
         return super(
             SpeakerListView, self
         ).dispatch(request, *args, **kwargs)
-
-
 
 
 class SpeakerDetailView(DetailView):
