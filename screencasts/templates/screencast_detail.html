@@ -13,14 +13,17 @@
         </a>
     </header>
     {{ object.summary }}
-    {% if object.medias.all %}
+
     <footer> 
-        {% for media in object.medias.all %}
-            <a href="{{ media.url }}">{{ media.title }}</a> 
-            {% if not forloop.last %}- {% endif %}
-        {% endfor %}
+    	{% if object.medias.all %}
+			{% for media in object.medias.all %}
+				<a href="{{ media.url }}">{{ media.title }}</a> 
+				{% if not forloop.last %}- {% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% include "includes/disqus-embed.html" %}
     </footer>
-    {% endif %}
 </article>
 
 {% endblock %}
