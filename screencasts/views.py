@@ -3,6 +3,9 @@
 # Stdlib imports
 
 # Core Django imports
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
+from django.views.decorators.http import condition
 from rest_framework import generics
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -68,6 +71,27 @@ class ScreencastListView(ListView):
             .select_related('MediaScreencast')
             .order_by('title')
         )
+
+    def latest_entry(request):
+        u"""
+        Metodo responsavel por retornar o ultimo objeto criado
+        no model e setar nos cabecalhos de resposta do
+        protocolo http.
+        """
+        return Screencast.objects.latest('created').created
+
+    @cache_control(max_age=600)
+    @method_decorator(condition(last_modified_func=latest_entry))
+    def dispatch(self, request, *args, **kwargs):
+        u"""
+        To decorate every instance of a class-based view,
+        you need to decorate the class definition itself.
+        To do this you apply the decorator to the dispatch()
+        method of the class.
+        """
+        return super(
+            ScreencastListView, self
+        ).dispatch(request, *args, **kwargs)
 
 
 class ScreencastDetailView(DetailView):
