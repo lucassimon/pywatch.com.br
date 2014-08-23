@@ -101,6 +101,7 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'djrill',
+    'embed_video',
 )
 
 REST_FRAMEWORK = {
