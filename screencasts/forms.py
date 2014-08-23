@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms.formsets import formset_factory
 
 # Thirdy Apps imports
+from taggit.forms import TagWidget
 
 # Realative imports of the 'app-name' package
 from .models import Serie, Screencast, MediaScreencast
@@ -56,7 +57,7 @@ class ScreencastForm(forms.ModelForm):
                     'placeholder': _(u'Insira um breve texto aqui'),
                 }
             ),
-            'tags': forms.TextInput(
+            'tags': TagWidget(
                 attrs={
                     'class': 'form-control',
                     'placeholder': _(u'Insira os marcadores'),
