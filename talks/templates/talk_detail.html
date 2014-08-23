@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load embed_video_tags i18n %}
 {% block title %} Palestra - {{ object.title }} {% endblock title %}
 {% block meta_description %}{{ object.summary|truncatewords:20 }}{% endblock meta_description %}
 {% block meta_keywords %}{{ object.tags.all|safeseq|join:", " }}{% endblock meta_keywords %}
@@ -9,12 +10,28 @@
     <header>
         <h1> {{ object.title }} </h1>
         <a href="{% url 'speakers:speaker-detail-view' slug=object.speaker.slug %}">
-            <h2> {{ object.speaker.get_full_name }} </h2>
+            <p> {{ object.speaker.get_full_name }} </p>
         </a>
     </header>
-    {{ object.summary }}
+	<section class="summary">
+		<h2> {% trans "Sumário" %} </h2>
+    	{{ object.summary|safe }}
+	</section>
+	{% if object.medias.all %}
+		{% for media in object.medias.all %}
+			{% if media.type == "VI" %}
+				<section class="videos">
+					<h2> {{ media.title|safe }} </h2>
+					<p>
+						{{ media.url|embed:'medium' }}
+					</p>
+				</section>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
     <footer> 
-		{% if object.medias.all %}
+    	{% if object.medias.all %}
+			Links: 
 			{% for media in object.medias.all %}
 				<a href="{{ media.url }}">{{ media.title }}</a> 
 				{% if not forloop.last %}- {% endif %}
