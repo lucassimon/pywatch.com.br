@@ -97,9 +97,11 @@ class SpeakerUser(AbstractUser, TimeStampedModel):
         para guardar o slug do palestrante
         """
         from uuslug import uuslug as slugify
+        if not self.first_name:
+            self.first_name = 'speaker noname'
         slug_str = "%s %s" % (self.first_name, self.last_name)
 
-        self.slug = slugify(slug_str, instance=self)
+        self.slug = slugify(slug_str, instance=self, start_no=1)
         super(SpeakerUser, self).save(**kwargs)
 
     class Meta:
