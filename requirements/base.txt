@@ -20,3 +20,4 @@ django-mptt
 djrill
 django-gravatar2
 django-uuslug
+django-embed-video
