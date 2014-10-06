@@ -6,6 +6,15 @@
 
 {% block content %}
 <h1> Palestrantes </h1>
+	{% if letters %}
+		<ul>
+		{% for letter in letters %}
+			<li>
+				<a href="?startswith={{ letter }}"> {{ letter }} </a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
     {% if speaker_list %}
         <section>
             {% for speaker in speaker_list %}
