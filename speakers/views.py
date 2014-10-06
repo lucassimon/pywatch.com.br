@@ -114,17 +114,46 @@ class SpeakerListView(ListView):
     paginados
     """
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         """
         Personaliza o queryset dos palestrantes
         resgatando o contatos caso existam
         """
-        return (
-            SpeakerUser.objects.all()
-            .select_related('KindContact')
+
+        qs = super(SpeakerListView, self).get_queryset(*args, **kwargs)
+        qs = (
+            qs.select_related('KindContact')
             .order_by('first_name')
             .exclude(username='root')
         )
+
+        sw = self.request.GET.get('startswith', None)
+        if sw:
+            return qs.filter(fist_name__istartswith=sw)
+
+    def get_context_data(self, **kwargs):
+        """
+        Envia ao contexto os dados personalizados
+        """
+        context = super(SpeakerListView, self).get_context_data(
+            **kwargs
+        )
+
+        speakers = filter(
+            None,
+            SpeakerUser.objects.all().values_list('first_name', flat=True)
+        )
+
+        letters = [x[0] for x in speakers]
+
+        temp_letters = list(set(letters))
+
+        context['letters'] = temp_letters.sort()
+
+        del temp_letters
+        del letters
+
+        return context
 
 
 class SpeakerDetailView(DetailView):
