@@ -15,13 +15,13 @@
     </header>
 	<section class="summary">
 		<h2> {% trans "Sumário" %} </h2>
-    	{{ object.summary }}
+    	{{ object.summary|safe }}
 	</section>
 
 	{% if object.medias.all %}
 		{% for media in object.medias.all %}
 			{% if media.type == "VI" %}
-				<section class="video">
+				<section class="videos">
 					<h2> {{ media.title|safe }} </h2>
 					<p>
 						{{ media.url|embed:'medium' }}
@@ -43,4 +43,7 @@
     </footer>
 </article>
 
+{% endblock %}
+{% block extra_js %}
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53fa81a54406be8d"></script>
 {% endblock %}
