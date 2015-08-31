@@ -140,6 +140,7 @@ class MediaTalkForm(forms.ModelForm):
                 }
             ),
         }
+        fields = '__all__'
 
 
 class MediaTalkCreateAndUpdateForm(forms.ModelForm):
@@ -187,6 +188,7 @@ class MediaTalkCreateAndUpdateForm(forms.ModelForm):
                 }
             ),
         }
+        fields = '__all__'
 
 
 MediaTalkFormSet = formset_factory(
