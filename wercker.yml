@@ -25,8 +25,9 @@ build:
             echo "python version $(python --version) running"
             echo "pip version $(pip --version) running"
             echo "$(WERCKER_POSTGRESQL_HOST)"
-            echo "$(POSTGRESQL_HOST)"
+            echo "$POSTGRESQL_HOST"
             echo "$(POSTGRES_USER)"
+            echo "$POSTGRES_USER"
     # - script:
     #     name: Run tests
     #     code: python manage.py test --settings=pywatch.settings.ci
