@@ -1,10 +1,7 @@
 
 box: python
 services:
-   - id: postgres
-     env:
-       POSTGRES_PASSWORD: postgres
-       POSTGRES_USER: postgres  # optional
+    - wercker/postgresql
 build:
   steps:
     - script:
