@@ -12,11 +12,17 @@ class SpeakerQueryset(models.query.QuerySet):
     """
     Classe para definir os querysets do model palestrante
     """
+
+    def no_superusers(self):
+        """
+        """
+        return self.exclude(is_superuser=True)
+
     def latest_with_limits(self, l=1):
         """
         :param l: Número para limitar a busca
         """
-        return self.exclude(username='root').order_by("-created")[:l]
+        return self.order_by("-created")[:l]
 
 
 class SpeakerManager(BaseUserManager, models.Manager):
@@ -90,3 +96,9 @@ class SpeakerManager(BaseUserManager, models.Manager):
         :param limit: Integer seta o limite da busca
         """
         return self.get_queryset().latest_with_limits(limit)
+
+    def no_superusers(self):
+        """
+        Exclui palestrantes que são superusuarios
+        """
+        return self.get_queryset().no_superusers()
