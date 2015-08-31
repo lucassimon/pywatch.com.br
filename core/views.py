@@ -3,6 +3,7 @@
 # Stdlib imports
 
 # Core Django imports
+from django.http import JsonResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.core.urlresolvers import reverse
@@ -45,7 +46,7 @@ class IndexHomePageTemplateView(TemplateView):
             IndexHomePageTemplateView, self
         ).get_context_data(**kwargs)
         context['most_recent_speakers_list'] = (
-            SpeakerUser.objects.latest_with_limits(5)
+            SpeakerUser.objects.no_superusers().latest_with_limits(5)
         )
         context['most_recent_talks_list'] = (
             Talk.objects.latest_with_limits(5)
@@ -108,3 +109,29 @@ class CustomRegisterCreateView(
             }
         )
         return ret
+
+
+class AjaxableResponseMixin(object):
+    """
+    Mixin to add AJAX support to a form.
+    Must be used with an object-based FormView (e.g. CreateView)
+    """
+    def form_invalid(self, form):
+        response = super(AjaxableResponseMixin, self).form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return response
+
+    def form_valid(self, form):
+        # We make sure to call the parent's form_valid() method because
+        # it might do some processing (in the case of CreateView, it will
+        # call form.save() for example).
+        response = super(AjaxableResponseMixin, self).form_valid(form)
+        if self.request.is_ajax():
+            data = {
+                'pk': self.object.pk,
+            }
+            return JsonResponse(data)
+        else:
+            return response
