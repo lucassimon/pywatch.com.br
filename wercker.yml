@@ -22,9 +22,9 @@ build:
         code: echo $WERCKER_POSTGRESQL_HOST $WERCKER_POSTGRESQL_PORT
         name: Print variables
         code: |
-        echo "python version $(python --version) running"
-        echo "pip version $(pip --version) running"
-        echo "$WERCKER_POSTGRESQL_HOST"
+            echo "python version $(python --version) running"
+            echo "pip version $(pip --version) running"
+            echo "$WERCKER_POSTGRESQL_HOST"
     - script:
         name: Run tests
         code: python manage.py test --settings=pywatch.settings.ci
