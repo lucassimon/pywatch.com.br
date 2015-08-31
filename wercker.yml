@@ -13,8 +13,8 @@ build:
     - virtualenv:
         name: pywatch
         install_wheel: false
-    - pip-install:
-        requirements_file: "requirements/ci.txt"
+    # - pip-install:
+    #     requirements_file: "requirements/ci.txt"
     - script:
         name: Create a Media directory
         code: mkdir media
@@ -24,7 +24,9 @@ build:
         code: |
             echo "python version $(python --version) running"
             echo "pip version $(pip --version) running"
-            echo "$WERCKER_POSTGRESQL_HOST"
-    - script:
-        name: Run tests
-        code: python manage.py test --settings=pywatch.settings.ci
+            echo "$(WERCKER_POSTGRESQL_HOST)"
+            echo "$(POSTGRESQL_HOST)"
+            echo "$(POSTGRES_USER)"
+    # - script:
+    #     name: Run tests
+    #     code: python manage.py test --settings=pywatch.settings.ci
