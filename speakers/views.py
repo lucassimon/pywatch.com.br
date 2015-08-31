@@ -3,21 +3,24 @@
 # Stdlib imports
 
 # Core Django imports
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic.base import TemplateView
-from rest_framework import generics
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext as _
-
+from django.utils.encoding import force_text
+from django.utils.html import format_html, format_html_join
 # Third-party app imports
-
+from rest_framework import generics
+from allauth.account.forms import ChangePasswordForm
 # Imports from your apps
+from core.views import AjaxableResponseMixin
 from .models import SpeakerUser, KindContact
 from .serializers import SpeakerSerializer
 from .forms import (
@@ -67,6 +70,10 @@ class SpeakerProfileTemplateView(TemplateView):
         )
         context['contact_list'] = KindContact.objects.filter(
             speaker=self.request.user
+        )
+
+        context['password_form'] = ChangePasswordForm(
+            user=self.request.user
         )
 
         return context
@@ -121,15 +128,20 @@ class SpeakerListView(ListView):
         """
 
         qs = super(SpeakerListView, self).get_queryset(*args, **kwargs)
+        qs = qs.no_superusers()
         qs = (
-            qs.select_related('KindContact')
-            .order_by('first_name')
+            qs.order_by('first_name')
             .exclude(username='root')
         )
 
-        sw = self.request.GET.get('startswith', None)
+        sw = self.request.GET.get('letter', None)
         if sw:
-            return qs.filter(fist_name__istartswith=sw)
+            return qs.filter(first_name__istartswith=sw)
+
+        if qs:
+            return qs
+        else:
+            return []
 
     def get_context_data(self, **kwargs):
         """
@@ -141,18 +153,19 @@ class SpeakerListView(ListView):
 
         speakers = filter(
             None,
-            SpeakerUser.objects.all().values_list('first_name', flat=True)
+            SpeakerUser.objects.no_superusers().values_list(
+                'first_name',
+                flat=True
+            )
         )
 
         letters = [x[0] for x in speakers]
+        letters = set(letters)
+        new_letters = list(letters)
+        context['letters'] = new_letters
 
-        temp_letters = list(set(letters))
-
-        context['letters'] = temp_letters.sort()
-
-        del temp_letters
         del letters
-
+        del new_letters
         return context
 
 
@@ -177,23 +190,78 @@ class SpeakerDetailView(DetailView):
         return context
 
 
-def save_basic_information_profile(request):
-    u"""
-    Função responsável por salvar os dados do formulário
-    exibidos na página de perfil do dashboard.
-    """
-    form = SpeakerBasicInformationForm(
-        request.POST or None,
-        instance=request.user
-    )
+class SpeakerBasicInformationProfile(AjaxableResponseMixin, CreateView):
+    model = SpeakerUser
+    fields = ['id', 'first_name', 'last_name', 'bio']
 
-    if form.is_valid():
-        form.save()
+    def get_object(self, queryset=None, pk=None):
 
-    return HttpResponseRedirect(
-        reverse('speakers:speaker-profile-view'),
-        {'basic_information_form': form}
-    )
+        if pk is None:
+            raise AttributeError(
+                "Generic detail view %s must be called with "
+                "either an object pk or a slug."
+                % self.__class__.__name__
+            )
+
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        if pk is not None:
+            queryset = queryset.filter(pk=pk)
+
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404(
+                _("No %(verbose_name)s found matching the query") %
+                {'verbose_name': queryset.model._meta.verbose_name}
+            )
+        return obj
+
+    def form_valid(self, form):
+        if self.request.is_ajax():
+
+            obj = self.get_object(
+                pk=self.request.POST.get('pk', None)
+            )
+
+            form = SpeakerBasicInformationForm(
+                self.request.POST,
+                instance=obj
+            )
+            if form.is_valid():
+                form.save()
+                data = {
+                    'success': True,
+                    'message': _(u'Dados salvos com sucesso')
+                }
+            else:
+                data = {
+                    'success': False,
+                    'errors': self.build_errors_as_ul(
+                        form.errors
+                    )
+                }
+            return JsonResponse(data)
+        else:
+            response = super(AjaxableResponseMixin, self).form_valid(form)
+
+            return response
+
+    def build_errors_as_ul(self, errors):
+        """
+        """
+
+        items = []
+        for v in errors.values():
+            for i in v:
+                items.append(u'<li>{}</li>'.format(i))
+
+        msg = ''.join(v for v in items)
+        return u'<ul>{}</ul>'.format(
+            msg
+        )
 
 
 class KindContactCreateView(CreateView):
