@@ -30,6 +30,7 @@ class SpeakerUserCreationForm(UserCreationForm):
 class SpeakerUserChangeForm(UserChangeForm):
         class Meta:
             model = SpeakerUser
+            fields = '__all__'
 
 
 class SpeakerBasicInformationForm(forms.ModelForm):
@@ -52,7 +53,7 @@ class SpeakerBasicInformationForm(forms.ModelForm):
         Define qual Model será utilizado
         """
 
-        fields = ('first_name', 'last_name', 'bio',)
+        fields = ('id', 'first_name', 'last_name', 'bio',)
         u"""
         Atributos que irão aparecer no formulário
         """
@@ -88,6 +89,16 @@ class SpeakerBasicInformationForm(forms.ModelForm):
                     'placeholder': _(u'Insira um breve texto aqui'),
                 }
             ),
+        }
+
+        error_messages = {
+            'first_name': {
+                'required': _(u'O primeiro nome é obrigatório')
+            },
+            'last_name': {
+                'required': _(u'O último nome é obrigatório')
+            },
+
         }
 
 
