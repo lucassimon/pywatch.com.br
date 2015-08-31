@@ -28,6 +28,8 @@ build:
             echo "$POSTGRESQL_HOST"
             echo "$(POSTGRES_USER)"
             echo "$POSTGRES_USER"
+            echo $WERCKER_STEP_NAME
+            echo "$WERCKER_STEP_NAME"
     # - script:
     #     name: Run tests
     #     code: python manage.py test --settings=pywatch.settings.ci
