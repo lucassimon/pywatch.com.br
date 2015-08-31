@@ -1,0 +1,30 @@
+
+box: wercker/python
+services:
+   - id: postgres
+     env:
+       POSTGRES_PASSWORD: postgres
+       POSTGRES_USER: postgres  # optional
+build:
+  steps:
+    - virtualenv:
+        name: pywatch
+        install_wheel: false
+    - script:
+        name: Install Requirements
+        code: pip install -r requirements/ci.txt --use-mirrors
+    - script:
+        name: Create a Media directory
+        code: mkdir media
+    - script:
+        name: Generate a syncdb
+        code: python manage.py syncdb --settings=pywatch.settings.ci --noinput
+    - script:
+        name: Migrate Taggit App
+        code: python manage.py migrate taggit --settings=pywatch.settings.ci
+    - script:
+        name: Migrate all packages
+        code: python manage.py migrate --settings=pywatch.settings.ci
+    - script:
+        name: Run tests
+        code: python manage.py test --settings=pywatch.settings.ci
