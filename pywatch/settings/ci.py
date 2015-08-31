@@ -1,5 +1,5 @@
 import os
-from base import *
+from .base import *
 from decouple import ConfigIni
 import dj_database_url
 
