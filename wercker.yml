@@ -1,7 +1,7 @@
 
 box: python
 services:
-    - wercker/postgresql
+    - postgresql
 build:
   steps:
     - script:
