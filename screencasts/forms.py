@@ -64,6 +64,7 @@ class ScreencastForm(forms.ModelForm):
                 }
             ),
         }
+        fields = '__all__'
 
 
 class SerieForm(forms.ModelForm):
@@ -93,6 +94,7 @@ class SerieForm(forms.ModelForm):
                 }
             ),
         }
+        fields = '__all__'
 
 
 class MediaScreencastForm(forms.ModelForm):
@@ -140,6 +142,7 @@ class MediaScreencastForm(forms.ModelForm):
                 }
             ),
         }
+        fields = '__all__'
 
 
 class MediaScreencastCreateAndUpdateForm(forms.ModelForm):
@@ -187,6 +190,7 @@ class MediaScreencastCreateAndUpdateForm(forms.ModelForm):
                 }
             ),
         }
+        fields = '__all__'
 
 
 MediaScreencastFormSet = formset_factory(
