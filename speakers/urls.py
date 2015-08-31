@@ -6,7 +6,7 @@ from .views import (
     SpeakerListView,
     SpeakerDetailView,
     SpeakerProfileTemplateView,
-    save_basic_information_profile,
+    SpeakerBasicInformationProfile,
     KindContactCreateView,
     KindContactUpdateView,
     KindContactDeleteView,
@@ -26,7 +26,7 @@ urlpatterns = patterns(
     ),
     url(
         r'^profile/basic-information$',
-        save_basic_information_profile,
+        SpeakerBasicInformationProfile.as_view(),
         name='speaker-profile-save-basic-information'
     ),
     url(
