@@ -23,9 +23,9 @@
                     </header>
                     {{ talk.summary }}
                     {% if talk.medias.all %}
-                        <footer> 
+                        <footer>
                             {% for media in talk.medias.all %}
-                                <a href="{{ media.url }}">{{ media.title }}</a> 
+                                <a href="{{ media.url }}">{{ media.title }}</a>
                                 {% if not forloop.last %} - {% endif %}
                             {% endfor %}
                         </footer>
