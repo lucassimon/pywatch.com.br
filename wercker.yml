@@ -1,5 +1,5 @@
 
-box: wercker/python
+box: python
 services:
    - id: postgres
      env:
