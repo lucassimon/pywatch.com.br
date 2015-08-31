@@ -2,11 +2,8 @@ from django.conf.urls import patterns, include, url
 from rest_framework.urlpatterns import format_suffix_patterns
 
 # Uncomment the next two lines to enable the admin:
-from djrill import DjrillAdminSite
 from django.contrib import admin
-admin.site = DjrillAdminSite()
 admin.autodiscover()
-
 
 urlpatterns = patterns(
     '',
