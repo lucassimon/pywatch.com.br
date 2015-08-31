@@ -1,5 +1,4 @@
 Django>1.8
-wsgiref==0.1.2
 South>=0.8.1
 Unipath>=1.0
 psycopg2
