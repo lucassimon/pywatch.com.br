@@ -65,7 +65,6 @@ class ScreencastListView(ListView):
         """
         return (
             Screencast.objects.all()
-            .select_related('MediaScreencast')
             .order_by('title')
         )
 
