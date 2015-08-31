@@ -86,22 +86,13 @@ Execute o PyWatch.
     python manage.py test --settings=pywatch.settings.test
 
 
-ROADMAP for 0.1.1
+ROADMAP for 0.1.5
 =================
 
-[ ] Melhorar a homepage
-
-[X] Criar a listagem de palestras
-
-[X] Criar a listagem de palestrantes
-
-[X] Criar a detalhes de palestras
-
-[X] Criar a listagem de palestrantes
-
-[X] Criar pesquisa de palestras com django-haystack e whoosh
-
-[ ] Melhorar o layout de listagem de palestras e palestrantes
+[ ] Melhorar o layout como um todo
+[ ] Criar no dashboard os formularios para screencasts
+[ ] Criar servidor de staging para testes do sistema
+[ ] Verificar como trocar a senha do usuario registrado, exceto o da rede social github
 
 CHANGELOG
 =========

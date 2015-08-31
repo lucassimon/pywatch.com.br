@@ -3,9 +3,10 @@
 {% block meta_description %} Listagem de palestras feitas pela comunidade Python. {% endblock meta_description %}
 {% block meta_keywords %} Palestras, Comunidade, Python {% endblock meta_keywords %}
 
+{% load i18n %}
 
 {% block content %}
-<h1> Palestras </h1>
+<h1> {% trans 'Palestras' %} </h1>
     {% if talk_list %}
         <section>
             {% for talk in talk_list %}
@@ -16,13 +17,16 @@
                                 {{ talk.title }}
                             </a>
                         </h2>
-                        <h3>  {{ talk.speaker.name }} </h3>
+                        <a href="{% url 'speakers:speaker-detail-view' slug=talk.speaker.slug %}">
+                            <h3>  {{ talk.speaker.get_full_name }} </h3>
+                        </a>
                     </header>
                     {{ talk.summary }}
                     {% if talk.medias.all %}
-                        <footer> 
+                        <footer>
                             {% for media in talk.medias.all %}
-                                <a href="{{ media.url }}">{{ media.title }}</a> - 
+                                <a href="{{ media.url }}">{{ media.title }}</a>
+                                {% if not forloop.last %} - {% endif %}
                             {% endfor %}
                         </footer>
                     {% endif %}
@@ -34,7 +38,7 @@
                 <span class="page-links">
                     {% if page_obj.has_previous %}
                         <a href="{% url 'talks:talk-list-view' %}?page={{ page_obj.previous_page_number }}">
-                            anterior
+                            {% trans 'Anterior' %}
                         </a>
                     {% endif %}
                     <span class="page-current">
@@ -42,7 +46,7 @@
                     </span>
                     {% if page_obj.has_next %}
                         <a href="{% url 'talks:talk-list-view' %}?page={{ page_obj.next_page_number }}">
-                            próximo
+                            {% trans 'Próximo' %}
                         </a>
                     {% endif %}
                 </span>

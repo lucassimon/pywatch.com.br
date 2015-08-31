@@ -5,3 +5,10 @@ django-discover-runner>=0.2.2
 model-mommy
 django_nose
 nose
+splinter
+spec
+django-webtest
+webtest
+nose-progressive
+xtraceback
+selenium

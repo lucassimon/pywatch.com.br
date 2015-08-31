@@ -8,7 +8,7 @@ from rest_framework import serializers
 # Third-party app imports
 
 # Imports from your apps
-from .models import Speaker, KindContact
+from .models import SpeakerUser, KindContact
 
 
 class KindContactSerializer(serializers.ModelSerializer):
@@ -38,8 +38,8 @@ class SpeakerSerializer(serializers.ModelSerializer):
         Seta definições para serializar
         o model
         """
-        model = Speaker
-        fields = ['name', 'bio', 'contacts']
+        model = SpeakerUser
+        fields = ['first_name', 'last_name', 'email', 'bio', 'contacts']
 
     def validate_bio(self, attrs, source):
         if len(attrs['bio']) < 5:

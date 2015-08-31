@@ -8,6 +8,7 @@ setuptools>=0.8
 ipython
 yolk
 ipdb
+pudb
 django_nose
 nose
 splinter
@@ -18,3 +19,5 @@ django-webtest
 webtest
 nose-progressive
 xtraceback
+sqlformatter
+selenium

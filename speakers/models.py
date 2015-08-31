@@ -4,33 +4,27 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import AbstractUser
+from django.views.generic.edit import CreateView
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel
-from .managers import SpeakerMostRecentCreatedManager
+from .managers import SpeakerManager
 
 
-class Speaker(TimeStampedModel):
+class SpeakerUser(AbstractUser, TimeStampedModel):
     """
     Classe model para criar um objeto model
     de palestrante.
     """
-
-    name = models.CharField(
-        verbose_name=_(u'Nome'),
-        max_length=255
-    )
-    """
-    Atributo da classe Speaker para setar o nome
-    do palestrante.
-
-    Caracteristicas:
-    max length: 255
-    """
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'bio']
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
-        unique=True
+        db_index=True,
+        max_length=255,
+        null=True,
+        blank=True
     )
     """
     Atributo da classe Speaker para setar o slug
@@ -38,6 +32,7 @@ class Speaker(TimeStampedModel):
 
     Caracteristicas:
     max length: 255
+    index: True
     unique: True
     """
 
@@ -55,7 +50,21 @@ class Speaker(TimeStampedModel):
     TextField
     """
 
-    objects = SpeakerMostRecentCreatedManager()
+    is_admin = models.BooleanField(
+        verbose_name=_(u'Administrador'),
+        default=False,
+        help_text=_(u'Designa este usuário como administrador.')
+    )
+    """
+    Atributo da classe Speaker para
+    setar o palestrante como administrador.
+
+    Caracteristicas:
+    BooleanField
+    Default: False
+    """
+
+    objects = SpeakerManager()
 
     def get_absolute_url(self):
         """
@@ -65,6 +74,36 @@ class Speaker(TimeStampedModel):
         urls.py
         """
         return reverse('speakers:speaker-detail-view', args=[self.slug])
+
+    def get_full_name(self):
+        """
+        Retorna o primeiro nome mais o ultimo nome, com
+        um espaço entre eles
+        """
+        full_name = u'%s %s' % (
+            self.first_name,
+            self.last_name
+        )
+        return full_name.strip()
+
+    def get_short_name(self):
+        """
+        Retorna somente o primeiro nome
+        """
+        return u'%s' % (self.first_name)
+
+    def save(self, *args,  **kwargs):
+        """
+        Customiza o metodo salvar da classe
+        para guardar o slug do palestrante
+        """
+        from uuslug import uuslug as slugify
+        if not self.first_name:
+            self.first_name = 'speaker noname'
+        slug_str = "%s %s" % (self.first_name, self.last_name)
+
+        self.slug = slugify(slug_str, instance=self, start_no=1)
+        super(SpeakerUser, self).save(**kwargs)
 
     class Meta:
         """
@@ -80,7 +119,7 @@ class Speaker(TimeStampedModel):
         Retorna o nome do palestrante
         como unicode.
         """
-        return u'%s' % (self.name)
+        return u'%s' % (self.get_full_name())
 
 
 class KindContact(models.Model):
@@ -93,10 +132,12 @@ class KindContact(models.Model):
         ('TT', _('Twitter')),
         ('GH', _('Github')),
         ('GG', _('Google')),
+        ('ST', _('Site')),
+        ('BL', _('Blog')),
     )
 
     speaker = models.ForeignKey(
-        'Speaker',
+        'SpeakerUser',
         verbose_name=_('Palestrante'),
         related_name='contacts'
     )

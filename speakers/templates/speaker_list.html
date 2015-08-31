@@ -6,28 +6,38 @@
 
 {% block content %}
 <h1> Palestrantes </h1>
+	{% if letters %}
+		<ul>
+		{% for letter in letters %}
+			<li>
+				<a href="?letter={{ letter }}"> {{ letter|upper }} </a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
     {% if speaker_list %}
         <section>
             {% for speaker in speaker_list %}
                 <article>
                     <header>
-                        <h2 id="{{speaker.slug}}"> 
+                        <h2 id="{{speaker.slug}}">
                             <a href="{% url 'speakers:speaker-detail-view' slug=speaker.slug %}">
-                                {{ speaker.name }}
+                                {{ speaker.get_full_name }}
                             </a>
                         </h2>
                     </header>
                     {{ speaker.bio }}
                     {% if speaker.contacts.all %}
-                        <footer> 
+                        <footer>
                             {% for contact in speaker.contacts.all %}
                                 {% if contact.kind == 'E' %}
-                                    <a href="mailto:{{ contact.value }}">{{ contact.value }}</a> - 
+                                    <a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
                                 {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
-                                    {{ contact.get_kind_display }}: {{ contact.value }} -
+                                    {{ contact.get_kind_display }}: {{ contact.value }}
                                 {% else %}
-                                    <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> - 
+                                    <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a>
                                 {% endif %}
+                                {% if not forloop.last %} - {% endif %}
                             {% endfor %}
                         </footer>
                     {% endif %}

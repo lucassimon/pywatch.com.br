@@ -50,8 +50,9 @@ class StandardItemStuffModel(models.Model):
     """
 
     speaker = models.ForeignKey(
-        'speakers.Speaker',
+        'speakers.SpeakerUser',
         verbose_name=_(u'Palestrante'),
+        help_text=_(u'A quem essa palestra pertence'),
     )
     """
     Atributo da classe StandardItemStuffModel para
@@ -64,6 +65,7 @@ class StandardItemStuffModel(models.Model):
 
     title = models.CharField(
         verbose_name=_(u'Titulo'),
+        help_text=_(u'Informe um titulo da palestra'),
         max_length=255
     )
     """
@@ -78,12 +80,14 @@ class StandardItemStuffModel(models.Model):
 
     slug = models.SlugField(
         verbose_name=_(u'Slug'),
+        help_text=_(u'Informe um slug para o titulo da palestra'),
         unique=True,
         null=True
     )
 
     summary = models.TextField(
-        verbose_name=_(u'Sumário')
+        verbose_name=_(u'Sumário'),
+        help_text=_(u'Descreva um sumário para sua palestra')
     )
     """
     Atributo da classe StandardItemStuffModel para
@@ -126,6 +130,7 @@ class Media(TimeStampedModel):
 
     type = models.CharField(
         verbose_name=_(u'Tipo'),
+        help_text=_(u'Escolha uma opção'),
         max_length=3,
         choices=_KIND_MEDIAS
     )
@@ -140,6 +145,7 @@ class Media(TimeStampedModel):
 
     title = models.CharField(
         verbose_name=_(u'Titulo'),
+        help_text=_(u'Escolha um Titulo da media. Exemplo Youtube,Slideshare'),
         max_length=255
     )
     """
@@ -154,6 +160,7 @@ class Media(TimeStampedModel):
 
     url = models.URLField(
         verbose_name=_('URL'),
+        help_text=_(u'Escolha a Url que esta localizada a media'),
     )
     """
     Atributo da classe Media para

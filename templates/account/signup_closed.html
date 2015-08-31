@@ -1,0 +1,22 @@
+{% extends "account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>{% trans "Sign Up Closed" %}</h1>
+        <p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
+        <p>
+            <a href="{% url "core:home-page" %}">
+                {% trans "Retornar a página principal" %}
+            </a> 
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+

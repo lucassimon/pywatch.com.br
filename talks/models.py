@@ -4,19 +4,87 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+# Thirdy Apps imports
 
 # Realative imports of the 'app-name' package
 from core.models import TimeStampedModel, StandardItemStuffModel,\
     Media
-from .managers import TalkMostRecentCreatedManager
+from .managers import TalkManager
+
+
+class Event(TimeStampedModel):
+    """
+    Model reponsável por cadastrar os eventos
+    e podem conter várias palestras.
+    """
+
+    name = models.CharField(
+        verbose_name=_(u'Nome'),
+        help_text=_(u'Escolha um nome para o evento'),
+        max_length=255
+    )
+    """
+    Atributo da classe  para identificar um evento
+    e seu nome
+
+    Caracteristicas:
+    CharField
+    verbose name: Nome
+    max length: 255
+    """
+
+    slug = models.SlugField(
+        verbose_name=_(u'Slug'),
+        max_length=255,
+        unique=True,
+        null=True
+    )
+    """
+    Atributo da classe para criar um slug baseado
+    no nome do evento
+
+    Caracteristicas:
+    SlugField
+    verbose name: Slug
+    max length: 255
+    """
+
+    class Meta:
+        ordering = ['created']
+        verbose_name = _(u'Evento')
+        verbose_name_plural = _(u'Eventos')
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
 
 
 class Talk(TimeStampedModel, StandardItemStuffModel):
     """
-    Model responsavel pelos palestrante
+    Model responsavel pelos palestras
+    e pode ser associada a um evento
     """
 
-    objects = TalkMostRecentCreatedManager()
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_(u'Evento'),
+        help_text=_(u'Selecione o evento correspondente ou deixe em branco'),
+        blank=True,
+        null=True
+    )
+    """
+    Atributo da classe Talk para
+    referenciar um objeto da classe Event
+
+    Caracteristicas:
+    ForeignKey
+    verbose name: Evento
+    """
+
+    objects = TalkManager()
 
     def get_absolute_url(self):
         """
@@ -60,3 +128,12 @@ class MediaTalk(Media):
 
     def __unicode__(self):
         return u'%s - %s' % (self.title, self.url)
+
+
+@receiver(post_save, sender=Talk)
+def talk_update_whoosh_index_post_save(sender, instance, **kwargs):
+    u"""
+    Metodo para realizar o update dos indices das palestras
+    com o django haystack e whoosh.
+    """
+    pass

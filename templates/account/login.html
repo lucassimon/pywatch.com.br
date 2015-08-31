@@ -1,0 +1,68 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load url from future %}
+
+{% block head_title %}{% trans "Login" %}{% endblock %}
+
+{% block content %}
+<div class="form-box" id="login-box">
+    <div class="header">
+        {% trans "Entrar" %}
+    </div>
+    <form action="{% url 'account_login' %}" method="POST">
+        {% csrf_token %}
+        <div class="body bg-gray">
+            <div class="form-group{% if form.login.errors %} has-error{% endif %}">
+                {{ form.login.label_tag }}
+                {{ form.login }}
+                <p class="text-aqua">
+                    {{ form.login.help_text }}
+                </p>
+                {% if form.login.errors %}
+                    {% for error in form.login.errors %}
+                        <p class="text-red"> {{ error }} </p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                <p class="text-aqua">
+                    {{ form.password.help_text }}
+                </p>
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <p class="text-red"> {{ error }} </p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="footer">                                                               
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit" class="btn bg-olive btn-block">
+                {% trans "Entrar" %}
+            </button>  
+            <p>
+                <a href="{% url 'account_reset_password' %}">
+                    {% trans "Eu esqueci minha senha" %}
+                </a>
+            </p>
+
+            <a href="{% url 'core:core-signup' %}" class="text-center">
+                {% trans "Registre-se como um novo membro" %}
+            </a>
+        </div>
+    </form>
+
+    <div class="margin text-center">
+        <span>{% trans "Entre utilizando com uma conta de rede social" %}</span>
+        <br>
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        {% include "socialaccount/snippets/login_extra.html" %}
+    </div>
+</div>
+{% endblock %}

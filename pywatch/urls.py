@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(
-        r'^$',
+        r'^',
         include(
             'core.urls',
             namespace='core'
@@ -28,11 +28,28 @@ urlpatterns = patterns(
             namespace='talks'
         )
     ),
+    url(
+        r'^screencasts/',
+        include(
+            'screencasts.urls',
+            namespace='screencasts'
+        )
+    ),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/v1/', include('api.urls')),
 
     url(r'^search/', include('haystack.urls')),
+
+    url(r'^accounts/', include('allauth.urls')),
+
+    url(
+        r'^dashboard/',
+        include(
+            'dashboards.urls',
+            namespace='dashboards'
+        )
+    ),
 )
 
 

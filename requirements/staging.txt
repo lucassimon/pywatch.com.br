@@ -11,4 +11,4 @@ ipdb
 django_nose
 nose
 splinter
-gunicorn
+uwsgi

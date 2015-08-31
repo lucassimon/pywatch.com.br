@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load embed_video_tags i18n %}
+{% block title %} Screencasts - {{ object.title }} {% endblock title %}
+{% block meta_description %}{{ object.summary|truncatewords:20 }}{% endblock meta_description %}
+{% block meta_keywords %}{{ object.tags.all|safeseq|join:", " }}{% endblock meta_keywords %}
+
+
+{% block content %}
+<article>
+    <header>
+        <h1> {{ object.title }} </h1>
+        <a href="{% url 'speakers:speaker-detail-view' slug=object.speaker.slug %}">
+            <p> {{ object.speaker.get_full_name }} </p>
+        </a>
+    </header>
+	<section class="summary">
+		<h2> {% trans "Sumário" %} </h2>
+    	{{ object.summary|safe }}
+	</section>
+
+	{% if object.medias.all %}
+		{% for media in object.medias.all %}
+			{% if media.type == "VI" %}
+				<section class="videos">
+					<h2> {{ media.title|safe }} </h2>
+					<p>
+						{{ media.url|embed:'medium' }}
+					</p>
+				</section>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+    <footer> 
+    	{% if object.medias.all %}
+			Links: 
+			{% for media in object.medias.all %}
+				<a href="{{ media.url }}">{{ media.title }}</a> 
+				{% if not forloop.last %}- {% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% include "includes/disqus-embed.html" %}
+    </footer>
+</article>
+
+{% endblock %}
+{% block extra_js %}
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53fa81a54406be8d"></script>
+{% endblock %}

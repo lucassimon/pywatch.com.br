@@ -7,7 +7,7 @@
 {% block content %}
 <article>
     <header>
-        <h1> {{ object.name }} </h1>
+        <h1> {{ object.get_full_name }} </h1>
     </header>
     {{ object.bio }}
 
@@ -25,21 +25,25 @@
             </ul>
         </section>
     {% endif %}
+    
 
-    {% if object.contacts.all %}
     <footer> 
-        <h3> Contatos </h3>
-        {% for contact in objects.contacts.all %}
-            {% if contact.kind == 'E' %}
-                <a href="mailto:{{ contact.value }}">{{ contact.value }}</a> - 
-            {% elif contact.kind in 'PH' or contact.kind in 'FX' %}
-                {{ contact.get_kind_display }}: {{ contact.value }} -
-            {% else %}
-                <a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> - 
-            {% endif %}
-        {% endfor %}
+		{% if object.contacts.all %}
+			<h3> Contatos </h3>
+			{% for contact in object.contacts.all %}
+				{% if contact.kind == 'E' %}
+					<a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
+				{% elif contact.kind in 'PH' or contact.kind in 'FX' %}
+					{{ contact.get_kind_display }}: {{ contact.value }}
+				{% else %}
+					<a href="{{ contact.value }}">{{ contact.get_kind_display }}</a> 
+				{% endif %}
+				{% if not forloop.last %} - {% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% include "includes/disqus-embed.html" %}
     </footer>
-    {% endif %}
 </article>
 
 {% endblock %}

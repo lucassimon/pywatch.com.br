@@ -10,9 +10,10 @@ defaults if you are happy with the default layout.
 
 from fabric.api import run, env,  cd, task, sudo
 from fabric.colors import green, red
-#from fabric.decorators import runs_once
+# from fabric.decorators import runs_once
 from fabric.context_managers import shell_env
 # CHANGEME
+# Usar fab <command> --set server=prod para executar em producao
 
 if not hasattr(env, 'server'):
     print(green('Server de Produção'))
@@ -23,6 +24,7 @@ if not hasattr(env, 'server'):
     env.code_dir = u'~/sites/pywatch.com.br'
     env.git_repo = u'git@github.com:lucassimon/pywatch.com.br.git'
     env.settings = u'--settings=pywatch.settings.production'
+    env.virtualenv_name = 'pywatch.com.br'
     env.virtualenv = '~/venvs/pywatch.com.br/'
     env.python_bin = env.virtualenv + 'bin/python'
     env.pip_bin = env.virtualenv + 'bin/pip'
@@ -30,6 +32,17 @@ if not hasattr(env, 'server'):
 elif env.server == 'staging':
     print(green('Server de Staging'))
     env.server = 'staging'
+    env.hosts = ['pywatch@192.81.211.65']
+    env.project_name = u'pywatch'
+    env.shell = u'/bin/zsh -c'
+    env.code_dir = u'~/sites/staging-pywatch'
+    env.git_repo = u'git@github.com:lucassimon/pywatch.com.br.git'
+    env.settings = u'--settings=pywatch.settings.staging'
+    env.virtualenv_name = 'staging-pywatch'
+    env.virtualenv = '~/venvs/staging-pywatch/'
+    env.python_bin = env.virtualenv + 'bin/python'
+    env.pip_bin = env.virtualenv + 'bin/pip'
+    env.webserver = u'nginx'
 
 
 def print_env_and_user():
@@ -39,7 +52,7 @@ def print_env_and_user():
     print(red("Executing on %s as %s" % (env.host, env.user)))
 
 
-def django_manage(command='help', virtualenv='pywatch.com.br', settings=env.settings):
+def django_manage(command='help', virtualenv=env.virtualenv_name, settings=env.settings):
     """
     Returns a absolute path to execute manage.py
     """

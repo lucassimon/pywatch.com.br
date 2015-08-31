@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Screencasts {% endblock title %}
+{% block meta_description %} Listagem de screencasts feitas pela comunidade Python. {% endblock meta_description %}
+{% block meta_keywords %} Screencasts, Comunidade, Python {% endblock meta_keywords %}
+
+
+{% block content %}
+<h1> Screencasts </h1>
+    {% if screencast_list %}
+        <section>
+            {% for screencast in screencast_list %}
+                <article>
+                    <header>
+                        <h2 id="{{screencast.slug}}">
+                            <a href="{% url 'screencasts:screencast-detail-view' slug=screencast.slug %}">
+                                {{ screencast.title }}
+                            </a>
+                        </h2>
+                        <a href="{% url 'speakers:speaker-detail-view' slug=screencast.speaker.slug %}">
+                            <h3>  {{ screencast.speaker.get_full_name }} </h3>
+                        </a>
+                    </header>
+                    {{ screencast.summary }}
+                    {% if screencast.medias.all %}
+                        <footer> 
+                            {% for media in screencast.medias.all %}
+                                <a href="{{ media.url }}">{{ media.title }}</a>
+                                {% if not forloop.last %}- {% endif %}
+                            {% endfor %}
+                        </footer>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </section>
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="{% url 'screencasts:screencast-list-view' %}?page={{ page_obj.previous_page_number }}">
+                            anterior
+                        </a>
+                    {% endif %}
+                    <span class="page-current">
+                        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="{% url 'screencasts:screencast-list-view' %}?page={{ page_obj.next_page_number }}">
+                            próximo
+                        </a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Nenhum screencast encontrado!!! :(</p>
+    {% endif %}
+{% endblock %}

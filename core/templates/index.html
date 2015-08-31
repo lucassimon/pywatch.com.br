@@ -5,10 +5,32 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
 {% endblock meta_description %}
 {% block meta_keywords %} Python, Palestrantes, Tutoriais, Palestras, Screencasts{% endblock meta_keywords %}
 
-{% block content %}
+{% load i18n %}
 
+{% block content %}
 <section>
-    <h2> Últimos palestras cadastradas </h2>
+    <div>
+        <h1 class="text-center main-title-call-action">Compartilhe e popularize seu conhecimento</h1>
+        <p class="text-center main-paragraph-call-action">
+           {% blocktrans %}
+                Veja a apresentação e saiba mais dessa base de conhecimento e faça seu registro. 
+            {% endblocktrans %}
+        </p>
+        <div class="text-center">
+            <a href="{% url "core:core-signup" %}" class="btn btn-lg btn-primary btn-call-action">
+                {% trans "Registre-se" %}
+            </a>
+
+            <a href="#" data-toggle="modal" data-target="#tour-modal" data-backdrop="false" class="btn btn-lg btn-info btn-call-action">
+                <span>
+                    {% trans "Veja a apresentação" %}
+                </span>
+            </a>
+        </div>
+    </div>
+</section>
+<section>
+    <h2> {% trans "Últimos palestras cadastradas" %} </h2>
     {% if most_recent_talks_list %}
         <ul class="list-unstyled">
             {% for talk in most_recent_talks_list %}
@@ -25,13 +47,13 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
 </section>
 
 <section>
-    <h2> Últimos palestrantes cadastrados </h2>
+    <h2> {% trans "Últimos palestrantes cadastrados" %} </h2>
     {% if most_recent_speakers_list %}
         <ul class="list-unstyled">
             {% for speaker in most_recent_speakers_list %}
                 <li> 
                     <a href="{% url 'speakers:speaker-detail-view' slug=speaker.slug %}"> 
-                        {{ speaker.name }}
+                        {{ speaker.get_full_name }}
                     </a>
                 </li>
             {% endfor %}
@@ -39,6 +61,23 @@ Coleção de materiais para aprendizagem em Python incluindo videos, palestras, 
     {% else %}
         <p>Nenhum palestrante encontrado!!! :(</p>
     {% endif %}
+</section>
+
+<section >
+    <div class="bs-callout bs-callout-info">
+        <h3>{% trans "Deseja contribuir com a evolução do pywatch?" %}</h3>
+        <p>
+            {% blocktrans %}
+                Se você deseja melhorar o código, relatar um bug, melhorar o layout do site <del>sou ótimo designer, só que não (: </del>  <br />
+                ou até mesmo ajudar na tradução do aplicativo...
+            {% endblocktrans %}
+        <p>
+            {% trans "Entre e conheça mais sobre o" %}
+            <a href="https://github.com/lucassimon/pywatch.com.br" target="_blank" class="btn btn-primary btn-lg">
+                {% trans "Projeto" %}
+            </a>
+        </p>
+    </div>
 </section>
 
 {% endblock %}

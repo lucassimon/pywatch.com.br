@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %} Página principal {% endblock title %}
+{% block meta_description %}
+Erro página não encontrada
+{% endblock meta_description %}
+{% block meta_keywords %} Página não encontrada{% endblock meta_keywords %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2> 404</h2>
+    </div>
+    <div class="cold-md-8">
+        <h3>
+            <i class="fa fa-warning text-yellow"></i>
+            {% trans 'Oops! Página não encontrada.' %}
+        </h3>
+        <p>
+            {% blocktrans %}
+            Nós não encontramos a página que você está procurando.
+            Entretanto, você pode
+                <a href="{% url "core:home-page" %}">
+                    retornar a página principal
+                </a> 
+                ou tente usar o formulário de busca.
+            {% endblocktrans %}
+        </p>
+        <form class="navbar-form navbar-right" role="form" action="{% url 'haystack_search' %}">
+            <div class="input-group">
+                <input name="q" type="text" placeholder="" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        {% trans "Buscar!" %}
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

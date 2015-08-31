@@ -1,0 +1,152 @@
+{% extends 'dashboards/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        {% trans 'Videos' %}
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
+                <i class="fa fa-dashboard"></i> Home
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'dashboards:dashboard-screencast-index-view' %}">
+                <i class="fa fa-video-camera"></i>
+                {% trans 'Videos' %}
+            </a>
+        </li>
+        <li class="active">
+            {% trans 'Criar' %}
+        </li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        {% if screencast.id %}
+                           {% trans 'Edite seu video' %}
+                        {% else %}
+                           {% trans 'Crie seu video' %}
+                        {% endif %}
+
+                    </h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+
+                <form role="form" action="{% if screencast.id %}{% url "dashboards:dashboard-screencast-update-view" screencast.id %}{% else %}.{% endif %}" method="post">{% csrf_token %}
+                    <div class="box-body">
+                        <div class="form-group ">
+                            {{ form.serie.label_tag }} 
+                            <a href="{% url "dashboards:dashboard-serie-create-view"  %}">
+                                <i class="fa fa-plus text-green"></i>
+                            </a>
+                            {{ form.serie }}
+                            <p class="text-aqua">
+                                {{ form.serie.help_text }}
+                            </p>
+                        </div>
+                        <div class="form-group{% if form.title.errors %} has-error{% endif %}">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                            <p class="text-aqua">
+                                {{ form.title.help_text }}
+                            </p>
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <p class="text-red"> {{ error }} </p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="form-group{% if form.summary.errors %} has-error{% endif %}">
+                            {{ form.summary.label_tag }}
+                            {{ form.summary }}
+                            <p class="text-aqua">
+                                {{ form.summary.help_text }}
+                            </p>
+                            {% if form.summary.errors %}
+                                {% for error in form.summary.errors %}
+                                    <p class="text-red"> {{ error }} </p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="form-group{% if form.tags.errors %} has-error{% endif %}">
+                            {{ form.tags.label_tag }}
+                            {{ form.tags }}
+                            <p class="text-aqua">
+                                {{ form.tags.help_text }}
+                            </p>
+                            {% if form.tags.errors %}
+                                {% for error in form.tags.errors %}
+                                    <p class="text-red"> {{ error }} </p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% with mediascreencast_formset as medias %}
+                    <div class="box-body">
+                        {{ medias.management_form }}
+                        {% for media_form in medias %}
+                        <h3 class="box-title">Inserir medias utilizadas {{ forloop.counter0 }} </h3>
+                            <div class="form-group{% if media_form.type.errors %} has-error{% endif %}">
+                                {{ media_form.type.label_tag }}
+                                {{ media_form.type }}
+                                <p class="text-aqua">
+                                    {{ media_form.type.help_text }}
+                                </p>
+                                {% if media_form.type.errors %}
+                                    {% for error in media_form.type.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group{% if media_form.title.errors %} has-error{% endif %}">
+                                {{ media_form.title.label_tag }}
+                                {{ media_form.title }}
+                                <p class="text-aqua">
+                                    {{ media_form.title.help_text }}
+                                </p>
+                                {% if media_form.title.errors %}
+                                    {% for error in media_form.title.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group{% if media_form.url.errors %} has-error{% endif %}">
+                                {{ media_form.url.label_tag }}
+                                {{ media_form.url }}
+                                <p class="text-aqua">
+                                    {{ media_form.url.help_text }}
+                                </p>
+                                {% if media_form.url.errors %}
+                                    {% for error in media_form.url.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% endwith %}
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            {% trans "Enviar" %}
+                        </button>
+                    </div>
+                </form>
+            </div><!-- /.box -->
+        </div>
+</section>
+{% endblock %}

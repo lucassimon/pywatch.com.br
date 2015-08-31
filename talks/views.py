@@ -66,7 +66,6 @@ class TalkListView(ListView):
         """
         return (
             Talk.objects.all()
-            .select_related('MediaTalk')
             .order_by('title')
         )
 

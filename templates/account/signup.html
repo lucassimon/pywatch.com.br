@@ -1,0 +1,47 @@
+{% extends "account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Registrar" %}{% endblock %}
+
+{% block content %}
+<div class="form-box" id="login-box">
+    <div class="header">
+        {% trans "Registrar" %}
+    </div>
+    <form action="{% url 'account_signup' %}" method="POST">
+        {% csrf_token %}
+        <div class="body bg-gray">
+            {{ form.as_p }}
+        </div>
+        <div class="footer">                                                               
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit" class="btn bg-olive btn-block">
+                {% trans "Registrar" %}
+            </button>  
+        </div>
+    </form>
+    <div class="margin text-center">
+        <span>{% trans "Entre utilizando com uma conta de rede social" %}</span>
+        <br>
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        {% include "socialaccount/snippets/login_extra.html" %}
+        <p>
+            {% blocktrans %}
+            Já possui uma conta? Então, por favor,
+                <a href="{{ login_url }}">Login</a>.
+            {% endblocktrans %}
+        </p>
+        <p>
+            <a href="{% url "core:home-page" %}">
+                {% trans "Retornar a página principal" %}
+            </a> 
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+

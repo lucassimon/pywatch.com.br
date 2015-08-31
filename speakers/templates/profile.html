@@ -1,0 +1,270 @@
+{% extends 'dashboards/base.html' %}
+
+{% load i18n %}
+{% load gravatar %}
+
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        {% trans 'Perfil' %}
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
+                <i class="fa fa-dashboard"></i> Home
+            </a>
+        </li>
+        <li class="active">
+            {% trans 'Perfil' %}
+        </li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="text-center">
+               {% trans 'Visualizar o perfil' %}
+            </h3>
+            <div class="text-center">
+                <img src="{% gravatar_url request.user.email 150 %}" class="img-circle">
+            </div>
+            <div class="">
+                <h4 class="text-center">
+                    {{ request.user.get_full_name }}
+                </h4>
+                <h5>
+                    {% trans "Sobre" %}
+                </h5>
+                <p>
+                    {{ request.user.bio }}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+
+                 <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                           {% trans 'Trocar senha' %}
+                        </h3>
+                    </div>
+                    <form method="POST" action="{% url 'account_change_password' %}" class="">
+                        {% csrf_token %}
+                        <div class="box-body">
+                            <div class="form-group{% if password_form.oldpassword.errors %} has-error{% endif %}">
+                                {{ password_form.oldpassword.label_tag }}
+                                {{ password_form.oldpassword }}
+                                <p class="text-aqua">
+                                    {{ password_form.oldpassword.help_text }}
+                                </p>
+                                {% if password_form.oldpassword.errors %}
+                                    {% for error in password_form.oldpassword.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if password_form.password1.errors %} has-error{% endif %}">
+                                {{ password_form.password1.label_tag }}
+                                {{ password_form.password1 }}
+                                <p class="text-aqua">
+                                    {{ password_form.password1.help_text }}
+                                </p>
+                                {% if password_form.password1.errors %}
+                                    {% for error in password_form.password1.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if password_form.password2.errors %} has-error{% endif %}">
+                                {{ password_form.password2.label_tag }}
+                                {{ password_form.password2 }}
+                                <p class="text-aqua">
+                                    {{ password_form.password2.help_text }}
+                                </p>
+                                {% if password_form.password2.errors %}
+                                    {% for error in password_form.password2.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn bg-olive " type="submit" name="action">{% trans "Change Password" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                           {% trans 'Informações pessoais' %}
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <form id="profile_basic_information_form" role="form" action="{% url "speakers:speaker-profile-save-basic-information" %}" method="post">{% csrf_token %}
+                        <div class="box-body">
+                            <div id="results"></div>
+                            <div class="form-group{% if basic_information_form.first_name.errors %} has-error{% endif %}">
+                                <input type="hidden" id="id_pk" value="{{ basic_information_form.instance.pk }}">
+                                {{ basic_information_form.first_name.label_tag }}
+                                {{ basic_information_form.first_name }}
+                                <p class="text-aqua">
+                                    {{ basic_information_form.first_name.help_text }}
+                                </p>
+                                {% if basic_information_form.first_name.errors %}
+                                    {% for error in basic_information_form.first_name.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if basic_information_form.last_name.errors %} has-error{% endif %}">
+                                {{ basic_information_form.last_name.label_tag }}
+                                {{ basic_information_form.last_name }}
+                                <p class="text-aqua">
+                                    {{ basic_information_form.last_name.help_text }}
+                                </p>
+                                {% if basic_information_form.last_name.errors %}
+                                    {% for error in basic_information_form.last_name.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if basic_information_form.bio.errors %} has-error{% endif %}">
+                                {{ basic_information_form.bio.label_tag }}
+                                {{ basic_information_form.bio }}
+                                <p class="text-aqua">
+                                    {{ basic_information_form.bio.help_text }}
+                                </p>
+                                {% if basic_information_form.bio.errors %}
+                                    {% for error in basic_information_form.bio.errors %}
+                                        <p class="text-red"> {{ error }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">
+                                {% trans "Enviar" %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">
+                       {% trans 'Contatos' %}
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="box-tools">
+                    <a href="{% url 'speakers:speaker-profile-contact-create-view' %}" class="btn btn-app">
+                        <i class="fa fa-plus"></i>
+                        {% trans "Criar Contatos" %}
+                    </a>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Tipo' %}</th>
+                                <th>{% trans 'Value' %}</th>
+                                <th>{% trans 'Actions' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if contact_list %}
+                                {% for contact in contact_list %}
+                                <tr>
+                                    <td>
+                                        {{ contact.get_kind_display }}
+                                    </td>
+                                    <td>
+                                        {{ contact.value }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'speakers:speaker-profile-contact-update-view' contact.id %}" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                            {% trans "Editar" %}
+                                        </a>
+                                        <a href="{% url 'speakers:speaker-profile-contact-delete-view' contact.id %}" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash-o"></i>
+                                            {% trans "Deletar" %}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6">{% trans 'Nenhuma video encontrada!!! :(' %}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        function save_basic_information(url) {
+            $.ajax({
+                url : url,
+                type : "POST",
+                data : {
+                    pk: $('#id_pk').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    first_name: $('#id_first_name').val(),
+                    last_name: $('#id_last_name').val(),
+                    bio: $('#id_bio').val(),
+                },
+                success : function(json) {
+                    if (json.success) {
+                        $('#results').html(
+                            "<div class='alert alert-block alert-success fade in' style='margin-bottom: 0px;'>" +
+                            "<a class='close' data-dismiss='alert' href='#'>x</a>"+
+                            json.message+
+                            "</div>"
+                        );
+                    } else {
+                        $('#results').html(
+                            "<div class='alert alert-block alert-danger fade in' style='margin-bottom: 0px;'>" +
+                            "<a class='close' data-dismiss='alert' href='#'>x</a>"+
+                            json.errors+
+                            "</div>"
+                        );
+                    };
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                }
+            });
+        };
+
+        $('#profile_basic_information_form').on('submit', function(event){
+            event.preventDefault();
+            var url = $(this).attr('action');
+            save_basic_information(url);
+        });
+    });
+</script>
+{% endblock %}

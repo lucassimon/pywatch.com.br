@@ -1,0 +1,122 @@
+{% extends 'dashboards/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        {% trans 'Palestras' %}
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboards:dashboard-index-view' %}">
+                <i class="fa fa-dashboard"></i> Home
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'dashboards:dashboard-talk-index-view' %}">
+                <i class="fa fa-comments-o"></i>
+                {% trans 'Palestras' %}
+            </a>
+        </li>
+        <li class="active">
+            {% trans 'Listar' %}
+        </li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <a href="{% url 'dashboards:dashboard-talk-create-view' %}" class="btn btn-app">
+        <i class="fa fa-plus"></i>
+        {% trans "Criar Palestras" %}
+    </a>
+    <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    {% trans 'Lista de palestras' %}
+                </h3>
+                <div class="box-tools">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li>
+                            {% if page_obj.has_previous %}
+                                <a href="{% url 'dashboards:dashboard-talk-list-view' %}?page={{ page_obj.previous_page_number }}">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <a href="{% url 'dashboards:dashboard-talk-list-view' %}?page={{ page_obj.number }}">
+                                {{ page_obj.number }}
+                            </a>
+                        </li>
+                        <li>
+                            {% if page_obj.has_next %}
+                                <a href="{% url 'dashboards:dashboard-talk-list-view' %}?page={{ page_obj.next_page_number }}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{% trans 'Evento' %}</th>
+                            <th>{% trans 'Titulo' %}</th>
+                            <th>{% trans 'Sumário' %}</th>
+                            <th>{% trans 'Tags' %}</th>
+                            <th>{% trans 'Actions' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if talk_list %}
+                            {% for talk in talk_list %}
+                            <tr>
+                                <td>
+                                    {% if talk.event %}
+                                       {{ talk.event }}
+                                    {% else %}
+                                        --
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ talk.title }}
+                                </td>
+                                <td>
+                                    {{ talk.summary }}
+                                </td>
+                                <td>
+                                    {{ talk.tags.all|safeseq|join:", " }}
+                                </td>
+                                <td>
+                                    <a href="{% url 'dashboards:dashboard-mediatalk-list-view' talk.id %}" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-picture-o"></i>
+                                        {% trans "Medias" %}
+                                    </a>
+                                    <a href="{% url 'dashboards:dashboard-talk-update-view' talk.id %}" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                        {% trans "Editar" %}
+                                    </a>
+                                    <a href="{% url 'dashboards:dashboard-talk-delete-view' talk.id %}" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o"></i>
+                                        {% trans "Deletar" %}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">{% trans 'Nenhuma palestra encontrada!!! :(' %}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div>
+</section>
+{% endblock %}

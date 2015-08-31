@@ -1,0 +1,88 @@
+{% extends 'dashboards/base.html' %}
+{% load i18n %}
+
+{% block content %}
+ <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">
+                <i class="fa fa-dashboard"></i> Home
+            </a>
+        </li>
+        <li class="active">
+            Dashboard
+        </li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>
+                        {{ talks_count }}
+                    </h3>
+                    <p>
+                        {% trans "Palestras Cadastradas" %}
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-comments-o"></i>
+                </div>
+                <a href="{% url 'dashboards:dashboard-talk-index-view' %}" class="small-box-footer">
+                    {% trans "Mais Informações" %}
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>
+                        {{ screencasts_count }}
+                    </h3>
+                    <p>
+                        {% trans "Videos Cadastrados" %}
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-video-camera"></i>
+                </div>
+                <a href="{% url 'dashboards:dashboard-screencast-index-view' %}" class="small-box-footer">
+                    {% trans "Mais Informações" %}
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div><!-- ./col -->
+        <!-- <div class="col-lg-3 col-xs-6"> -->
+            <!-- small box -->
+            <!-- <div class="small-box bg-yellow"> -->
+            <!--     <div class="inner"> -->
+            <!--         <h3> -->
+            <!--             44 -->
+            <!--         </h3> -->
+            <!--         <p> -->
+            <!--             {% trans "Tutoriais Cadastrados" %} -->
+            <!--         </p> -->
+            <!--     </div> -->
+            <!--     <div class="icon"> -->
+            <!--         <i class="fa fa-edit"></i> -->
+            <!--     </div> -->
+            <!--     <a href="#" class="small-box-footer"> -->
+            <!--         {% trans "Mais Informações" %} -->
+            <!--         <i class="fa fa-arrow-circle-right"></i> -->
+            <!--     </a> -->
+            <!-- </div> -->
+        <!-- </div><1!-- ./col --1> -->
+    </div><!-- /.row -->
+{% endblock %}

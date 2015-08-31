@@ -1,0 +1,35 @@
+{% extends "socialaccount/base.html" %}
+{% load url from future %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Registrar" %}{% endblock %}
+
+{% block content %}
+<div class="form-box" id="login-box">
+    <div class="header">
+        {% trans "Registrar" %}
+    </div>
+    <div class="body bg-gray">
+
+        <p>
+            {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}
+            Você esta sabendo sobre usar sua conta {{provider_name}} para logar no {{site_name}}.
+            Como uma etapa final, por favor complete os seguintes campos do formulário:
+            {% endblocktrans %}
+        </p>
+    </div>
+    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+        {% csrf_token %}
+        <div class="body bg-gray">
+            {{ form.as_p }}
+        </div>
+        <div class="footer">                                                               
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button class="btn bg-olive btn-block" type="submit">{% trans "Sign Up" %} &raquo;</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

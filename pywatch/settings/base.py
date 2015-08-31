@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 from unipath import Path
 PROJECT_DIR = Path(__file__).ancestor(3)
 
@@ -54,6 +55,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,9 +68,32 @@ ROOT_URLCONF = 'pywatch.urls'
 
 WSGI_APPLICATION = 'pywatch.wsgi.application'
 
-TEMPLATE_DIRS = (
-    PROJECT_DIR.child("templates"),
-)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [PROJECT_DIR.child("templates")],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+AUTH_USER_MODEL = 'speakers.SpeakerUser'
+# AUTH_PROFILE_MODULE = 'speakers.SpeakerUser'
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -80,14 +105,23 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'core',
+    'dashboards',
+    'screencasts',
     'speakers',
     'talks',
 
-    'south',
     'django_extensions',
     'rest_framework',
     'haystack',
     'taggit',
+    'mptt',
+    'django_gravatar',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'djrill',
+    'embed_video',
 )
 
 REST_FRAMEWORK = {
@@ -96,15 +130,15 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_PERMISSION_CLASSES': [
-        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.OAuth2Authentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.OAuth2Authentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
 
 }
@@ -114,6 +148,27 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
         'PATH': PROJECT_DIR + '/whoosh_index',
     },
+}
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    # Required by allauth template tags
+    'django.core.context_processors.request',
+    # allauth specific context processors
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+LOGIN_REDIRECT_URL = '/dashboard/'
+DEFAULT_FROM_EMAIL = 'no-reply@pywatch.com.br'
+
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
 }
 
 LOGGING = {

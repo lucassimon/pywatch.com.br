@@ -1,74 +1,72 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+from django.conf import settings
+import taggit.managers
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Talk'
-        db.create_table(u'talks_talk', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('speaker', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['speakers.Speaker'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('summary', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal(u'talks', ['Talk'])
+    dependencies = [
+        ('taggit', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Adding model 'MediaTalk'
-        db.create_table(u'talks_mediatalk', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length=3)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('talk', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['talks.Talk'])),
-        ))
-        db.send_create_signal(u'talks', ['MediaTalk'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Talk'
-        db.delete_table(u'talks_talk')
-
-        # Deleting model 'MediaTalk'
-        db.delete_table(u'talks_mediatalk')
-
-
-    models = {
-        u'speakers.speaker': {
-            'Meta': {'ordering': "['created']", 'object_name': 'Speaker'},
-            'bio': ('django.db.models.fields.TextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'})
-        },
-        u'talks.mediatalk': {
-            'Meta': {'ordering': "['created']", 'object_name': 'MediaTalk'},
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'talk': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['talks.Talk']"}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': '3'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
-        },
-        u'talks.talk': {
-            'Meta': {'ordering': "['created']", 'object_name': 'Talk'},
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'speaker': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['speakers.Speaker']"}),
-            'summary': ('django.db.models.fields.TextField', [], {}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        }
-    }
-
-    complete_apps = ['talks']
+    operations = [
+        migrations.CreateModel(
+            name='Event',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('modified', models.DateTimeField(auto_now=True)),
+                ('name', models.CharField(help_text='Escolha um nome para o evento', max_length=255, verbose_name='Nome')),
+                ('slug', models.SlugField(max_length=255, unique=True, null=True, verbose_name='Slug')),
+            ],
+            options={
+                'ordering': ['created'],
+                'verbose_name': 'Evento',
+                'verbose_name_plural': 'Eventos',
+            },
+        ),
+        migrations.CreateModel(
+            name='MediaTalk',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('modified', models.DateTimeField(auto_now=True)),
+                ('type', models.CharField(help_text='Escolha uma op\xe7\xe3o', max_length=3, verbose_name='Tipo', choices=[(b'TU', 'Tutorial'), (b'CD', 'Codigo'), (b'VI', 'Video'), (b'SL', 'Slide')])),
+                ('title', models.CharField(help_text='Escolha um Titulo da media. Exemplo Youtube,Slideshare', max_length=255, verbose_name='Titulo')),
+                ('url', models.URLField(help_text='Escolha a Url que esta localizada a media', verbose_name='URL')),
+            ],
+            options={
+                'ordering': ['created'],
+                'verbose_name': 'Media Palestrante',
+                'verbose_name_plural': 'Medias Palestrantes',
+            },
+        ),
+        migrations.CreateModel(
+            name='Talk',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('modified', models.DateTimeField(auto_now=True)),
+                ('title', models.CharField(help_text='Informe um titulo da palestra', max_length=255, verbose_name='Titulo')),
+                ('slug', models.SlugField(null=True, help_text='Informe um slug para o titulo da palestra', unique=True, verbose_name='Slug')),
+                ('summary', models.TextField(help_text='Descreva um sum\xe1rio para sua palestra', verbose_name='Sum\xe1rio')),
+                ('event', models.ForeignKey(blank=True, to='talks.Event', help_text='Selecione o evento correspondente ou deixe em branco', null=True, verbose_name='Evento')),
+                ('speaker', models.ForeignKey(verbose_name='Palestrante', to=settings.AUTH_USER_MODEL, help_text='A quem essa palestra pertence')),
+                ('tags', taggit.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', help_text='A comma-separated list of tags.', verbose_name='Tags')),
+            ],
+            options={
+                'ordering': ['created'],
+                'verbose_name': 'Palestras',
+                'verbose_name_plural': 'Palestras',
+            },
+        ),
+        migrations.AddField(
+            model_name='mediatalk',
+            name='talk',
+            field=models.ForeignKey(related_name='medias', verbose_name='Palestras', to='talks.Talk'),
+        ),
+    ]
