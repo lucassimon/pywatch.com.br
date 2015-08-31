@@ -1,7 +1,15 @@
 
 box: python
 services:
-    - postgresql
+   - id: postgres
+    env:
+       POSTGRES_PASSWORD: postgres
+       POSTGRES_USER: postgres  # optional
+       WERCKER_POSTGRESQL_USERNAME: postgres
+       WERCKER_POSTGRESQL_PASSWORD: wercker
+       WERCKER_POSTGRESQL_PORT: 5432
+       WERCKER_POSTGRESQL_DATABASE: werckerdb1
+       WERCKER_POSTGRESQL_URL: postgres://postgres:wercker@$$HOST$$:5432/werckerdb1
 build:
   steps:
     - script:
