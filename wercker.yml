@@ -13,9 +13,8 @@ build:
     - virtualenv:
         name: pywatch
         install_wheel: false
-    - script:
-        name: Install Requirements
-        code: pip install -r requirements/ci.txt --use-mirrors
+    - pip-install:
+        requirements_file: "requirements/ci.txt"
     - script:
         name: Create a Media directory
         code: mkdir media
