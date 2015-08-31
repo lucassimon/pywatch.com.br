@@ -18,15 +18,8 @@ build:
     - script:
         name: Create a Media directory
         code: mkdir media
-    - script:
-        name: Generate a syncdb
-        code: python manage.py syncdb --settings=pywatch.settings.ci --noinput
-    - script:
-        name: Migrate Taggit App
-        code: python manage.py migrate taggit --settings=pywatch.settings.ci
-    - script:
-        name: Migrate all packages
-        code: python manage.py migrate --settings=pywatch.settings.ci
+        name: Print variables
+        code: echo $WERCKER_POSTGRESQL_HOST $WERCKER_POSTGRESQL_PORT
     - script:
         name: Run tests
         code: python manage.py test --settings=pywatch.settings.ci
